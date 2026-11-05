@@ -1,0 +1,123 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": true,
+        "show_collection_image": true,
+        "desc_size": 15,
+        "image_radius": 8,
+        "bg_color": "#f8f8f8",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "title_color": "#1a1a1a",
+        "title_size": 40,
+        "text_color": "#444444",
+        "breadcrumb_color": "#666666",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "disabled": true,
+      "custom_css": [],
+      "settings": {
+        "products_per_page": 24,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "padding_top": 0,
+        "padding_bottom": 60
+      }
+    },
+    "1792181965b09c1760": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_23a64b7_KUNV88": {
+          "type": "ai_gen_block_23a64b7",
+          "settings": {
+            "columns": 4,
+            "per_page": 12,
+            "gap": 20,
+            "max_width": 1400,
+            "side_padding": 24,
+            "card_bg": "#ffffff",
+            "card_radius": 12,
+            "card_border_width": 1,
+            "card_border_color": "#e5e7e5",
+            "card_shadow": "0 2px 8px rgba(0,0,0,0.06)",
+            "card_padding": 16,
+            "hover_lift": 4,
+            "zoom": 1.1,
+            "title_color": "#1a1a1a",
+            "title_size": 16,
+            "title_weight": "600",
+            "desc_color": "#666666",
+            "desc_size": 13,
+            "price_color": "#0e4d22",
+            "price_size": 22,
+            "compare_color": "#999999",
+            "compare_size": 14,
+            "badge_bg": "#e8f5e9",
+            "badge_text": "#2e7d32",
+            "badge_size": 11,
+            "save_bg": "#e8f5e9",
+            "save_text": "#2e7d32",
+            "add_text": "Add to cart",
+            "show_buy_now": false,
+            "buy_text": "Buy now",
+            "btn_bg": "#0e4d22",
+            "btn_text": "#ffffff",
+            "btn_hover": "#333333",
+            "buy_bg": "#d96817",
+            "buy_text_color": "#ffffff",
+            "btn_radius": 6,
+            "cart_title": "Your cart",
+            "drawer_width": 420,
+            "drawer_bg": "#ffffff",
+            "drawer_text": "#1a1a1a",
+            "border_color": "#e5e5e5",
+            "checkout_text": "CHECKOUT",
+            "checkout_bg": "#1a1a1a",
+            "checkout_text_color": "#ffffff",
+            "viewcart_text": "VIEW CART",
+            "viewcart_bg": "#e7622c",
+            "viewcart_text_color": "#ffffff",
+            "image_bg": "#f8f8f8"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_23a64b7_KUNV88"
+      ],
+      "name": "Modern Product Grid Mush",
+      "settings": {}
+    }
+  },
+  "order": [
+    "banner",
+    "product-grid",
+    "1792181965b09c1760"
+  ]
+}

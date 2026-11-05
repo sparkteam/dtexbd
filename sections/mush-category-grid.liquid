@@ -1,0 +1,418 @@
+{% comment %}
+  Mush Category Grid Section
+  Fully dynamic + editable
+{% endcomment %}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --primary: {{ section.settings.primary_color }};
+    --text: {{ section.settings.text_color }};
+    --muted: {{ section.settings.muted_color }};
+    --bg: {{ section.settings.background_color }};
+    --card-bg: {{ section.settings.card_background }};
+    --radius: {{ section.settings.border_radius }}px;
+  }
+
+  #shopify-section-{{ section.id }} .mush-category {
+    background: var(--bg);
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  #shopify-section-{{ section.id }} .mush-category__inner {
+    max-width: {{ section.settings.container_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* Header */
+  #shopify-section-{{ section.id }} .mush-category__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: {{ section.settings.header_spacing }}px;
+  }
+
+  #shopify-section-{{ section.id }} .mush-category__title {
+    font-size: {{ section.settings.title_size }}px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .mush-category__view-all {
+    font-size: 14px;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--muted);
+    padding-bottom: 2px;
+    transition: all 0.2s ease;
+  }
+
+  #shopify-section-{{ section.id }} .mush-category__view-all:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+
+  /* Grid */
+  #shopify-section-{{ section.id }} .mush-category__grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+    gap: {{ section.settings.grid_gap }}px;
+  }
+
+  #shopify-section-{{ section.id }} .mush-category__item {
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .mush-category__image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: var(--card-bg);
+    margin-bottom: 14px;
+    aspect-ratio: 1 / 1.15;
+  }
+
+  #shopify-section-{{ section.id }} .mush-category__image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  #shopify-section-{{ section.id }} .mush-category__item:hover .mush-category__image-wrapper img {
+    transform: scale(1.05);
+  }
+
+  #shopify-section-{{ section.id }} .mush-category__item-title {
+    font-size: {{ section.settings.item_title_size }}px;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  #shopify-section-{{ section.id }} .mush-category__item a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  /* Tablet */
+  @media screen and (max-width: 989px) {
+    #shopify-section-{{ section.id }} .mush-category__grid {
+      grid-template-columns: repeat({{ section.settings.columns_tablet }}, 1fr);
+    }
+  }
+
+  /* Mobile */
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .mush-category__grid {
+      grid-template-columns: repeat({{ section.settings.columns_mobile }}, 1fr);
+      gap: 16px;
+    }
+
+    #shopify-section-{{ section.id }} .mush-category__title {
+      font-size: 22px;
+    }
+
+    #shopify-section-{{ section.id }} .mush-category__header {
+      margin-bottom: 24px;
+    }
+  }
+</style>
+
+<div class="mush-category">
+  <div class="mush-category__inner">
+
+    <!-- Header -->
+    <div class="mush-category__header">
+      {% if section.settings.title != blank %}
+        <h2 class="mush-category__title">{{ section.settings.title }}</h2>
+      {% endif %}
+
+      {% if section.settings.view_all_text != blank %}
+        <a href="{{ section.settings.view_all_link | default: '#' }}" class="mush-category__view-all">
+          {{ section.settings.view_all_text }}
+        </a>
+      {% endif %}
+    </div>
+
+    <!-- Grid -->
+    <div class="mush-category__grid">
+      {% for block in section.blocks %}
+        <div class="mush-category__item" {{ block.shopify_attributes }}>
+          <a href="{{ block.settings.link | default: '#' }}">
+            <div class="mush-category__image-wrapper">
+              {% if block.settings.image != blank %}
+                <img
+                  src="{{ block.settings.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.title | escape }}"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                  loading="lazy"
+                >
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+            </div>
+            {% if block.settings.title != blank %}
+              <h3 class="mush-category__item-title">{{ block.settings.title }}</h3>
+            {% endif %}
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Mush Category Grid",
+  "tag": "section",
+  "class": "section-mush-category",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "BEDSHEETS"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View All Text",
+      "default": "View all bedsheets"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "min": 1000,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "label": "Container Max Width",
+      "default": 1280
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "label": "Columns (Desktop)",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Columns (Tablet)",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Columns (Mobile)",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 10,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Grid Gap",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "header_spacing",
+      "min": 16,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Space below Header",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Image Border Radius",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Primary Color (Hover)",
+      "default": "#0d6239"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Image Background",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Title Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "View All Color",
+      "default": "#555555"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 20,
+      "max": 42,
+      "step": 1,
+      "unit": "px",
+      "label": "Section Title Size",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "item_title_size",
+      "min": 13,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Item Title Size",
+      "default": 15
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Category Name"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mush Category Grid",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "title": "Double Bed Sheets"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Single Bed Sheets"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Fancy Bed Sheets"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Kids Bed Sheets"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Plain Bed Sheets"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Fitted Bed Sheets"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
