@@ -9,59 +9,62 @@
  */
 {
   "sections": {
-    "slideshow": {
-      "type": "slideshow",
+    "dtex_hero": {
+      "type": "dtex-hero",
       "blocks": {
-        "slide-0": {
+        "slide_bedsheet": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/hero-sage.jpg",
-            "image_overlay_opacity": 10,
-            "heading": "<strong>প্রিমিয়াম </strong>&nbsp;<strong>কোয়ালিটি</strong>",
-            "heading_size": "h1",
-            "subheading": "বেডশিট, ওয়াফেল কার্টেন, তোয়ালে আর কম্ফোর্টার – আপনার ঘরের সবকিছু এক ওয়েবসাইটে।",
-            "button_label": "Shop all",
-            "link": "shopify://collections/all",
-            "button_style_secondary": false,
-            "show_text_box": true,
-            "box_align": "middle-left",
-            "text_alignment": "left",
-            "text_alignment_mobile": "center",
-            "color_scheme": "scheme-1"
+            "image": "shopify://shop_images/WhatsAppImage2026-11-03at21.27.13.jpg",
+            "kicker": "Bedsheet",
+            "heading": "নরম কটন বেডশিট",
+            "text": "এক্সপোর্ট কোয়ালিটি ফ্লোরাল বেডশিট — নরম, রঙিন, প্রতিদিনের ঘুমের জন্য।",
+            "button_label": "Shop bedsheets",
+            "button_link": "shopify://collections/export-quality-bedsheets",
+            "tab_label": "Bedsheet",
+            "note": "Home delivery in 2–3 days"
           }
         },
-        "slide_8DrmeY": {
+        "slide_curtain": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/hero-blush.jpg",
-            "image_overlay_opacity": 10,
-            "heading": "Browse our latest products",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "Shop all",
-            "link": "shopify://collections/all",
-            "button_style_secondary": false,
-            "show_text_box": false,
-            "box_align": "top-left",
-            "text_alignment": "left",
-            "text_alignment_mobile": "left",
-            "color_scheme": "scheme-1"
+            "image": "shopify://shop_images/WhatsAppImage2026-11-02at01.28.37.jpg",
+            "kicker": "Curtain",
+            "heading": "ঘর জুড়ে ওয়াফেল কার্টেন",
+            "text": "ফ্লোরাল প্রিন্ট আর প্রিমিয়াম ওয়াফেল টেক্সচার — জানালা হবে ঘরের সেরা কোণা।",
+            "button_label": "Shop curtains",
+            "button_link": "shopify://collections/waffle-curtain",
+            "tab_label": "Curtain",
+            "note": "7 ft height · waffle cotton"
+          }
+        },
+        "slide_comforter": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/WhatsAppImage2026-10-29at01.50.54.jpg",
+            "kicker": "Comforter",
+            "heading": "হালকা ফুলের কম্ফোর্টার",
+            "text": "নরম কুইল্টেড কম্ফোর্টার, উজ্জ্বল প্রিন্ট — শীতের রাত আর গিফট, দুটোতেই মানানসই।",
+            "button_label": "Shop comforters",
+            "button_link": "shopify://collections/premium-comforter",
+            "tab_label": "Comforter",
+            "note": "3 day easy return"
           }
         }
       },
       "block_order": [
-        "slide-0",
-        "slide_8DrmeY"
+        "slide_bedsheet",
+        "slide_curtain",
+        "slide_comforter"
       ],
       "settings": {
-        "layout": "full_bleed",
-        "slide_height": "small",
-        "slider_visual": "counter",
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "image_behavior": "ambient",
-        "show_text_below": true,
-        "accessibility_info": "Slideshow about our brand"
+        "accessibility_label": "Bedsheet, curtain and comforter",
+        "autoplay": true,
+        "interval": 6,
+        "panel_color": "#0e4d22",
+        "accent_color": "#f0a05a",
+        "button_color": "#f4efe6",
+        "button_text": "#0e4d22"
       }
     },
     "1791922712091fa8b5": {
@@ -847,7 +850,7 @@
     }
   },
   "order": [
-    "slideshow",
+    "dtex_hero",
     "1791922712091fa8b5",
     "shop_by_category_mush_JmnNMc",
     "featured-collection-0",

@@ -1,0 +1,661 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@500;700;800&family=Questrial&display=swap" rel="stylesheet">
+
+{%- style -%}
+  #DtexHero-{{ section.id }} {
+    --dtex-panel: {{ section.settings.panel_color }};
+    --dtex-accent: {{ section.settings.accent_color }};
+    --dtex-btn: {{ section.settings.button_color }};
+    --dtex-btn-text: {{ section.settings.button_text }};
+    --dtex-interval: {{ section.settings.interval }}s;
+  }
+{%- endstyle -%}
+
+<dtex-hero
+  id="DtexHero-{{ section.id }}"
+  class="dtex-hero"
+  data-autoplay="{{ section.settings.autoplay }}"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="{{ section.settings.accessibility_label | escape }}"
+>
+  <div class="dtex-hero__frame">
+    <div class="dtex-hero__panel">
+      <div class="dtex-hero__stories">
+        {%- for block in section.blocks -%}
+          <div
+            class="dtex-hero__story{% if forloop.first %} is-active{% endif %}"
+            data-hero-slide="{{ forloop.index0 }}"
+            {{ block.shopify_attributes }}
+            {% unless forloop.first %}hidden{% endunless %}
+          >
+            <p class="dtex-hero__kicker">
+              <span>0{{ forloop.index }}</span>
+              {{ block.settings.kicker | escape }}
+            </p>
+            {%- if block.settings.heading != blank -%}
+              <h2 class="dtex-hero__heading">{{ block.settings.heading | escape }}</h2>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="dtex-hero__text">{{ block.settings.text | escape }}</p>
+            {%- endif -%}
+            {%- if block.settings.button_label != blank -%}
+              <a
+                class="dtex-hero__btn"
+                {% if block.settings.button_link != blank %}
+                  href="{{ block.settings.button_link }}"
+                {% else %}
+                  role="link" aria-disabled="true"
+                {% endif %}
+              >
+                {{ block.settings.button_label | escape }}
+                <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                  <path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            {%- endif -%}
+            {%- if block.settings.note != blank -%}
+              <p class="dtex-hero__note">{{ block.settings.note | escape }}</p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.blocks.size > 1 -%}
+        <div class="dtex-hero__tabs" role="tablist" aria-label="Choose a category">
+          {%- for block in section.blocks -%}
+            <button
+              class="dtex-hero__tab{% if forloop.first %} is-active{% endif %}"
+              type="button"
+              role="tab"
+              data-hero-tab="{{ forloop.index0 }}"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              aria-label="{{ block.settings.tab_label | default: block.settings.kicker | escape }}"
+            >
+              <span class="dtex-hero__tab-index">0{{ forloop.index }}</span>
+              <span class="dtex-hero__tab-label">{{ block.settings.tab_label | default: block.settings.kicker | escape }}</span>
+              <span class="dtex-hero__bar" aria-hidden="true"><span class="dtex-hero__bar-fill"></span></span>
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="dtex-hero__media">
+      {%- for block in section.blocks -%}
+        <div class="dtex-hero__photo{% if forloop.first %} is-active{% endif %}" data-hero-photo="{{ forloop.index0 }}">
+          {%- if block.settings.image != blank -%}
+            {%- assign hero_alt = block.settings.heading | default: block.settings.kicker -%}
+            {%- if forloop.first and section.index == 1 -%}
+              {{
+                block.settings.image
+                | image_url: width: 1800
+                | image_tag:
+                  widths: '600, 900, 1200, 1600, 1800',
+                  sizes: '(min-width: 990px) 58vw, 100vw',
+                  alt: hero_alt,
+                  fetchpriority: 'high',
+                  class: 'dtex-hero__img'
+              }}
+            {%- else -%}
+              {{
+                block.settings.image
+                | image_url: width: 1800
+                | image_tag:
+                  widths: '600, 900, 1200, 1600, 1800',
+                  sizes: '(min-width: 990px) 58vw, 100vw',
+                  alt: hero_alt,
+                  loading: 'lazy',
+                  class: 'dtex-hero__img'
+              }}
+            {%- endif -%}
+          {%- else -%}
+            {{ 'lifestyle-2' | placeholder_svg_tag: 'dtex-hero__img dtex-hero__placeholder' }}
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+
+      {%- if section.blocks.size > 1 -%}
+        <div class="dtex-hero__arrows">
+          <button class="dtex-hero__arrow" type="button" data-hero-prev aria-label="Previous slide">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="dtex-hero__arrow" type="button" data-hero-next aria-label="Next slide">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</dtex-hero>
+
+{% stylesheet %}
+  .dtex-hero {
+    display: block;
+    background: var(--dtex-panel, #0e4d22);
+    color: #f7f4ee;
+  }
+
+  .dtex-hero__frame {
+    display: grid;
+    grid-template-columns: minmax(340px, 0.86fr) minmax(460px, 1.14fr);
+    height: clamp(560px, calc(100svh - 148px), 700px);
+  }
+
+  .dtex-hero__panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+    padding: 52px 48px 0;
+    background: var(--dtex-panel, #0e4d22);
+  }
+
+  .dtex-hero__stories {
+    position: relative;
+    flex: 1;
+    min-height: 280px;
+  }
+
+  .dtex-hero__story {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    max-width: 520px;
+    min-height: 100%;
+  }
+
+  .dtex-hero__story[hidden] {
+    display: none;
+  }
+
+  .dtex-hero__kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 18px;
+    color: var(--dtex-accent, #f0a05a);
+    font-family: Questrial, "Noto Sans Bengali", sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .dtex-hero__kicker span {
+    letter-spacing: 0.08em;
+  }
+
+  .dtex-hero__kicker::after {
+    content: "";
+    width: 42px;
+    height: 1px;
+    background: var(--dtex-accent, #f0a05a);
+  }
+
+  .dtex-hero__heading {
+    margin: 0;
+    color: #f7f4ee;
+    font-family: "Noto Sans Bengali", Almarai, sans-serif;
+    font-size: clamp(36px, 4vw, 58px);
+    font-weight: 800;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+  }
+
+  .dtex-hero__text {
+    margin: 16px 0 0;
+    max-width: 440px;
+    color: rgba(247, 244, 238, 0.88);
+    font-family: "Noto Sans Bengali", Questrial, sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.65;
+  }
+
+  .dtex-hero__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 28px;
+    min-height: 50px;
+    padding: 0 22px 0 24px;
+    border-radius: 999px;
+    background: var(--dtex-btn, #f4efe6);
+    color: var(--dtex-btn-text, #0e4d22);
+    font-family: Questrial, "Noto Sans Bengali", sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .dtex-hero__btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .dtex-hero__btn:hover {
+    background: #fff;
+    transform: translateX(3px);
+  }
+
+  .dtex-hero__note {
+    margin: 16px 0 0;
+    color: rgba(247, 244, 238, 0.7);
+    font-family: Questrial, sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+  }
+
+  .dtex-hero__tabs {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 8px;
+    margin: 28px -12px 0;
+  }
+
+  .dtex-hero__tab {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 14px 12px 18px;
+    border: 0;
+    border-top: 1px solid rgba(247, 244, 238, 0.18);
+    background: transparent;
+    color: rgba(247, 244, 238, 0.62);
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .dtex-hero__tab.is-active {
+    color: #f7f4ee;
+  }
+
+  .dtex-hero__tab-index {
+    font-family: Questrial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+
+  .dtex-hero__tab-label {
+    font-family: Questrial, "Noto Sans Bengali", sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+  }
+
+  .dtex-hero__bar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin-top: 8px;
+    background: rgba(247, 244, 238, 0.2);
+    overflow: hidden;
+  }
+
+  .dtex-hero__bar-fill {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: var(--dtex-accent, #f0a05a);
+  }
+
+  .dtex-hero__tab.is-active .dtex-hero__bar-fill {
+    animation: dtex-hero-fill var(--dtex-interval, 6s) linear forwards;
+  }
+
+  .dtex-hero.is-paused .dtex-hero__bar-fill {
+    animation-play-state: paused;
+  }
+
+  @keyframes dtex-hero-fill {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  .dtex-hero__media {
+    position: relative;
+    min-width: 0;
+    background: #d9d3c8;
+    overflow: hidden;
+  }
+
+  .dtex-hero__photo {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  .dtex-hero__photo.is-active {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .dtex-hero__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    transform: scale(1.06);
+  }
+
+  .dtex-hero__photo.is-active .dtex-hero__img {
+    animation: dtex-hero-ken 8s ease forwards;
+  }
+
+  .dtex-hero__placeholder {
+    background: #efe8dc;
+  }
+
+  @keyframes dtex-hero-ken {
+    from { transform: scale(1.06); }
+    to { transform: scale(1); }
+  }
+
+  .dtex-hero__arrows {
+    position: absolute;
+    z-index: 2;
+    right: 22px;
+    bottom: 22px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .dtex-hero__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: #172117;
+    box-shadow: 0 8px 24px rgba(23, 33, 23, 0.16);
+    cursor: pointer;
+  }
+
+  .dtex-hero__arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .dtex-hero__arrow:hover {
+    background: #fff;
+  }
+
+  .dtex-hero__btn:focus-visible,
+  .dtex-hero__tab:focus-visible,
+  .dtex-hero__arrow:focus-visible {
+    outline: 3px solid var(--dtex-accent, #f0a05a);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dtex-hero__photo,
+    .dtex-hero__btn,
+    .dtex-hero__img {
+      transition: none;
+      animation: none;
+    }
+
+    .dtex-hero__tab.is-active .dtex-hero__bar-fill {
+      animation: none;
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    .dtex-hero__frame {
+      grid-template-columns: 1fr;
+      height: auto;
+      min-height: 0;
+    }
+
+    .dtex-hero__media {
+      height: min(92vw, 520px);
+      order: -1;
+    }
+
+    .dtex-hero__panel {
+      padding: 28px 20px 0;
+    }
+
+    .dtex-hero__stories {
+      min-height: 0;
+    }
+
+    .dtex-hero__story {
+      min-height: 0;
+      padding-bottom: 8px;
+    }
+
+    .dtex-hero__heading {
+      font-size: 34px;
+    }
+
+    .dtex-hero__text {
+      font-size: 15px;
+    }
+
+    .dtex-hero__tabs {
+      margin-top: 22px;
+    }
+
+    .dtex-hero__tab {
+      padding: 12px 8px 16px;
+    }
+
+    .dtex-hero__tab-label {
+      font-size: 13px;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  if (!customElements.get('dtex-hero')) {
+    class DtexHero extends HTMLElement {
+      connectedCallback() {
+        if (this.dataset.bound === 'true') return;
+        this.dataset.bound = 'true';
+        this.stories = [...this.querySelectorAll('[data-hero-slide]')];
+        this.photos = [...this.querySelectorAll('[data-hero-photo]')];
+        this.tabs = [...this.querySelectorAll('[data-hero-tab]')];
+        this.index = 0;
+        this.paused = false;
+        this.reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this.querySelector('[data-hero-prev]')?.addEventListener('click', () => this.show(this.index - 1));
+        this.querySelector('[data-hero-next]')?.addEventListener('click', () => this.show(this.index + 1));
+        this.tabs.forEach((tab, index) => {
+          tab.addEventListener('click', () => this.show(index));
+        });
+        this.addEventListener('animationend', (event) => {
+          if (event.animationName !== 'dtex-hero-fill' || this.paused || this.reduce || this.ignoreEnd) return;
+          if (this.dataset.autoplay !== 'true') return;
+          const tab = event.target.closest('[data-hero-tab]');
+          if (!tab || Number(tab.dataset.heroTab) !== this.index) return;
+          this.show(this.index + 1);
+        });
+        this.addEventListener('mouseenter', () => this.setPaused(true));
+        this.addEventListener('mouseleave', () => this.setPaused(false));
+        this.addEventListener('focusin', () => this.setPaused(true));
+        this.addEventListener('focusout', (event) => {
+          if (!this.contains(event.relatedTarget)) this.setPaused(false);
+        });
+        this.addEventListener('keydown', (event) => {
+          if (event.key === 'ArrowLeft') this.show(this.index - 1);
+          if (event.key === 'ArrowRight') this.show(this.index + 1);
+        });
+        this.restartBar();
+      }
+
+      setPaused(paused) {
+        this.paused = paused;
+        this.classList.toggle('is-paused', paused);
+      }
+
+      show(nextIndex) {
+        if (!this.stories.length) return;
+        this.ignoreEnd = true;
+        const total = this.stories.length;
+        this.index = (nextIndex + total) % total;
+        this.stories.forEach((story, index) => {
+          const active = index === this.index;
+          story.classList.toggle('is-active', active);
+          story.toggleAttribute('hidden', !active);
+        });
+        this.photos.forEach((photo, index) => {
+          photo.classList.toggle('is-active', index === this.index);
+        });
+        this.tabs.forEach((tab, index) => {
+          const active = index === this.index;
+          tab.classList.toggle('is-active', active);
+          tab.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        this.restartBar();
+        requestAnimationFrame(() => {
+          this.ignoreEnd = false;
+        });
+      }
+
+      restartBar() {
+        const active = this.tabs[this.index];
+        if (!active) return;
+        const fill = active.querySelector('.dtex-hero__bar-fill');
+        if (!fill) return;
+        fill.style.animation = 'none';
+        void fill.offsetWidth;
+        fill.style.animation = '';
+      }
+    }
+
+    customElements.define('dtex-hero', DtexHero);
+  }
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "DTex hero",
+  "tag": "section",
+  "class": "dtex-hero-section",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "text",
+      "id": "accessibility_label",
+      "label": "Slideshow label",
+      "default": "Featured categories"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "interval",
+      "min": 4,
+      "max": 9,
+      "step": 1,
+      "unit": "s",
+      "label": "Seconds per slide",
+      "default": 6
+    },
+    {
+      "type": "color",
+      "id": "panel_color",
+      "label": "Panel color",
+      "default": "#0e4d22"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#f0a05a"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button color",
+      "default": "#f4efe6"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "#0e4d22"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "kicker",
+          "label": "Eyebrow",
+          "default": "Bedsheet"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "নরম কটন বেডশিট"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "এক্সপোর্ট কোয়ালিটি ফ্লোরাল বেডশিট — নরম, রঙিন, প্রতিদিনের ঘুমের জন্য।"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Shop bedsheets"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Tab label",
+          "default": "Bedsheet"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Note",
+          "default": "Home delivery in 2–3 days"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DTex hero",
+      "blocks": [
+        { "type": "slide" },
+        { "type": "slide" },
+        { "type": "slide" }
+      ]
+    }
+  ]
+}
+{% endschema %}

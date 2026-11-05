@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DTex hero preview — not published</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@500;700;800&family=Questrial&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e7e2d8; color: #172117; font-family: Questrial, "Noto Sans Bengali", sans-serif; overflow-x: hidden; }
+    .artboard { width: 1280px; background: #fff; transform-origin: top left; }
+    .preview-flag {
+      position: sticky; top: 0; z-index: 20;
+      padding: 8px 16px; background: #172117; color: #f4efe6;
+      font-size: 13px; letter-spacing: 0.04em; text-align: center;
+    }
+    .announce { padding: 10px 16px; border-bottom: 1px solid #ececec; text-align: center; font-size: 14px; }
+    .header { display: flex; align-items: center; justify-content: space-between; padding: 10px 28px 14px; }
+    .header img { height: 74px; width: auto; }
+    .icon { width: 26px; height: 26px; }
+    .dtex-hero { --dtex-panel: #0e4d22; --dtex-accent: #f0a05a; --dtex-btn: #f4efe6; --dtex-btn-text: #0e4d22; --dtex-interval: 6s; display: block; background: var(--dtex-panel); color: #f7f4ee; }
+    .dtex-hero__frame { display: grid; grid-template-columns: minmax(340px, 0.86fr) minmax(460px, 1.14fr); height: 640px; }
+    .dtex-hero__panel { position: relative; display: flex; flex-direction: column; justify-content: space-between; min-width: 0; padding: 52px 48px 0; background: var(--dtex-panel); }
+    .dtex-hero__stories { position: relative; flex: 1; min-height: 280px; }
+    .dtex-hero__story { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; max-width: 520px; min-height: 100%; }
+    .dtex-hero__story[hidden] { display: none; }
+    .dtex-hero__kicker { display: flex; align-items: center; gap: 12px; margin: 0 0 18px; color: var(--dtex-accent); font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; }
+    .dtex-hero__kicker::after { content: ""; width: 42px; height: 1px; background: var(--dtex-accent); }
+    .dtex-hero__heading { margin: 0; color: #f7f4ee; font-family: "Noto Sans Bengali", sans-serif; font-size: clamp(36px, 4vw, 58px); font-weight: 800; line-height: 1.18; letter-spacing: -0.02em; }
+    .dtex-hero__text { margin: 16px 0 0; max-width: 440px; color: rgba(247,244,238,.88); font-family: "Noto Sans Bengali", Questrial, sans-serif; font-size: 17px; font-weight: 500; line-height: 1.65; }
+    .dtex-hero__btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; min-height: 50px; padding: 0 22px 0 24px; border-radius: 999px; background: var(--dtex-btn); color: var(--dtex-btn-text); font-size: 16px; text-decoration: none; }
+    .dtex-hero__btn svg { width: 18px; height: 18px; }
+    .dtex-hero__btn:hover { background: #fff; }
+    .dtex-hero__note { margin: 16px 0 0; color: rgba(247,244,238,.7); font-size: 13px; letter-spacing: 0.04em; }
+    .dtex-hero__tabs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 8px; margin: 28px -12px 0; }
+    .dtex-hero__tab { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 14px 12px 18px; border: 0; border-top: 1px solid rgba(247,244,238,.18); background: transparent; color: rgba(247,244,238,.62); text-align: left; cursor: pointer; }
+    .dtex-hero__tab.is-active { color: #f7f4ee; }
+    .dtex-hero__tab-index { font-size: 11px; letter-spacing: 0.14em; }
+    .dtex-hero__tab-label { font-size: 15px; letter-spacing: 0.04em; }
+    .dtex-hero__bar { display: block; width: 100%; height: 2px; margin-top: 8px; background: rgba(247,244,238,.2); overflow: hidden; }
+    .dtex-hero__bar-fill { display: block; width: 0; height: 100%; background: var(--dtex-accent); }
+    .dtex-hero__tab.is-active .dtex-hero__bar-fill { animation: dtex-hero-fill var(--dtex-interval) linear forwards; }
+    .dtex-hero.is-paused .dtex-hero__bar-fill { animation-play-state: paused; }
+    @keyframes dtex-hero-fill { from { width: 0; } to { width: 100%; } }
+    .dtex-hero__media { position: relative; min-width: 0; background: #d9d3c8; overflow: hidden; }
+    .dtex-hero__photo { position: absolute; inset: 0; opacity: 0; transition: opacity .6s ease; }
+    .dtex-hero__photo.is-active { opacity: 1; z-index: 1; }
+    .dtex-hero__img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); }
+    .dtex-hero__photo.is-active .dtex-hero__img { animation: dtex-hero-ken 8s ease forwards; }
+    @keyframes dtex-hero-ken { from { transform: scale(1.06); } to { transform: scale(1); } }
+    .dtex-hero__arrows { position: absolute; z-index: 2; right: 22px; bottom: 22px; display: flex; gap: 8px; }
+    .dtex-hero__arrow { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border: 0; border-radius: 50%; background: rgba(255,255,255,.92); color: #172117; box-shadow: 0 8px 24px rgba(23,33,23,.16); cursor: pointer; }
+    .dtex-hero__arrow svg { width: 18px; height: 18px; }
+    .trust { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 22px 28px 36px; background: #fff; }
+    .trust div { padding: 16px; background: #f5f7f5; border-radius: 8px; }
+    .trust strong { display: block; margin-bottom: 4px; }
+    .trust span { color: #3d4a3d; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="artboard" id="artboard">
+  <div class="preview-flag">Local preview only — homepage hero is not published yet. Click the tabs or arrows.</div>
+  <div class="announce">Welcome to our store</div>
+  <header class="header">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#172117" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    <img src="https://dtex.com.bd/cdn/shop/files/dtex_bd_logo.png" alt="DTex BD">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#172117" stroke-width="1.6"><path d="M6 7h15l-1.6 8.2a2 2 0 0 1-2 1.6H9.2a2 2 0 0 1-2-1.6L5 4H3"/><circle cx="9" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg>
+  </header>
+
+  <dtex-hero class="dtex-hero" data-autoplay="true" role="region" aria-roledescription="carousel" aria-label="Bedsheet, curtain and comforter">
+    <div class="dtex-hero__frame">
+      <div class="dtex-hero__panel">
+        <div class="dtex-hero__stories">
+          <div class="dtex-hero__story is-active" data-hero-slide="0">
+            <p class="dtex-hero__kicker"><span>01</span> Bedsheet</p>
+            <h2 class="dtex-hero__heading">নরম কটন বেডশিট</h2>
+            <p class="dtex-hero__text">এক্সপোর্ট কোয়ালিটি ফ্লোরাল বেডশিট — নরম, রঙিন, প্রতিদিনের ঘুমের জন্য।</p>
+            <a class="dtex-hero__btn" href="https://dtex.com.bd/collections/export-quality-bedsheets">Shop bedsheets
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <p class="dtex-hero__note">Home delivery in 2–3 days</p>
+          </div>
+          <div class="dtex-hero__story" data-hero-slide="1" hidden>
+            <p class="dtex-hero__kicker"><span>02</span> Curtain</p>
+            <h2 class="dtex-hero__heading">ঘর জুড়ে ওয়াফেল কার্টেন</h2>
+            <p class="dtex-hero__text">ফ্লোরাল প্রিন্ট আর প্রিমিয়াম ওয়াফেল টেক্সচার — জানালা হবে ঘরের সেরা কোণা।</p>
+            <a class="dtex-hero__btn" href="https://dtex.com.bd/collections/waffle-curtain">Shop curtains
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <p class="dtex-hero__note">7 ft height · waffle cotton</p>
+          </div>
+          <div class="dtex-hero__story" data-hero-slide="2" hidden>
+            <p class="dtex-hero__kicker"><span>03</span> Comforter</p>
+            <h2 class="dtex-hero__heading">হালকা ফুলের কম্ফোর্টার</h2>
+            <p class="dtex-hero__text">নরম কুইল্টেড কম্ফোর্টার, উজ্জ্বল প্রিন্ট — শীতের রাত আর গিফট, দুটোতেই মানানসই।</p>
+            <a class="dtex-hero__btn" href="https://dtex.com.bd/collections/premium-comforter">Shop comforters
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <p class="dtex-hero__note">3 day easy return</p>
+          </div>
+        </div>
+        <div class="dtex-hero__tabs" role="tablist" aria-label="Choose a category">
+          <button class="dtex-hero__tab is-active" type="button" role="tab" data-hero-tab="0" aria-selected="true"><span class="dtex-hero__tab-index">01</span><span class="dtex-hero__tab-label">Bedsheet</span><span class="dtex-hero__bar"><span class="dtex-hero__bar-fill"></span></span></button>
+          <button class="dtex-hero__tab" type="button" role="tab" data-hero-tab="1" aria-selected="false"><span class="dtex-hero__tab-index">02</span><span class="dtex-hero__tab-label">Curtain</span><span class="dtex-hero__bar"><span class="dtex-hero__bar-fill"></span></span></button>
+          <button class="dtex-hero__tab" type="button" role="tab" data-hero-tab="2" aria-selected="false"><span class="dtex-hero__tab-index">03</span><span class="dtex-hero__tab-label">Comforter</span><span class="dtex-hero__bar"><span class="dtex-hero__bar-fill"></span></span></button>
+        </div>
+      </div>
+      <div class="dtex-hero__media">
+        <div class="dtex-hero__photo is-active" data-hero-photo="0"><img class="dtex-hero__img" alt="Floral bedsheet" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-11-03at21.27.13.jpg?v=1793774832"></div>
+        <div class="dtex-hero__photo" data-hero-photo="1"><img class="dtex-hero__img" alt="Waffle curtain" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-11-02at01.28.37.jpg?v=1793702376"></div>
+        <div class="dtex-hero__photo" data-hero-photo="2"><img class="dtex-hero__img" alt="Floral comforter" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-10-29at01.50.54.jpg?v=1793629617"></div>
+        <div class="dtex-hero__arrows">
+          <button class="dtex-hero__arrow" type="button" data-hero-prev aria-label="Previous slide"><svg viewBox="0 0 20 20"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="dtex-hero__arrow" type="button" data-hero-next aria-label="Next slide"><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </dtex-hero>
+
+  <section class="trust">
+    <div><strong>Fast delivery</strong><span>Home delivery in 2–3 days</span></div>
+    <div><strong>3 days return policy</strong><span>No questions asked</span></div>
+    <div><strong>Customer support</strong><span>Call us on +880 1791-859990</span></div>
+  </section>
+  </div>
+
+  <script>
+    function fitArtboard() {
+      const board = document.getElementById('artboard');
+      const scale = Math.min(1, window.innerWidth / 1280);
+      board.style.transform = 'scale(' + scale + ')';
+      document.body.style.height = Math.ceil(board.offsetHeight * scale) + 'px';
+    }
+    addEventListener('resize', fitArtboard);
+    fitArtboard();
+  </script>
+  <script>
+    class DtexHero extends HTMLElement {
+      connectedCallback() {
+        this.stories = [...this.querySelectorAll('[data-hero-slide]')];
+        this.photos = [...this.querySelectorAll('[data-hero-photo]')];
+        this.tabs = [...this.querySelectorAll('[data-hero-tab]')];
+        this.index = 0;
+        this.paused = false;
+        this.querySelector('[data-hero-prev]').addEventListener('click', () => this.show(this.index - 1));
+        this.querySelector('[data-hero-next]').addEventListener('click', () => this.show(this.index + 1));
+        this.tabs.forEach((tab, index) => tab.addEventListener('click', () => this.show(index)));
+        this.addEventListener('animationend', (event) => {
+          if (event.animationName !== 'dtex-hero-fill' || this.paused || this.ignoreEnd) return;
+          const tab = event.target.closest('[data-hero-tab]');
+          if (!tab || Number(tab.dataset.heroTab) !== this.index) return;
+          this.show(this.index + 1);
+        });
+        this.addEventListener('mouseenter', () => this.setPaused(true));
+        this.addEventListener('mouseleave', () => this.setPaused(false));
+        this.restartBar();
+      }
+      setPaused(paused) { this.paused = paused; this.classList.toggle('is-paused', paused); }
+      show(nextIndex) {
+        this.ignoreEnd = true;
+        const total = this.stories.length;
+        this.index = (nextIndex + total) % total;
+        this.stories.forEach((story, index) => {
+          const active = index === this.index;
+          story.classList.toggle('is-active', active);
+          story.toggleAttribute('hidden', !active);
+        });
+        this.photos.forEach((photo, index) => photo.classList.toggle('is-active', index === this.index));
+        this.tabs.forEach((tab, index) => {
+          const active = index === this.index;
+          tab.classList.toggle('is-active', active);
+          tab.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        this.restartBar();
+        requestAnimationFrame(() => { this.ignoreEnd = false; });
+      }
+      restartBar() {
+        const fill = this.tabs[this.index].querySelector('.dtex-hero__bar-fill');
+        fill.style.animation = 'none';
+        void fill.offsetWidth;
+        fill.style.animation = '';
+      }
+    }
+    customElements.define('dtex-hero', DtexHero);
+  </script>
+</body>
+</html>
