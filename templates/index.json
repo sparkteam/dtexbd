@@ -133,30 +133,23 @@
     "shop_by_category_mush_JmnNMc": {
       "type": "shop-by-category-mush",
       "blocks": {
-        "category_jymtKj": {
-          "type": "category",
-          "settings": {
-            "title": "Towel",
-            "link": "shopify://collections/towel"
-          }
-        },
-        "category_ztKeTj": {
+        "category_bedsheet": {
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/Folded_Botanical_Bedding_Set.png",
-            "title": "Bed Sheet",
+            "title": "Bedsheet",
             "link": "shopify://collections/bedsheet"
           }
         },
-        "category_ahdLVD": {
+        "category_comforter": {
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/Comforters.png",
-            "title": "Comforters",
-            "link": "shopify://collections/comfuter"
+            "title": "Comforter",
+            "link": "shopify://collections/premium-comforter"
           }
         },
-        "category_dQx3HT": {
+        "category_curtain": {
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/WhatsApp_Image_2026-10-29_at_02.52.32_2.jpg",
@@ -164,39 +157,28 @@
             "link": "shopify://collections/waffle-curtain"
           }
         },
-        "category_pfpTpj": {
+        "category_towel": {
+          "type": "category",
+          "settings": {
+            "title": "Towel",
+            "link": "shopify://collections/towel"
+          }
+        },
+        "category_3d_bedsheet": {
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/WhatsAppImage2026-09-18at06.06.56.jpg",
-            "title": "3D Digital Bed Sheet",
+            "title": "3D Digital Bedsheet",
             "link": "shopify://collections/3d-digital-bed-sheet"
-          }
-        },
-        "category_aPrmKQ": {
-          "type": "category",
-          "settings": {
-            "image": "shopify://shop_images/Folded_Botanical_Bedding_Set.png",
-            "title": "Bed Sheet",
-            "link": "shopify://collections/bedsheet"
-          }
-        },
-        "category_KCiDzC": {
-          "type": "category",
-          "settings": {
-            "image": "shopify://shop_images/Folded_Botanical_Bedding_Set.png",
-            "title": "Bed Sheet",
-            "link": "shopify://collections/bedsheet"
           }
         }
       },
       "block_order": [
-        "category_jymtKj",
-        "category_ztKeTj",
-        "category_ahdLVD",
-        "category_dQx3HT",
-        "category_pfpTpj",
-        "category_aPrmKQ",
-        "category_KCiDzC"
+        "category_bedsheet",
+        "category_comforter",
+        "category_curtain",
+        "category_towel",
+        "category_3d_bedsheet"
       ],
       "name": "Shop By Category Mush",
       "settings": {
@@ -208,8 +190,8 @@
         "heading_letter_spacing": 1,
         "heading_margin": 36,
         "heading_color": "#111111",
-        "columns_desktop": 6,
-        "columns_tablet": 5,
+        "columns_desktop": 5,
+        "columns_tablet": 3,
         "columns_mobile": 3,
         "item_gap": 12,
         "container_width": 1400,
