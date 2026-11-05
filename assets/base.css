@@ -2921,6 +2921,116 @@ details[open] > .header__menu-item .icon-caret {
   position: static;
 }
 
+@media screen and (min-width: 990px) {
+  .header__inline-menu > .list-menu--inline {
+    align-items: center;
+    column-gap: 0.2rem;
+    row-gap: 0.2rem;
+  }
+
+  .header__inline-menu > .list-menu--inline > li > .header__menu-item,
+  .header__inline-menu > .list-menu--inline > li > header-menu > details > .header__menu-item {
+    border-radius: 999px;
+    color: rgba(var(--color-foreground), 0.8);
+    font-size: 1.5rem;
+    letter-spacing: 0.04em;
+    padding: 0.9rem 1.4rem;
+    transition: background-color var(--duration-short) ease, color var(--duration-short) ease;
+  }
+
+  .header__inline-menu > .list-menu--inline > li > header-menu > details > summary.list-menu__item {
+    padding-right: 3rem;
+  }
+
+  .header__inline-menu > .list-menu--inline > li > header-menu > details > summary .icon-caret {
+    height: 0.55rem;
+    right: 1.25rem;
+    top: calc(50% - 0.25rem);
+    transition: transform var(--duration-short) ease;
+  }
+
+  .header__inline-menu > .list-menu--inline > li > .header__menu-item span,
+  .header__inline-menu > .list-menu--inline > li > header-menu > details > .header__menu-item span {
+    text-decoration: none;
+  }
+
+  .header__inline-menu > .list-menu--inline > li > .header__menu-item:hover,
+  .header__inline-menu > .list-menu--inline > li > header-menu > details > .header__menu-item:hover,
+  .header__inline-menu > .list-menu--inline > li > header-menu > details[open] > .header__menu-item,
+  .header__inline-menu > .list-menu--inline > li > .header__menu-item:has(.header__active-menu-item),
+  .header__inline-menu > .list-menu--inline > li > header-menu > details > .header__menu-item:has(.header__active-menu-item),
+  .header__inline-menu > .list-menu--inline > li > .header__menu-item[aria-current='page'] {
+    background-color: rgba(var(--color-foreground), 0.06);
+    color: rgb(var(--color-foreground));
+    text-decoration: none;
+  }
+
+  .header__inline-menu > .list-menu--inline > li > header-menu > details[open] > .header__menu-item,
+  .header__inline-menu > .list-menu--inline > li > header-menu > details[open]:hover > .header__menu-item,
+  .header__inline-menu > .list-menu--inline > li > .header__menu-item:hover span,
+  .header__inline-menu > .list-menu--inline > li > header-menu > details > .header__menu-item:hover span,
+  .header__inline-menu .header__active-menu-item,
+  .header__inline-menu .header__menu-item:hover .header__active-menu-item {
+    text-decoration: none;
+  }
+
+  .header__inline-menu .header__active-menu-item {
+    color: rgb(var(--color-foreground));
+  }
+}
+
+.header__submenu.list-menu--disclosure {
+  margin-top: 0.8rem;
+  min-width: 22rem;
+  padding: 0.6rem;
+  width: max(22rem, 100%);
+}
+
+.header__submenu.global-settings-popup {
+  box-shadow: var(--popup-shadow-horizontal-offset) var(--popup-shadow-vertical-offset) var(--popup-shadow-blur-radius)
+      rgba(var(--color-shadow), var(--popup-shadow-opacity)),
+    0 1.2rem 3.2rem rgba(var(--color-shadow), 0.14);
+}
+
+.header__submenu .header__submenu {
+  background-color: transparent;
+  border-left: 0.15rem solid rgba(var(--color-foreground), 0.16);
+  border-radius: 0;
+  margin: 0.2rem 0.4rem 0.4rem 1.2rem;
+  padding: 0.2rem 0 0.2rem 0.4rem;
+}
+
+.header__submenu .header__menu-item {
+  border-radius: 0.8rem;
+  gap: 0.8rem;
+  justify-content: space-between;
+  padding: 0.85rem 1.1rem;
+  transition: background-color var(--duration-short) ease, color var(--duration-short) ease;
+}
+
+.header__submenu .header__menu-item:hover,
+.header__submenu .header__menu-item:focus-visible,
+.header__submenu .list-menu__item--active,
+.header__submenu details[open] > .header__menu-item {
+  background-color: rgba(var(--color-foreground), 0.06);
+  color: rgb(var(--color-foreground));
+  text-decoration: none;
+}
+
+.header__submenu details[open] > .header__menu-item,
+.header__submenu details[open]:hover > .header__menu-item {
+  text-decoration: none;
+}
+
+.header__submenu .header__menu-item:hover,
+.header__submenu .header__menu-item:hover span,
+.header__submenu .list-menu__item--active,
+.header__submenu .list-menu__item--active:hover {
+  text-decoration: none;
+  text-decoration-line: none;
+  text-decoration-thickness: unset;
+}
+
 header-menu > details,
 details-disclosure > details {
   position: relative;
