@@ -1,43 +1,46 @@
-<div class="fp-card {% unless product.available %}fp-sold-out{% endunless %}">
-  <a href="{{ product.url }}" class="fp-image-wrap">
-    {% if product.compare_at_price > product.price %}
-      <span class="fp-sale-badge">Sale</span>
+{%- liquid
+  assign card_label = label
+  if card_label == blank
+    assign card_label = product.type
+  endif
+  assign on_sale = false
+  if product.compare_at_price > product.price
+    assign on_sale = true
+    assign save_amount = product.compare_at_price | minus: product.price
+    assign save_percent = save_amount | times: 100.0 | divided_by: product.compare_at_price | round
+  endif
+-%}
+<a class="fp-card" href="{{ product.url }}">
+  <span class="fp-image-wrap">
+    {% if on_sale %}
+      <span class="fp-sale-badge">-{{ save_percent }}%</span>
     {% endif %}
+    {% unless product.available %}
+      <span class="fp-sold-badge">{{ section.settings.soldout_text | default: 'Sold out' }}</span>
+    {% endunless %}
 
     {% if product.featured_media %}
-      {{ product.featured_media | image_url: width: 700 | image_tag:
+      {{ product.featured_media | image_url: width: 900 | image_tag:
         loading: 'lazy',
-        widths: '300,400,500,600,700',
+        widths: '300,450,600,750,900',
         sizes: '(max-width: 749px) 50vw, 25vw',
         alt: product.featured_media.alt | escape
       }}
     {% else %}
-      {{ 'product-1' | placeholder_svg_tag }}
+      {{ 'product-1' | placeholder_svg_tag: 'fp-placeholder' }}
     {% endif %}
-  </a>
+  </span>
 
-  <div class="fp-info">
-    <a href="{{ product.url }}" class="fp-title">{{ product.title }}</a>
-
-    <div class="fp-price-wrap">
-      {% if product.compare_at_price > product.price %}
+  <span class="fp-info">
+    {% if card_label != blank %}
+      <span class="fp-label">{{ card_label }}</span>
+    {% endif %}
+    <span class="fp-title">{{ product.title }}</span>
+    <span class="fp-price-wrap">
+      <span class="fp-price">{{ product.price | money }}</span>
+      {% if on_sale %}
         <span class="fp-compare">{{ product.compare_at_price | money }}</span>
       {% endif %}
-      <span class="fp-price">{{ product.price | money }}</span>
-    </div>
-
-    {% if product.available %}
-      <button 
-        type="button" 
-        class="fp-btn fp-add-to-cart" 
-        data-variant-id="{{ product.selected_or_first_available_variant.id }}"
-      >
-        {{ section.settings.button_text }}
-      </button>
-    {% else %}
-      <button type="button" class="fp-btn" disabled>
-        {{ section.settings.soldout_text }}
-      </button>
-    {% endif %}
-  </div>
-</div>
+    </span>
+  </span>
+</a>

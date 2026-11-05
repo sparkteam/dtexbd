@@ -244,59 +244,83 @@
     "featured_products_mush_QDW7xV": {
       "type": "featured-products-mush",
       "blocks": {
-        "product_UR6eN8": {
+        "product_export": {
           "type": "product",
           "settings": {
-            "product": "3d-bed-sheet"
+            "product": "export-quality-bedsheet-8",
+            "label": "Bedsheet"
           }
         },
-        "product_PrnNT6": {
+        "product_parkel": {
           "type": "product",
           "settings": {
-            "product": "3d-digital-bedsheet"
+            "product": "parkel-bedsheet-18",
+            "label": "Bedsheet"
           }
         },
-        "product_pFJWbz": {
+        "product_twill_sheet": {
           "type": "product",
           "settings": {
-            "product": "3d-digital-bedsheet-1"
+            "product": "twill-bedsheet-5",
+            "label": "Bedsheet"
           }
         },
-        "product_wrYKgA": {
+        "product_3d_sheet": {
           "type": "product",
           "settings": {
-            "product": "3d-digital-bedsheet-1"
+            "product": "3d-digital-bedsheet-3",
+            "label": "3D Bedsheet"
           }
         },
-        "product_hBpY3t": {
+        "product_curtain": {
           "type": "product",
           "settings": {
-            "product": "3d-digital-bedsheet-1"
+            "product": "combined-waffle-curtain-2",
+            "label": "Curtain"
           }
         },
-        "product_qgdhtj": {
+        "product_regular": {
           "type": "product",
           "settings": {
-            "product": "3d-digital-bedsheet-1"
+            "product": "regular-comforter-1",
+            "label": "Comforter"
+          }
+        },
+        "product_twill_comf": {
+          "type": "product",
+          "settings": {
+            "product": "twill-comforter-2",
+            "label": "Comforter"
+          }
+        },
+        "product_3d_comf": {
+          "type": "product",
+          "settings": {
+            "product": "3d-digital-comforter-4",
+            "label": "3D Comforter"
           }
         }
       },
       "block_order": [
-        "product_UR6eN8",
-        "product_PrnNT6",
-        "product_pFJWbz",
-        "product_wrYKgA",
-        "product_hBpY3t",
-        "product_qgdhtj"
+        "product_export",
+        "product_parkel",
+        "product_twill_sheet",
+        "product_3d_sheet",
+        "product_curtain",
+        "product_regular",
+        "product_twill_comf",
+        "product_3d_comf"
       ],
       "name": "Featured Products Mush",
       "settings": {
         "heading": "Featured products",
+        "view_all_label": "View all products",
+        "view_all_link": "shopify://collections/all",
         "collection": "",
-        "products_to_show": 4,
+        "products_to_show": 8,
         "button_text": "Add to cart",
         "soldout_text": "Sold out",
-        "columns_desktop": 3,
+        "columns_desktop": 4,
         "columns_tablet": 3,
         "columns_mobile": 2,
         "grid_gap": 20,
@@ -344,8 +368,8 @@
         "ai_gen_block_7394186_WKApCP": {
           "type": "ai_gen_block_7394186",
           "settings": {
-            "button_text": "See more bedsheet designs",
-            "button_link": "",
+            "button_text": "Check our all products",
+            "button_link": "shopify://collections/all",
             "open_new_tab": false,
             "note": "",
             "alignment": "center",
@@ -540,19 +564,22 @@
         "product_qmxyBh": {
           "type": "product",
           "settings": {
-            "product": "3d-bed-sheet"
+            "product": "solid-cotton-bedsheet-set-with-2-pillow-covers-40-40-count-8-5-x-7-5-feet",
+            "label": "Bedsheet"
           }
         },
         "product_WgpYnM": {
           "type": "product",
           "settings": {
-            "product": "3d-digital-bedsheet"
+            "product": "solid-comforter-1",
+            "label": "Comforter"
           }
         },
         "product_z6EqfX": {
           "type": "product",
           "settings": {
-            "product": "3d-digital-bedsheet-1"
+            "product": "perkel-comforter",
+            "label": "Comforter"
           }
         }
       },
@@ -564,6 +591,8 @@
       "name": "Featured Products Mush",
       "settings": {
         "heading": "Featured products",
+        "view_all_label": "View all products",
+        "view_all_link": "shopify://collections/all",
         "collection": "",
         "products_to_show": 4,
         "button_text": "Add to cart",
