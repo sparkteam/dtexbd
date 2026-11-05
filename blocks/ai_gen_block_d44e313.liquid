@@ -1,0 +1,229 @@
+{% doc %}
+  @prompt
+    Create a modern, premium, fully responsive Shopify hero slider section for an ecommerce homepage. It should look and feel like a high-converting hero banner used by popular modern Shopify themes such as Dawn, Motion, Impulse, Prestige, or Fashion-style themes.
+    
+    Build it as an Online Store 2.0 section named “Hero Slider” with reusable “Slide” blocks, so I can add, remove, reorder, and customize unlimited slides from the Shopify Theme Editor without touching code.
+    
+    ### Overall design requirements
+    - Full-width hero slider placed at the top of the homepage.
+    - Clean, modern, minimal ecommerce aesthetic.
+    - Fully responsive for desktop, tablet, and mobile.
+    - Use high-quality typography, balanced spacing, and a professional call-to-action layout.
+    - Support both light and dark text overlays.
+    - Include a subtle dark gradient or color overlay option so text remains readable over images.
+    - Support rounded corners, full-bleed edges, and adjustable section padding.
+    - Ensure excellent Core Web Vitals: lazy-load non-active slides, preload only the first slide image, use responsive image sizes, and avoid layout shift.
+    - Make it accessible: keyboard navigation, ARIA labels, focus states, reduced-motion support, and readable color contrast.
+    
+    ### Slider functionality
+    Include the following slider controls and options:
+    - Unlimited slides using Slide blocks.
+    - Autoplay with an adjustable speed setting in seconds.
+    - Option to enable or disable autoplay.
+    - Pause autoplay on hover.
+    - Pause autoplay when the slider is not visible in the viewport.
+    - Infinite loop / continuous sliding.
+    - Swipe and drag support on mobile and desktop touch devices.
+    - Previous and next arrow buttons, with options to show, hide, or auto-hide them.
+    - Dot pagination, numbered pagination, or progress-bar pagination.
+    - Option to position navigation arrows and dots: bottom center, bottom left, bottom right, side center, or custom.
+    - Slide transition effects: fade, slide horizontal, slide vertical, zoom, parallax, or Ken Burns effect.
+    - Adjustable transition duration.
+    - Option to show a slide progress timer.
+    - Keyboard arrow navigation.
+    - Support for deep linking or anchor navigation to a specific slide, if practical.
+    
+    ### Per-slide content options
+    Each Slide block must allow the merchant to configure:
+    - Desktop image.
+    - Mobile-specific image, with an option to use the desktop image if no mobile image is uploaded.
+    - Optional background video or video URL, with poster image fallback.
+    - Image focal point / image position setting.
+    - Optional small eyebrow or top label, such as “New Arrival”, “Limited Edition”, or “Free Shipping”.
+    - Main heading.
+    - Subheading or short description.
+    - Primary button label and link.
+    - Secondary button label and link.
+    - Button styles: solid, outline, ghost, pill, or underline link.
+    - Button link type: product, collection, page, blog post, or custom URL.
+    - Text alignment: left, center, or right.
+    - Text vertical position: top, middle, or bottom.
+    - Text horizontal position: left, center, or right.
+    - Text container width: narrow, medium, wide, or full width.
+    - Overlay opacity and overlay color.
+    - Text color: light or dark.
+    - Optional badge, such as “Sale”, “Best Seller”, “New”, or custom text.
+    - Optional countdown timer with an end date, for limited-time offers.
+    - Optional product reference.
+    
+    ### Dynamic product price option
+    Add a powerful dynamic product feature for each slide:
+    - Allow the merchant to select a Shopify product directly from the Slide block.
+    - When a product is selected, automatically display:
+      - Product title, optionally.
+      - Product featured image, optionally.
+      - Product price.
+      - Compare-at price, if available.
+      - Discount percentage or saved amount, if a compare-at price exists.
+      - “Sold out” or “Available” status, optionally.
+      - Product rating or review count, if available from the theme’s product data.
+    - Display the price dynamically using the store’s active currency and Shopify money formatting.
+    - Show the price with proper sale styling: current price, original compare-at price struck through, and a discount badge.
+    - Allow the merchant to choose which product details appear: title only, price only, image only, title + price, or all available details.
+    - Allow the merchant to hide the product information completely for normal image-only slides.
+    - Make the entire slide or a dedicated “Shop Now” button link to the selected product.
+    
+    ### Theme Editor settings
+    Provide clear, organized settings in the Shopify Theme Editor:
+    - Section heading for internal reference.
+    - Slider height: small, medium, large, full screen, or custom height.
+    - Separate mobile height setting.
+    - Autoplay speed.
+    - Transition effect and duration.
+    - Show/hide arrows.
+    - Show/hide dots or progress bar.
+    - Navigation style and position.
+    - Overlay default color and opacity.
+    - Default text color.
+    - Button border radius.
+    - Section background color.
+    - Section top and bottom padding.
+    - Option to enable/disable slider on mobile.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+{% style %}
+  .ai-hero-{{ ai_gen_id }} { display:block; width:100%; position:relative; overflow:hidden; background:{{ block.settings.background }}; border-radius:{{ block.settings.radius }}px; }
+  .ai-hero-{{ ai_gen_id }}__track { position:relative; height:{{ block.settings.height }}px; }
+  .ai-hero-{{ ai_gen_id }}__slide { position:absolute; inset:0; opacity:0; visibility:hidden; transition:opacity {{ block.settings.duration }}ms ease; overflow:hidden; }
+  .ai-hero-{{ ai_gen_id }}__slide.is-active { opacity:1; visibility:visible; z-index:1; }
+  .ai-hero-{{ ai_gen_id }}__media,.ai-hero-{{ ai_gen_id }}__media img,.ai-hero-{{ ai_gen_id }}__media video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .ai-hero-{{ ai_gen_id }}__media img { object-position:var(--focal); }
+  .ai-hero-{{ ai_gen_id }}__placeholder { position:absolute; inset:0; background:#e8e8e8; }
+  .ai-hero-{{ ai_gen_id }}__placeholder svg { width:100%; height:100%; object-fit:cover; }
+  .ai-hero-{{ ai_gen_id }}__shade { position:absolute; inset:0; background:linear-gradient(90deg, {{ block.settings.overlay_color | color_modify: 'alpha', block.settings.overlay_opacity | divided_by: 100.0 }} 0%, transparent 100%); }
+  .ai-hero-{{ ai_gen_id }}__content { position:absolute; inset:0; z-index:2; display:flex; align-items:center; padding:clamp(24px,6vw,88px); color:var(--copy-color); }
+  .ai-hero-{{ ai_gen_id }}__copy { width:min(100%,560px); text-align:var(--align); }
+  .ai-hero-{{ ai_gen_id }}__copy--center { margin-inline:auto; }
+  .ai-hero-{{ ai_gen_id }}__copy--right { margin-left:auto; }
+  .ai-hero-{{ ai_gen_id }}__eyebrow { margin:0 0 14px; font-size:.85rem; letter-spacing:.12em; text-transform:uppercase; }
+  .ai-hero-{{ ai_gen_id }}__heading { margin:0 0 16px; font-size:clamp(2.2rem,5vw,5rem); line-height:1.03; }
+  .ai-hero-{{ ai_gen_id }}__text { font-size:1.05rem; line-height:1.6; }
+  .ai-hero-{{ ai_gen_id }}__actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:26px; }
+  .ai-hero-{{ ai_gen_id }}__button { min-height:48px; display:inline-flex; align-items:center; justify-content:center; padding:12px 24px; border:1px solid currentColor; border-radius:{{ block.settings.button_radius }}px; text-decoration:none; font-weight:600; color:inherit; }
+  .ai-hero-{{ ai_gen_id }}__button--primary { background:{{ block.settings.button_color }}; color:{{ block.settings.button_text }}; border-color:{{ block.settings.button_color }}; }
+  .ai-hero-{{ ai_gen_id }}__product { margin-top:18px; display:flex; align-items:center; gap:12px; color:inherit; }
+  .ai-hero-{{ ai_gen_id }}__product img { width:58px; height:58px; object-fit:cover; border-radius:8px; }
+  .ai-hero-{{ ai_gen_id }}__price { font-weight:700; }
+  .ai-hero-{{ ai_gen_id }}__compare { opacity:.8; text-decoration:line-through; margin-left:8px; }
+  .ai-hero-{{ ai_gen_id }}__controls { position:absolute; z-index:3; inset:auto 24px 22px; display:flex; justify-content:space-between; align-items:center; pointer-events:none; }
+  .ai-hero-{{ ai_gen_id }}__arrows,.ai-hero-{{ ai_gen_id }}__pagination { display:flex; align-items:center; gap:10px; pointer-events:auto; }
+  .ai-hero-{{ ai_gen_id }}__arrow { width:44px; height:44px; border:1px solid rgba(255,255,255,.8); border-radius:50%; color:#fff; background:rgba(0,0,0,.35); cursor:pointer; font-size:20px; }
+  .ai-hero-{{ ai_gen_id }}__dot { width:10px; height:10px; padding:0; border:1px solid #fff; background:transparent; border-radius:50%; cursor:pointer; }
+  .ai-hero-{{ ai_gen_id }}__dot[aria-current="true"] { background:#fff; }
+  .ai-hero-{{ ai_gen_id }}__empty { position:absolute; z-index:2; bottom:20px; left:20px; padding:8px 12px; background:#fff; color:#222; }
+  .ai-hero-{{ ai_gen_id }} button:focus-visible,.ai-hero-{{ ai_gen_id }} a:focus-visible { outline:3px solid #f28c28; outline-offset:3px; }
+  @media(max-width:749px) { .ai-hero-{{ ai_gen_id }}__track { height:{{ block.settings.mobile_height }}px; } .ai-hero-{{ ai_gen_id }}__content { padding:24px; align-items:flex-end; padding-bottom:76px; } .ai-hero-{{ ai_gen_id }}__copy { text-align:{{ block.settings.mobile_align }}; } .ai-hero-{{ ai_gen_id }}__heading { font-size:clamp(2rem,10vw,3.2rem); } .ai-hero-{{ ai_gen_id }}__controls { inset:auto 16px 16px; } }
+  @media(prefers-reduced-motion:reduce) { .ai-hero-{{ ai_gen_id }}__slide { transition:none; } }
+{% endstyle %}
+<hero-slider-{{ ai_gen_id }} class="ai-hero-{{ ai_gen_id }}" data-autoplay="{{ block.settings.autoplay }}" data-speed="{{ block.settings.speed | times: 1000 }}" data-loop="{{ block.settings.loop }}" data-pause-hover="{{ block.settings.pause_hover }}" aria-roledescription="carousel" aria-label="{{ block.settings.accessible_label | escape }}" {{ block.shopify_attributes }}>
+  <div class="ai-hero-{{ ai_gen_id }}__track">
+    {% for i in (1..5) %}
+      {% liquid
+        assign enabled_key = 'slide_' | append: i | append: '_enabled'
+        assign image_key = 'slide_' | append: i | append: '_image'
+        assign mobile_key = 'slide_' | append: i | append: '_mobile_image'
+        assign eyebrow_key = 'slide_' | append: i | append: '_eyebrow'
+        assign heading_key = 'slide_' | append: i | append: '_heading'
+        assign text_key = 'slide_' | append: i | append: '_text'
+        assign link_key = 'slide_' | append: i | append: '_link'
+        assign label_key = 'slide_' | append: i | append: '_button'
+        assign product_key = 'slide_' | append: i | append: '_product'
+        assign enabled = block.settings[enabled_key]
+        assign image = block.settings[image_key]
+        assign mobile_image = block.settings[mobile_key]
+        assign product = block.settings[product_key]
+      %}
+      {% if enabled %}
+        <article class="ai-hero-{{ ai_gen_id }}__slide{% if forloop.first %} is-active{% endif %}" data-slide-index="{{ forloop.index0 }}" aria-roledescription="slide" aria-label="{{ forloop.index }}" aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}" style="--copy-color:{{ block.settings.text_color }};--align:{{ block.settings.text_align }}">
+          <div class="ai-hero-{{ ai_gen_id }}__media">
+            {% if image %}
+              <picture>
+                {% if mobile_image %}<source media="(max-width: 749px)" srcset="{{ mobile_image | image_url: width: 1200 }}">{% endif %}
+                <img src="{{ image | image_url: width: 2400 }}" srcset="{{ image | image_url: width: 750 }} 750w, {{ image | image_url: width: 1200 }} 1200w, {{ image | image_url: width: 1800 }} 1800w, {{ image | image_url: width: 2400 }} 2400w" sizes="100vw" alt="{{ image.alt | escape }}" width="{{ image.width }}" height="{{ image.height }}" style="--focal:{{ image.presentation.focal_point | default: '50% 50%' }}" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+              </picture>
+            {% else %}<div class="ai-hero-{{ ai_gen_id }}__placeholder">{{ 'hero-apparel-1' | placeholder_svg_tag }}</div>{% endif %}
+          </div>
+          <div class="ai-hero-{{ ai_gen_id }}__shade"></div>
+          <div class="ai-hero-{{ ai_gen_id }}__content">
+            <div class="ai-hero-{{ ai_gen_id }}__copy ai-hero-{{ ai_gen_id }}__copy--{{ block.settings.text_align }}">
+              {% if block.settings[eyebrow_key] != blank %}<p class="ai-hero-{{ ai_gen_id }}__eyebrow">{{ block.settings[eyebrow_key] | escape }}</p>{% endif %}
+              {% if block.settings[heading_key] != blank %}<h2 class="ai-hero-{{ ai_gen_id }}__heading">{{ block.settings[heading_key] | escape }}</h2>{% endif %}
+              {% if block.settings[text_key] != blank %}<div class="ai-hero-{{ ai_gen_id }}__text">{{ block.settings[text_key] | escape | newline_to_br }}</div>{% endif %}
+              <div class="ai-hero-{{ ai_gen_id }}__actions">
+                {% if block.settings[label_key] != blank and block.settings[link_key] != blank %}<a class="ai-hero-{{ ai_gen_id }}__button ai-hero-{{ ai_gen_id }}__button--primary" href="{{ block.settings[link_key] }}">{{ block.settings[label_key] | escape }}</a>{% endif %}
+                {% if product != blank %}<a class="ai-hero-{{ ai_gen_id }}__button" href="{{ product.url }}">Shop {{ product.title | escape }}</a>{% endif %}
+              </div>
+              {% if product != blank and block.settings.show_product %}<a class="ai-hero-{{ ai_gen_id }}__product" href="{{ product.url }}">{% if product.featured_image %}<img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ product.featured_image.alt | escape }}" width="58" height="58" loading="lazy">{% endif %}<span>{{ product.title | escape }}<br><span class="ai-hero-{{ ai_gen_id }}__price">{{ product.price | money }}</span>{% if product.compare_at_price > product.price %}<span class="ai-hero-{{ ai_gen_id }}__compare">{{ product.compare_at_price | money }}</span>{% endif %}</span></a>{% endif %}
+            </div>
+          </div>
+        </article>
+      {% endif %}
+    {% endfor %}
+    {% if block.settings.slide_1_image == blank and block.settings.slide_2_image == blank and block.settings.slide_3_image == blank and block.settings.slide_4_image == blank and block.settings.slide_5_image == blank %}<div class="ai-hero-{{ ai_gen_id }}__empty">Add slide images in the block settings to get started.</div>{% endif %}
+    <div class="ai-hero-{{ ai_gen_id }}__controls"><div class="ai-hero-{{ ai_gen_id }}__arrows"><button type="button" class="ai-hero-{{ ai_gen_id }}__arrow" data-prev aria-label="Previous slide">‹</button><button type="button" class="ai-hero-{{ ai_gen_id }}__arrow" data-next aria-label="Next slide">›</button></div><div class="ai-hero-{{ ai_gen_id }}__pagination" aria-label="Choose slide"></div></div>
+  </div>
+</hero-slider-{{ ai_gen_id }}>
+<script>
+(function(){
+ const tag='hero-slider-{{ ai_gen_id }}';
+ if(customElements.get(tag))return;
+ class HeroSlider extends HTMLElement{
+  connectedCallback(){this.slides=[...this.querySelectorAll('[data-slide-index]')];this.dots=this.querySelector('.ai-hero-{{ ai_gen_id }}__pagination');this.index=0;this.timer=null;if(!this.slides.length)return;this.slides.forEach((s,i)=>{const b=document.createElement('button');b.type='button';b.className='ai-hero-{{ ai_gen_id }}__dot';b.setAttribute('aria-label','Go to slide '+(i+1));b.addEventListener('click',()=>this.go(i));this.dots.appendChild(b)});this.querySelector('[data-prev]').addEventListener('click',()=>this.go(this.index-1));this.querySelector('[data-next]').addEventListener('click',()=>this.go(this.index+1));this.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();this.go(this.index+1)}if(e.key==='ArrowLeft'){e.preventDefault();this.go(this.index-1)}});this.addEventListener('mouseenter',()=>{if(this.dataset.pauseHover==='true')this.stop()});this.addEventListener('mouseleave',()=>this.start());this.addEventListener('touchstart',e=>{this.touchX=e.changedTouches[0].screenX},{passive:true});this.addEventListener('touchend',e=>{const d=e.changedTouches[0].screenX-this.touchX;if(Math.abs(d)>45)this.go(this.index+(d<0?1:-1))},{passive:true});this.observer=new IntersectionObserver(entries=>{if(entries[0].isIntersecting)this.start();else this.stop()});this.observer.observe(this);this.update();}
+  go(n){if(n<0)n=this.dataset.loop==='true'?this.slides.length-1:0;if(n>=this.slides.length)n=this.dataset.loop==='true'?0:this.slides.length-1;this.index=n;this.update();this.start()}
+  update(){this.slides.forEach((s,i)=>{s.classList.toggle('is-active',i===this.index);s.setAttribute('aria-hidden',i===this.index?'false':'true')});[...this.dots.children].forEach((d,i)=>d.setAttribute('aria-current',i===this.index?'true':'false'))}
+  start(){this.stop();if(this.dataset.autoplay==='true'&&this.slides.length>1&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches)this.timer=setInterval(()=>this.go(this.index+1),Number(this.dataset.speed)||5000)}
+  stop(){if(this.timer)clearInterval(this.timer);this.timer=null}
+  disconnectedCallback(){this.stop();if(this.observer)this.observer.disconnect()}
+ }
+ customElements.define(tag,HeroSlider);
+})();
+</script>
+{% schema %}
+{
+ "name":"Hero slider",
+ "settings":[
+  {"type":"header","content":"Slider settings"},
+  {"type":"text","id":"accessible_label","label":"Accessible label","default":"Featured promotions"},
+  {"type":"range","id":"desktop_width_percent","label":"Desktop width","min":50,"max":100,"step":5,"unit":"%","default":100},
+  {"type":"range","id":"height","label":"Desktop height","min":300,"max":900,"step":50,"unit":"px","default":650},
+  {"type":"range","id":"mobile_height","label":"Mobile height","min":300,"max":700,"step":50,"unit":"px","default":500},
+  {"type":"checkbox","id":"autoplay","label":"Enable autoplay","default":false},
+  {"type":"range","id":"speed","label":"Autoplay speed","min":3,"max":12,"step":1,"unit":"s","default":5},
+  {"type":"checkbox","id":"pause_hover","label":"Pause on hover","default":true},
+  {"type":"checkbox","id":"loop","label":"Infinite loop","default":true},
+  {"type":"range","id":"duration","label":"Fade duration","min":200,"max":1000,"step":100,"unit":"ms","default":500},
+  {"type":"header","content":"Appearance"},
+  {"type":"color","id":"background","label":"Background","default":"#f3f3f3"},
+  {"type":"color","id":"overlay_color","label":"Overlay","default":"#000000"},
+  {"type":"range","id":"overlay_opacity","label":"Overlay opacity","min":0,"max":80,"step":5,"unit":"%","default":35},
+  {"type":"color","id":"text_color","label":"Text color","default":"#ffffff"},
+  {"type":"color","id":"button_color","label":"Button background","default":"#0e4d22"},
+  {"type":"color","id":"button_text","label":"Button text","default":"#ffffff"},
+  {"type":"range","id":"button_radius","label":"Button corner radius","min":0,"max":40,"step":2,"unit":"px","default":6},
+  {"type":"range","id":"radius","label":"Section corner radius","min":0,"max":40,"step":2,"unit":"px","default":0},
+  {"type":"select","id":"text_align","label":"Text alignment","options":[{"value":"left","label":"Left"},{"value":"center","label":"Center"},{"value":"right","label":"Right"}],"default":"left"},
+  {"type":"select","id":"mobile_align","label":"Mobile text alignment","options":[{"value":"left","label":"Left"},{"value":"center","label":"Center"},{"value":"right","label":"Right"}],"default":"left"},
+  {"type":"header","content":"Slide 1"},
+  {"type":"checkbox","id":"slide_1_enabled","label":"Show slide 1","default":true},
+  {"type":"image_picker","id":"slide_1_image","label":"Desktop image"},{"type":"image_picker","id":"slide_1_mobile_image","label":"Mobile image"},
+  {"type":"text","id":"slide_1_eyebrow","label":"Eyebrow","default":"New collection"},{"type":"text","id":"slide_1_heading","label":"Heading","default":"Designed for everyday"},{"type":"textarea","id":"slide_1_text","label":"Description","default":"Discover pieces made to move with you."},{"type":"text","id":"slide_1_button","label":"Button label","default":"Shop now"},{"type":"url","id":"slide_1_link","label":"Button link"},{"type":"product","id":"slide_1_product","label":"Featured product"},{"type":"checkbox","id":"show_product","label":"Show product details","default":false},
+  {"type":"header","content":"Slide 2"},{"type":"checkbox","id":"slide_2_enabled","label":"Show slide 2","default":true},{"type":"image_picker","id":"slide_2_image","label":"Desktop image"},{"type":"image_picker","id":"slide_2_mobile_image","label":"Mobile image"},{"type":"text","id":"slide_2_eyebrow","label":"Eyebrow","default":"Made for you"},{"type":"text","id":"slide_2_heading","label":"Heading","default":"A fresh perspective"},{"type":"textarea","id":"slide_2_text","label":"Description","default":"Find your next everyday essential."},{"type":"text","id":"slide_2_button","label":"Button label","default":"Explore"},{"type":"url","id":"slide_2_link","label":"Button link"},{"type":"product","id":"slide_2_product","label":"Featured product"},
+  {"type":"header","content":"Slide 3"},{"type":"checkbox","id":"slide_3_enabled","label":"Show slide 3","default":false},{"type":"image_picker","id":"slide_3_image","label":"Desktop image"},{"type":"image_picker","id":"slide_3_mobile_image","label":"Mobile image"},{"type":"text","id":"slide_3_eyebrow","label":"Eyebrow","default":"Just arrived"},{"type":"text","id":"slide_3_heading","label":"Heading","default":"The latest edit"},{"type":"textarea","id":"slide_3_text","label":"Description","default":"Explore our newest arrivals."},{"type":"text","id":"slide_3_button","label":"Button label","default":"Shop the edit"},{"type":"url","id":"slide_3_link","label":"Button link"},{"type":"product","id":"slide_3_product","label":"Featured product"},
+  {"type":"header","content":"Slide 4"},{"type":"checkbox","id":"slide_4_enabled","label":"Show slide 4","default":false},{"type":"image_picker","id":"slide_4_image","label":"Desktop image"},{"type":"image_picker","id":"slide_4_mobile_image","label":"Mobile image"},{"type":"text","id":"slide_4_eyebrow","label":"Eyebrow","default":"Made to last"},{"type":"text","id":"slide_4_heading","label":"Heading","default":"Quality in every detail"},{"type":"textarea","id":"slide_4_text","label":"Description","default":"Thoughtful design meets everyday function."},{"type":"text","id":"slide_4_button","label":"Button label","default":"Discover more"},{"type":"url","id":"slide_4_link","label":"Button link"},{"type":"product","id":"slide_4_product","label":"Featured product"},
+  {"type":"header","content":"Slide 5"},{"type":"checkbox","id":"slide_5_enabled","label":"Show slide 5","default":false},{"type":"image_picker","id":"slide_5_image","label":"Desktop image"},{"type":"image_picker","id":"slide_5_mobile_image","label":"Mobile image"},{"type":"text","id":"slide_5_eyebrow","label":"Eyebrow","default":"Your next favorite"},{"type":"text","id":"slide_5_heading","label":"Heading","default":"Made for your moment"},{"type":"textarea","id":"slide_5_text","label":"Description","default":"Shop carefully selected essentials."},{"type":"text","id":"slide_5_button","label":"Button label","default":"Shop now"},{"type":"url","id":"slide_5_link","label":"Button link"},{"type":"product","id":"slide_5_product","label":"Featured product"}
+ ],
+ "presets":[{"name":"Hero slider"}],
+ "tag":null,
+ "class":"hero-slider-block"
+}
+{% endschema %}

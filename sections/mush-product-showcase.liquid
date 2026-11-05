@@ -1,0 +1,622 @@
+{% comment %}
+  Mush Product Showcase - Fully Dynamic & Error Free
+{% endcomment %}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --primary: {{ section.settings.primary_color }};
+    --secondary: {{ section.settings.secondary_color }};
+    --bg: {{ section.settings.background_color }};
+    --text: {{ section.settings.text_color }};
+    --muted: {{ section.settings.muted_text_color }};
+    --card-bg: {{ section.settings.card_background }};
+    --radius: {{ section.settings.border_radius }}px;
+  }
+
+  #shopify-section-{{ section.id }} .mush-showcase {
+    background: var(--bg);
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  #shopify-section-{{ section.id }} .mush-showcase__inner {
+    max-width: {{ section.settings.container_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  #shopify-section-{{ section.id }} .mush-showcase__card {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: {{ section.settings.gap }}px;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    overflow: hidden;
+    align-items: stretch;
+    {% if section.settings.enable_shadow %}
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    {% endif %}
+  }
+
+  /* ===== Image Position Control ===== */
+  #shopify-section-{{ section.id }} .mush-showcase__media {
+    order: 1;
+  }
+  #shopify-section-{{ section.id }} .mush-showcase__content {
+    order: 2;
+  }
+
+  {% if section.settings.image_position == 'right' %}
+    #shopify-section-{{ section.id }} .mush-showcase__media {
+      order: 2;
+    }
+    #shopify-section-{{ section.id }} .mush-showcase__content {
+      order: 1;
+    }
+  {% endif %}
+
+  /* Media */
+  #shopify-section-{{ section.id }} .mush-showcase__media {
+    position: relative;
+    min-height: {{ section.settings.image_min_height }}px;
+  }
+
+  #shopify-section-{{ section.id }} .mush-showcase__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Content */
+  #shopify-section-{{ section.id }} .mush-showcase__content {
+    padding: {{ section.settings.content_padding }}px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Blocks */
+  #shopify-section-{{ section.id }} .block-badge {
+    display: inline-block;
+    background: var(--secondary);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    padding: 6px 16px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .block-heading {
+    font-size: {{ section.settings.heading_size }}px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--text);
+    margin: 0 0 14px;
+  }
+
+  #shopify-section-{{ section.id }} .block-description {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+    margin-bottom: 22px;
+  }
+
+  #shopify-section-{{ section.id }} .block-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  #shopify-section-{{ section.id }} .block-tags .tag {
+    background: {{ section.settings.tag_bg }};
+    border: 1px solid {{ section.settings.tag_border }};
+    color: {{ section.settings.tag_text }};
+    font-size: 13px;
+    padding: 8px 15px;
+    border-radius: 50px;
+    font-weight: 500;
+  }
+
+  #shopify-section-{{ section.id }} .block-price {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 26px;
+  }
+
+  #shopify-section-{{ section.id }} .block-price .sale {
+    font-size: {{ section.settings.price_size }}px;
+    font-weight: 700;
+    color: var(--secondary);
+  }
+
+  #shopify-section-{{ section.id }} .block-price .compare {
+    font-size: 17px;
+    color: #9ca3af;
+    text-decoration: line-through;
+  }
+
+  #shopify-section-{{ section.id }} .block-button a {
+    display: inline-block;
+    background: var(--primary);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 15px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 14px rgba(13, 98, 57, 0.25);
+  }
+
+  #shopify-section-{{ section.id }} .block-button a:hover {
+    background: {{ section.settings.button_hover }};
+    transform: translateY(-2px);
+    color: #fff;
+  }
+
+  /* ===== Responsive ===== */
+  @media screen and (max-width: 989px) {
+    #shopify-section-{{ section.id }} .mush-showcase__card {
+      grid-template-columns: 1fr;
+    }
+
+    #shopify-section-{{ section.id }} .mush-showcase__media {
+      min-height: 340px;
+      {% if section.settings.image_position == 'right' %}
+        order: 2;
+      {% else %}
+        order: 1;
+      {% endif %}
+    }
+
+    #shopify-section-{{ section.id }} .mush-showcase__content {
+      {% if section.settings.image_position == 'right' %}
+        order: 1;
+      {% else %}
+        order: 2;
+      {% endif %}
+      padding: 28px 22px 36px;
+    }
+
+    #shopify-section-{{ section.id }} .block-heading {
+      font-size: 24px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .block-button a {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<div class="mush-showcase">
+  <div class="mush-showcase__inner">
+    <div class="mush-showcase__card">
+
+      <!-- Media -->
+      <div class="mush-showcase__media">
+        {% if section.settings.image != blank %}
+          <img
+            src="{{ section.settings.image | image_url: width: 1400 }}"
+            alt="{{ section.settings.image.alt | escape }}"
+            width="{{ section.settings.image.width }}"
+            height="{{ section.settings.image.height }}"
+            loading="lazy"
+          >
+        {% else %}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+      </div>
+
+      <!-- Content Blocks -->
+      <div class="mush-showcase__content">
+        {% for block in section.blocks %}
+          {% case block.type %}
+
+            {% when 'badge' %}
+              <div class="block-badge" {{ block.shopify_attributes }}>
+                {{ block.settings.text }}
+              </div>
+
+            {% when 'heading' %}
+              <h2 class="block-heading" {{ block.shopify_attributes }}>
+                {{ block.settings.text }}
+              </h2>
+
+            {% when 'description' %}
+              <div class="block-description" {{ block.shopify_attributes }}>
+                {{ block.settings.text }}
+              </div>
+
+            {% when 'tags' %}
+              <div class="block-tags" {{ block.shopify_attributes }}>
+                {% if block.settings.tag_1 != blank %}<span class="tag">{{ block.settings.tag_1 }}</span>{% endif %}
+                {% if block.settings.tag_2 != blank %}<span class="tag">{{ block.settings.tag_2 }}</span>{% endif %}
+                {% if block.settings.tag_3 != blank %}<span class="tag">{{ block.settings.tag_3 }}</span>{% endif %}
+                {% if block.settings.tag_4 != blank %}<span class="tag">{{ block.settings.tag_4 }}</span>{% endif %}
+                {% if block.settings.tag_5 != blank %}<span class="tag">{{ block.settings.tag_5 }}</span>{% endif %}
+                {% if block.settings.tag_6 != blank %}<span class="tag">{{ block.settings.tag_6 }}</span>{% endif %}
+              </div>
+
+            {% when 'price' %}
+              <div class="block-price" {{ block.shopify_attributes }}>
+                {% if block.settings.sale_price != blank %}
+                  <span class="sale">{{ block.settings.currency }} {{ block.settings.sale_price }}</span>
+                {% endif %}
+                {% if block.settings.compare_price != blank %}
+                  <span class="compare">{{ block.settings.currency }} {{ block.settings.compare_price }}</span>
+                {% endif %}
+              </div>
+
+            {% when 'button' %}
+              <div class="block-button" {{ block.shopify_attributes }}>
+                <a href="{{ block.settings.link | default: '#' }}">
+                  {{ block.settings.label }}
+                </a>
+              </div>
+
+            {% when 'spacer' %}
+              <div class="block-spacer" style="height: {{ block.settings.height }}px;" {{ block.shopify_attributes }}></div>
+
+          {% endcase %}
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Mush Product Showcase",
+  "tag": "section",
+  "class": "section-mush-showcase",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "min": 1000,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "label": "Container Max Width",
+      "default": 1280
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap between Image & Content",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "image_min_height",
+      "min": 300,
+      "max": 700,
+      "step": 20,
+      "unit": "px",
+      "label": "Image Minimum Height",
+      "default": 480
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "min": 20,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Content Padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Section Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Section Padding Bottom",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Card Border Radius",
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_shadow",
+      "label": "Enable Card Shadow",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Primary Color (Button)",
+      "default": "#0d6239"
+    },
+    {
+      "type": "color",
+      "id": "secondary_color",
+      "label": "Secondary Color (Badge & Price)",
+      "default": "#e7622c"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section Background",
+      "default": "#f7f7f7"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Heading Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Description Color",
+      "default": "#555555"
+    },
+    {
+      "type": "color",
+      "id": "button_hover",
+      "label": "Button Hover Color",
+      "default": "#0a4f2e"
+    },
+    {
+      "type": "color",
+      "id": "tag_bg",
+      "label": "Tag Background",
+      "default": "#f3f4f6"
+    },
+    {
+      "type": "color",
+      "id": "tag_border",
+      "label": "Tag Border",
+      "default": "#e5e7eb"
+    },
+    {
+      "type": "color",
+      "id": "tag_text",
+      "label": "Tag Text Color",
+      "default": "#374151"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 20,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading Font Size",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "price_size",
+      "min": 20,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Price Font Size",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Product Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Badge Text",
+          "default": "NEW PRODUCT"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Heading",
+          "default": "Mattress Topper King Size – 800 GSM"
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Add a soft, cushioned layer to your bed without replacing your mattress. Filled with siliconized hollow fiber and finished in a smooth microfiber shell."
+        }
+      ]
+    },
+    {
+      "type": "tags",
+      "name": "Feature Tags",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tag_1",
+          "label": "Tag 1",
+          "default": "72 × 78 inches"
+        },
+        {
+          "type": "text",
+          "id": "tag_2",
+          "label": "Tag 2",
+          "default": "800 GSM hollow fiber"
+        },
+        {
+          "type": "text",
+          "id": "tag_3",
+          "label": "Tag 3",
+          "default": "Microfiber shell"
+        },
+        {
+          "type": "text",
+          "id": "tag_4",
+          "label": "Tag 4",
+          "default": "Vacuum-packed"
+        },
+        {
+          "type": "text",
+          "id": "tag_5",
+          "label": "Tag 5"
+        },
+        {
+          "type": "text",
+          "id": "tag_6",
+          "label": "Tag 6"
+        }
+      ]
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "settings": [
+        {
+          "type": "text",
+          "id": "currency",
+          "label": "Currency",
+          "default": "Tk"
+        },
+        {
+          "type": "text",
+          "id": "sale_price",
+          "label": "Sale Price",
+          "default": "7,599"
+        },
+        {
+          "type": "text",
+          "id": "compare_price",
+          "label": "Compare at Price",
+          "default": "9,999"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Button Label",
+          "default": "SHOP MATTRESS TOPPER"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button Link"
+        }
+      ]
+    },
+    {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": [
+        {
+          "type": "range",
+          "id": "height",
+          "min": 8,
+          "max": 80,
+          "step": 4,
+          "unit": "px",
+          "label": "Height",
+          "default": 20
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mush Product Showcase",
+      "blocks": [
+        { "type": "badge" },
+        { "type": "heading" },
+        { "type": "description" },
+        { "type": "tags" },
+        { "type": "price" },
+        { "type": "button" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,167 @@
+{% doc %}
+  @prompt
+    Fast Delivery
+    Home delivery in 2-3 days
+    
+    3 Days Return Policy
+    No questions asked 3 days return
+    
+    Customer Support
+    Call us on +880 1791-859990
+    
+    add dynamic option there we can change anything. add icon of related 3 column, if need i can add new column, syle should be add also. 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-benefits-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    color: {{ block.settings.text_color }};
+    background: {{ block.settings.background_color }};
+    padding: {{ block.settings.padding }}px;
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.corner_radius }}px;
+  }
+  .ai-benefits-{{ ai_gen_id }}__grid {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, minmax(0, 1fr));
+    gap: {{ block.settings.gap }}px;
+  }
+  .ai-benefits-{{ ai_gen_id }}__item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+    padding: {{ block.settings.item_padding }}px;
+    background: {{ block.settings.item_background }};
+    border-radius: {{ block.settings.item_radius }}px;
+    text-align: {{ block.settings.alignment }};
+  }
+  .ai-benefits-{{ ai_gen_id }}__icon {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    color: {{ block.settings.icon_color }};
+  }
+  .ai-benefits-{{ ai_gen_id }}__icon svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .ai-benefits-{{ ai_gen_id }}__title { margin: 0 0 5px; color: {{ block.settings.text_color }}; font-size: {{ block.settings.title_size }}px; font-weight: 700; line-height: 1.25; }
+  .ai-benefits-{{ ai_gen_id }}__text { margin: 0; color: {{ block.settings.text_color }}; font-size: {{ block.settings.body_size }}px; line-height: 1.45; }
+  .ai-benefits-{{ ai_gen_id }}__content { min-width: 0; }
+  .ai-benefits-{{ ai_gen_id }}__link { color: inherit; text-decoration: none; }
+  .ai-benefits-{{ ai_gen_id }}__link:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+  @media screen and (max-width: 749px) {
+    .ai-benefits-{{ ai_gen_id }} { width: 100%; }
+    .ai-benefits-{{ ai_gen_id }}__grid { grid-template-columns: repeat({{ block.settings.columns_mobile }}, minmax(0, 1fr)); }
+    .ai-benefits-{{ ai_gen_id }}__item { gap: 10px; }
+  }
+{% endstyle %}
+
+<div class="ai-benefits-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-benefits-{{ ai_gen_id }}__grid">
+    {% for i in (1..6) %}
+      {% liquid
+        assign enabled_key = 'item_' | append: i | append: '_enabled'
+        assign title_key = 'item_' | append: i | append: '_title'
+        assign text_key = 'item_' | append: i | append: '_text'
+        assign icon_key = 'item_' | append: i | append: '_icon'
+        assign link_key = 'item_' | append: i | append: '_link'
+        assign enabled = block.settings[enabled_key]
+        assign item_title = block.settings[title_key]
+        assign item_text = block.settings[text_key]
+        assign item_icon = block.settings[icon_key]
+        assign item_link = block.settings[link_key]
+      %}
+      {% if enabled and item_title != blank %}
+        <div class="ai-benefits-{{ ai_gen_id }}__item">
+          <span class="ai-benefits-{{ ai_gen_id }}__icon" aria-hidden="true">
+            {% case item_icon %}
+              {% when 'delivery' %}
+                <svg viewBox="0 0 24 24"><path d="M3 6h11v12H3zM14 10h4l3 3v5h-7z"/><circle cx="7.5" cy="18" r="1.5"/><circle cx="17.5" cy="18" r="1.5"/><path d="M3 10h7M3 13h5"/></svg>
+              {% when 'return' %}
+                <svg viewBox="0 0 24 24"><path d="M3 11a9 9 0 1 1 2.6 6.4"/><path d="M3 4v7h7M12 7v5l3 2"/></svg>
+              {% when 'support' %}
+                <svg viewBox="0 0 24 24"><path d="M4 13v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="12" width="4" height="7" rx="2"/><rect x="17" y="12" width="4" height="7" rx="2"/><path d="M17 19a5 5 0 0 1-5 3h-2"/></svg>
+              {% when 'shield' %}
+                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/><path d="m9 12 2 2 4-4"/></svg>
+              {% when 'payment' %}
+                <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg>
+              {% else %}
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
+            {% endcase %}
+          </span>
+          <div class="ai-benefits-{{ ai_gen_id }}__content">
+            {% if item_link != blank %}<a class="ai-benefits-{{ ai_gen_id }}__link" href="{{ item_link }}">{% endif %}
+            <h3 class="ai-benefits-{{ ai_gen_id }}__title">{{ item_title | escape }}</h3>
+            {% if item_text != blank %}<p class="ai-benefits-{{ ai_gen_id }}__text">{{ item_text | escape | newline_to_br }}</p>{% endif %}
+            {% if item_link != blank %}</a>{% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Store benefits row",
+  "settings": [
+    { "type": "range", "id": "desktop_width_percent", "label": "Desktop width", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "select", "id": "columns_desktop", "label": "Columns on desktop", "options": [{"value":"1","label":"1"},{"value":"2","label":"2"},{"value":"3","label":"3"},{"value":"4","label":"4"},{"value":"5","label":"5"},{"value":"6","label":"6"}], "default": "3" },
+    { "type": "select", "id": "columns_mobile", "label": "Columns on mobile", "options": [{"value":"1","label":"1"},{"value":"2","label":"2"}], "default": "1" },
+    { "type": "header", "content": "Benefit columns" },
+    { "type": "checkbox", "id": "item_1_enabled", "label": "Show column 1", "default": true },
+    { "type": "text", "id": "item_1_title", "label": "Column 1 heading", "default": "Fast delivery" },
+    { "type": "textarea", "id": "item_1_text", "label": "Column 1 description", "default": "Home delivery in 2-3 days" },
+    { "type": "select", "id": "item_1_icon", "label": "Column 1 icon", "options": [{"value":"delivery","label":"Delivery"},{"value":"return","label":"Returns"},{"value":"support","label":"Support"},{"value":"shield","label":"Shield"},{"value":"payment","label":"Payment"},{"value":"clock","label":"Clock"}], "default": "delivery" },
+    { "type": "url", "id": "item_1_link", "label": "Column 1 link" },
+    { "type": "checkbox", "id": "item_2_enabled", "label": "Show column 2", "default": true },
+    { "type": "text", "id": "item_2_title", "label": "Column 2 heading", "default": "3 days return policy" },
+    { "type": "textarea", "id": "item_2_text", "label": "Column 2 description", "default": "No questions asked 3 days return" },
+    { "type": "select", "id": "item_2_icon", "label": "Column 2 icon", "options": [{"value":"delivery","label":"Delivery"},{"value":"return","label":"Returns"},{"value":"support","label":"Support"},{"value":"shield","label":"Shield"},{"value":"payment","label":"Payment"},{"value":"clock","label":"Clock"}], "default": "return" },
+    { "type": "url", "id": "item_2_link", "label": "Column 2 link" },
+    { "type": "checkbox", "id": "item_3_enabled", "label": "Show column 3", "default": true },
+    { "type": "text", "id": "item_3_title", "label": "Column 3 heading", "default": "Customer support" },
+    { "type": "textarea", "id": "item_3_text", "label": "Column 3 description", "default": "Call us on +880 1791-859990" },
+    { "type": "select", "id": "item_3_icon", "label": "Column 3 icon", "options": [{"value":"delivery","label":"Delivery"},{"value":"return","label":"Returns"},{"value":"support","label":"Support"},{"value":"shield","label":"Shield"},{"value":"payment","label":"Payment"},{"value":"clock","label":"Clock"}], "default": "support" },
+    { "type": "url", "id": "item_3_link", "label": "Column 3 link" },
+    { "type": "checkbox", "id": "item_4_enabled", "label": "Show column 4", "default": false },
+    { "type": "text", "id": "item_4_title", "label": "Column 4 heading", "default": "More information" },
+    { "type": "textarea", "id": "item_4_text", "label": "Column 4 description", "default": "Add another store benefit" },
+    { "type": "select", "id": "item_4_icon", "label": "Column 4 icon", "options": [{"value":"delivery","label":"Delivery"},{"value":"return","label":"Returns"},{"value":"support","label":"Support"},{"value":"shield","label":"Shield"},{"value":"payment","label":"Payment"},{"value":"clock","label":"Clock"}], "default": "shield" },
+    { "type": "url", "id": "item_4_link", "label": "Column 4 link" },
+    { "type": "checkbox", "id": "item_5_enabled", "label": "Show column 5", "default": false },
+    { "type": "text", "id": "item_5_title", "label": "Column 5 heading", "default": "More information" },
+    { "type": "textarea", "id": "item_5_text", "label": "Column 5 description", "default": "Add another store benefit" },
+    { "type": "select", "id": "item_5_icon", "label": "Column 5 icon", "options": [{"value":"delivery","label":"Delivery"},{"value":"return","label":"Returns"},{"value":"support","label":"Support"},{"value":"shield","label":"Shield"},{"value":"payment","label":"Payment"},{"value":"clock","label":"Clock"}], "default": "payment" },
+    { "type": "url", "id": "item_5_link", "label": "Column 5 link" },
+    { "type": "checkbox", "id": "item_6_enabled", "label": "Show column 6", "default": false },
+    { "type": "text", "id": "item_6_title", "label": "Column 6 heading", "default": "More information" },
+    { "type": "textarea", "id": "item_6_text", "label": "Column 6 description", "default": "Add another store benefit" },
+    { "type": "select", "id": "item_6_icon", "label": "Column 6 icon", "options": [{"value":"delivery","label":"Delivery"},{"value":"return","label":"Returns"},{"value":"support","label":"Support"},{"value":"shield","label":"Shield"},{"value":"payment","label":"Payment"},{"value":"clock","label":"Clock"}], "default": "clock" },
+    { "type": "url", "id": "item_6_link", "label": "Column 6 link" },
+    { "type": "header", "content": "Style" },
+    { "type": "select", "id": "alignment", "label": "Text alignment", "options": [{"value":"left","label":"Left"},{"value":"center","label":"Center"}], "default": "left" },
+    { "type": "color", "id": "background_color", "label": "Block background", "default": "#ffffff" },
+    { "type": "color", "id": "item_background", "label": "Column background", "default": "#f5f7f5" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#172117" },
+    { "type": "color", "id": "icon_color", "label": "Icon", "default": "#0e4d22" },
+    { "type": "color", "id": "border_color", "label": "Border", "default": "#dce4dc" },
+    { "type": "range", "id": "title_size", "label": "Heading size", "min": 12, "max": 28, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "body_size", "label": "Description size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "icon_size", "label": "Icon size", "min": 24, "max": 60, "step": 2, "unit": "px", "default": 36 },
+    { "type": "range", "id": "gap", "label": "Column gap", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "padding", "label": "Block padding", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 12 },
+    { "type": "range", "id": "item_padding", "label": "Column padding", "min": 0, "max": 32, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "border_width", "label": "Border width", "min": 0, "max": 6, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "corner_radius", "label": "Block corner radius", "min": 0, "max": 30, "step": 2, "unit": "px", "default": 8 },
+    { "type": "range", "id": "item_radius", "label": "Column corner radius", "min": 0, "max": 30, "step": 2, "unit": "px", "default": 8 }
+  ],
+  "presets": [{ "name": "Store benefits row" }],
+  "tag": null,
+  "class": "store-benefits-block"
+}
+{% endschema %}

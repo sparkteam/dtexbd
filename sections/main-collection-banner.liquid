@@ -1,0 +1,296 @@
+{% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
+{{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .collection-hero-{{ section.id }} {
+    position: relative;
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.bg_color }};
+    {% if section.settings.bg_image != blank %}
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2000 }}');
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+  }
+
+  .collection-hero-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: {{ section.settings.overlay_color }};
+    opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    pointer-events: none;
+  }
+
+  .collection-hero-{{ section.id }} .collection-hero__inner {
+    position: relative;
+    z-index: 1;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .collection-hero-{{ section.id }} .breadcrumb {
+    position: absolute;
+    top: 8px;
+    left: 20px;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: {{ section.settings.breadcrumb_color }};
+    margin: 0;
+    padding: 0;
+    background: transparent;
+  }
+
+  .collection-hero-{{ section.id }} .breadcrumb a {
+    color: {{ section.settings.breadcrumb_color }};
+    text-decoration: none;
+    opacity: 0.75;
+  }
+
+  .collection-hero-{{ section.id }} .breadcrumb a:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  .collection-hero-{{ section.id }} .breadcrumb span {
+    opacity: 0.5;
+  }
+
+  .collection-hero-{{ section.id }} .collection-hero__text-wrapper {
+    padding-top: 36px;
+    text-align: left;
+  }
+
+  .collection-hero-{{ section.id }} .collection-hero__title {
+    font-size: {{ section.settings.title_size }}px;
+    font-weight: 700;
+    margin: 0 0 10px;
+    color: {{ section.settings.title_color }};
+    line-height: 1.2;
+  }
+
+  .collection-hero-{{ section.id }} .collection-hero__description {
+    max-width: 650px;
+    font-size: {{ section.settings.desc_size }}px;
+    line-height: 1.6;
+    color: {{ section.settings.text_color }};
+    margin: 0;
+  }
+
+  .collection-hero-{{ section.id }} .collection-hero__image-container {
+    margin-top: 20px;
+    border-radius: {{ section.settings.image_radius }}px;
+    overflow: hidden;
+  }
+
+  @media screen and (max-width: 749px) {
+    .collection-hero-{{ section.id }} .collection-hero__title {
+      font-size: {{ section.settings.title_size | times: 0.7 | round }}px;
+    }
+    .collection-hero-{{ section.id }} .breadcrumb {
+      top: 6px;
+      left: 16px;
+      font-size: 12px;
+    }
+    .collection-hero-{{ section.id }} .collection-hero__text-wrapper {
+      padding-top: 32px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign banner_image = section.settings.collection_image
+  if banner_image == blank
+    assign banner_image = collection.image
+  endif
+
+  assign banner_description = section.settings.custom_description
+  if banner_description == blank
+    assign banner_description = collection.description
+  endif
+-%}
+
+<div class="collection-hero-{{ section.id }} collection-hero color-{{ section.settings.color_scheme }} gradient">
+  <div class="collection-hero__inner page-width {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+    
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span>/</span>
+      <a href="{{ routes.collections_url }}">Collections</a>
+      <span>/</span>
+      <span>{{ collection.title }}</span>
+    </nav>
+
+    <div class="collection-hero__text-wrapper">
+      <h1 class="collection-hero__title">
+        {{- collection.title | escape -}}
+      </h1>
+
+      {%- if section.settings.show_collection_description and banner_description != blank -%}
+        <div class="collection-hero__description rte">
+          {{ banner_description }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_collection_image and banner_image != blank -%}
+      <div class="collection-hero__image-container media gradient">
+        <img
+          src="{{ banner_image | image_url: width: 1200 }}"
+          alt="{{ banner_image.alt | default: collection.title | escape }}"
+          width="{{ banner_image.width }}"
+          height="{{ banner_image.height }}"
+          loading="lazy"
+        >
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-collection-banner.name",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_collection_description",
+      "default": true,
+      "label": "Show description"
+    },
+    {
+      "type": "richtext",
+      "id": "custom_description",
+      "label": "Custom description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_image",
+      "default": true,
+      "label": "Show image"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_image",
+      "label": "Collection image"
+    },
+    {
+      "type": "range",
+      "id": "desc_size",
+      "label": "Description font size",
+      "min": 13,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Image corner radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 28,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Description color",
+      "default": "#444444"
+    },
+    {
+      "type": "color",
+      "id": "breadcrumb_color",
+      "label": "Breadcrumb color",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 20,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 20,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    }
+  ]
+}
+{% endschema %}
