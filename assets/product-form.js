@@ -136,12 +136,15 @@ if (!customElements.get('product-form')) {
       }
 
       toggleSubmitButton(disable = true, text) {
+        const buyNow = this.querySelector('[data-dtex-buy-now]');
         if (disable) {
           this.submitButton.setAttribute('disabled', 'disabled');
           if (text) this.submitButtonText.textContent = text;
+          if (buyNow) buyNow.setAttribute('disabled', 'disabled');
         } else {
           this.submitButton.removeAttribute('disabled');
           this.submitButtonText.textContent = window.variantStrings.addToCart;
+          if (buyNow) buyNow.removeAttribute('disabled');
         }
       }
 

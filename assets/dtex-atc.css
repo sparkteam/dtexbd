@@ -105,6 +105,133 @@
   stroke: #ffffff;
 }
 
+.dtex-purchase {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 44rem;
+}
+
+.dtex-purchase .product-form__submit,
+.dtex-buy-now,
+.dtex-whatsapp {
+  box-sizing: border-box;
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+  margin: 0;
+  padding: 0 14px;
+  font-size: 14px !important;
+  line-height: 1;
+}
+
+.dtex-buy-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.dtex-buy-now,
+.dtex-whatsapp {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  border-radius: 8px;
+  font-family: inherit;
+  white-space: nowrap;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+}
+
+.dtex-buy-now {
+  border: 1px solid #e7622c;
+  background: #e7622c;
+  color: #ffffff;
+}
+
+.dtex-buy-now:hover {
+  background: #cf5220;
+  border-color: #cf5220;
+  color: #ffffff;
+}
+
+.dtex-whatsapp {
+  border: 1px solid #1da851;
+  background: #25d366;
+  color: #ffffff;
+}
+
+.dtex-whatsapp:hover {
+  background: #1ebe5b;
+  border-color: #1ebe5b;
+  color: #ffffff;
+}
+
+.dtex-whatsapp svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+
+.dtex-buy-now:focus-visible,
+.dtex-whatsapp:focus-visible {
+  outline: 3px solid #e7622c;
+  outline-offset: 2px;
+}
+
+.dtex-buy-now[disabled],
+.dtex-buy-now[aria-disabled='true'] {
+  background: #f3f3f3;
+  border-color: #d7d7d7;
+  color: #8a8a8a;
+  cursor: not-allowed;
+}
+
+.dtex-buy-now.is-loading {
+  color: transparent;
+}
+
+.dtex-buy-now.is-loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: dtex-buy-spin 0.6s linear infinite;
+}
+
+@keyframes dtex-buy-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .dtex-buy-row {
+    grid-template-columns: 1fr;
+  }
+
+  .dtex-purchase .product-form__submit,
+  .dtex-buy-now,
+  .dtex-whatsapp {
+    height: 48px;
+    min-height: 48px;
+    max-height: 48px;
+    font-size: 14px !important;
+    padding: 0 14px;
+  }
+}
+
 @media screen and (max-width: 749px) {
   .fp-atc,
   .dtex-atc,

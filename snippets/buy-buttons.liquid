@@ -63,7 +63,7 @@
           {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
         {%- endif -%}
 
-        <div class="product-form__buttons">
+        <div class="product-form__buttons dtex-purchase">
           {%- liquid
             assign check_against_inventory = true
             if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'
@@ -72,16 +72,32 @@
             if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
               assign quantity_rule_soldout = true
             endif
+
+            assign purchase_unavailable = false
+            if product.selected_or_first_available_variant.available == false or quantity_rule_soldout or product.selected_or_first_available_variant == null
+              assign purchase_unavailable = true
+            endif
+
+            assign wa_phone = block.settings.whatsapp_number | default: '8801791859990' | remove: '+' | remove: ' ' | remove: '-'
+            assign wa_variant = ''
+            unless product.has_only_default_variant
+              assign wa_variant = product.selected_or_first_available_variant.title
+            endunless
+            capture wa_text
+Hi, I want to buy {{ product.title }}.
+{%- if wa_variant != blank %}
+Option: {{ wa_variant }}
+{%- endif %}
+Price: {{ product.selected_or_first_available_variant.price | money }}
+{{ shop.url }}{{ product.url }}
+            endcapture
           -%}
           <button
             id="ProductSubmitButton-{{ section_id }}"
             type="submit"
             name="add"
-            class="product-form__submit dtex-atc button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
-            {% if product.selected_or_first_available_variant.available == false
-              or quantity_rule_soldout
-              or product.selected_or_first_available_variant == null
-            %}
+            class="product-form__submit dtex-atc button button--full-width button--primary"
+            {% if purchase_unavailable %}
               disabled
             {% endif %}
           >
@@ -96,15 +112,41 @@
             </span>
             {%- render 'loading-spinner' -%}
           </button>
-          {%- if show_dynamic_checkout -%}
-            {{ form | payment_button }}
-          {%- endif -%}
+          <div class="dtex-buy-row">
+            <button
+              type="button"
+              class="dtex-buy-now"
+              data-dtex-buy-now
+              {% if purchase_unavailable %}
+                disabled
+              {% endif %}
+            >
+              {{ 'products.product.buy_it_now' | t }}
+            </button>
+            <a
+              class="dtex-whatsapp"
+              data-dtex-whatsapp
+              data-phone="{{ wa_phone }}"
+              data-title="{{ product.title | escape }}"
+              data-variant="{{ wa_variant | escape }}"
+              data-price="{{ product.selected_or_first_available_variant.price | money | escape }}"
+              data-url="{{ shop.url }}{{ product.url }}"
+              href="https://wa.me/{{ wa_phone }}?text={{ wa_text | strip | url_encode }}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M20.5 3.5A11 11 0 0 0 2.1 17.8L1 23l5.3-1.1A11 11 0 0 0 20.5 3.5zM12 20.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.8c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.4 7.4 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.5-.6.2-.4c0-.1 0-.3-.1-.4l-.8-1.8c-.2-.4-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.2 1.6 2.5 3.9 3.5 1.4.6 2 .7 2.7.6.4-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1 0-.1-.2-.2-.4-.3z"/>
+              </svg>
+              <span>{{ 'products.product.buy_with_whatsapp' | t }}</span>
+            </a>
+          </div>
         </div>
       {%- endform -%}
     </product-form>
   {%- else -%}
     <div class="product-form">
-      <div class="product-form__buttons form">
+      <div class="product-form__buttons form dtex-purchase">
         <button
           type="submit"
           name="add"
@@ -113,6 +155,12 @@
         >
           {{ 'products.product.sold_out' | t }}
         </button>
+        <div class="dtex-buy-row">
+          <button type="button" class="dtex-buy-now" disabled>{{ 'products.product.buy_it_now' | t }}</button>
+          <a class="dtex-whatsapp" href="https://wa.me/{{ block.settings.whatsapp_number | default: '8801791859990' | remove: '+' | remove: ' ' | remove: '-' }}" target="_blank" rel="noopener noreferrer">
+            <span>{{ 'products.product.buy_with_whatsapp' | t }}</span>
+          </a>
+        </div>
       </div>
     </div>
   {%- endif -%}
@@ -152,3 +200,95 @@
     <script src="{{ 'pickup-availability.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
 </div>
+
+{% javascript %}
+  if (!window.dtexPurchaseBound) {
+  window.dtexPurchaseBound = true;
+
+  function dtexCheckoutUrl() {
+    const cartUrl = (window.routes && window.routes.cart_url) || '/cart';
+    return cartUrl.replace(/\/cart\/?$/, '/checkout');
+  }
+
+  function dtexSelectedOptions(root) {
+    const fields = root.querySelectorAll('.product-form__input input:checked, .product-form__input select');
+    const values = [];
+    fields.forEach((field) => {
+      if (field.value) values.push(field.value);
+    });
+    return values.join(' / ');
+  }
+
+  function dtexWhatsappHref(link) {
+    const phone = (link.dataset.phone || '').replace(/\D/g, '');
+    const info = link.closest('.product__info-container') || document;
+    const form = link.closest('form');
+    const title = link.dataset.title || '';
+    const price = (info.querySelector('.sale-price') || {}).textContent;
+    const qtyField = form
+      ? form.querySelector('[name="quantity"]') || document.querySelector('[name="quantity"][form="' + form.id + '"]')
+      : null;
+    const quantity = qtyField && qtyField.value ? qtyField.value : '1';
+    const variant = dtexSelectedOptions(info) || link.dataset.variant || '';
+    const pageUrl = link.dataset.url || window.location.href;
+    const lines = ['Hi, I want to buy ' + title + '.'];
+    if (variant) lines.push('Option: ' + variant);
+    if (price && price.trim()) lines.push('Price: ' + price.trim());
+    lines.push('Quantity: ' + quantity);
+    lines.push(pageUrl);
+    return 'https://wa.me/' + phone + '?text=' + encodeURIComponent(lines.join('\n'));
+  }
+
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('[data-dtex-whatsapp]');
+    if (!link) return;
+    link.href = dtexWhatsappHref(link);
+  });
+
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-dtex-buy-now]');
+    if (!button) return;
+    event.preventDefault();
+    if (button.hasAttribute('disabled') || button.getAttribute('aria-disabled') === 'true') return;
+
+    const form = button.closest('form');
+    const productForm = button.closest('product-form');
+    if (!form) return;
+
+    button.setAttribute('aria-disabled', 'true');
+    button.classList.add('is-loading');
+
+    const config = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+      body: new FormData(form),
+    };
+
+    const addUrl = (window.routes && window.routes.cart_add_url) || '/cart/add';
+
+    fetch(addUrl, config)
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.status) {
+          const wrapper = productForm && productForm.querySelector('.product-form__error-message-wrapper');
+          const message = productForm && productForm.querySelector('.product-form__error-message');
+          if (wrapper && message) {
+            message.textContent = response.description || response.message || '';
+            wrapper.hidden = false;
+          }
+          button.classList.remove('is-loading');
+          button.removeAttribute('aria-disabled');
+          return;
+        }
+        window.location.href = dtexCheckoutUrl();
+      })
+      .catch(() => {
+        button.classList.remove('is-loading');
+        button.removeAttribute('aria-disabled');
+      });
+  });
+  }
+{% endjavascript %}
