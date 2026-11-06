@@ -220,6 +220,8 @@
               {% assign card_label = 'Perkel' %}
             {% elsif title_down contains 'regular' %}
               {% assign card_label = 'Regular' %}
+            {% elsif title_down contains 'export' %}
+              {% assign card_label = 'Export' %}
             {% elsif title_down contains 'waffle' %}
               {% assign card_label = 'Waffle' %}
             {% else %}

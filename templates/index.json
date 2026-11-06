@@ -895,6 +895,26 @@
         "heading_size": 28,
         "section_bg": "#ffffff",
         "padding_top": 20,
+        "padding_bottom": 20,
+        "soldout_text": "Sold out"
+      }
+    },
+    "catalog_bedsheets_mush": {
+      "type": "catalog-grid-mush",
+      "name": "Bedsheets",
+      "settings": {
+        "heading": "BEDSHEETS",
+        "view_all_label": "View all bedsheets",
+        "view_all_link": "shopify://collections/export-quality-bedsheets",
+        "collection": "export-quality-bedsheets",
+        "card_label": "Bedsheet",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "grid_gap": 20,
+        "container_width": 1400,
+        "heading_size": 28,
+        "section_bg": "#ffffff",
+        "padding_top": 20,
         "padding_bottom": 40,
         "soldout_text": "Sold out"
       }
@@ -910,6 +930,7 @@
     "mush_product_showcase_xQUTRz",
     "catalog_curtains_mush",
     "catalog_comforters_mush",
+    "catalog_bedsheets_mush",
     "mush_category_grid_jik7qb",
     "featured_products_mush_TaFDFR",
     "blocks_EQUDVW",
