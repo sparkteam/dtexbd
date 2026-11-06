@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Curtain banner + products — desktop preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@500;700;800&family=Questrial&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #ece7de;
+      color: #172117;
+      font-family: Questrial, "Noto Sans Bengali", "Helvetica Neue", Arial, sans-serif;
+    }
+    .preview-flag {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 10px 16px;
+      background: #172117;
+      color: #f4efe6;
+      font-size: 13px;
+      letter-spacing: 0.03em;
+      text-align: center;
+    }
+    .artboard {
+      width: min(1440px, 100%);
+      margin: 0 auto;
+      background: #ffffff;
+    }
+    .context {
+      padding: 28px 20px 8px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .context-label {
+      margin: 0 0 12px;
+      color: #6d756d;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .context-card {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      min-height: 168px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #e6e4e4;
+    }
+    .context-card img {
+      width: 100%;
+      height: 168px;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.85);
+    }
+    .context-copy {
+      padding: 28px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .pill {
+      display: inline-block;
+      width: fit-content;
+      margin-bottom: 10px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: #e7622c;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+    .context-copy h2 {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.2;
+    }
+    .context-copy p {
+      margin: 8px 0 0;
+      color: #555;
+      font-size: 14px;
+    }
+
+    .curtain-products {
+      padding: 40px 0 12px;
+    }
+    .curtain-products + .curtain-products {
+      padding-top: 20px;
+      padding-bottom: 72px;
+    }
+    .products-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .products-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .products-head h2 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .view-all {
+      color: #555555;
+      font-size: 15px;
+      text-decoration: none;
+      border-bottom: 1px solid #555555;
+      padding-bottom: 2px;
+      white-space: nowrap;
+    }
+    .view-all:hover { color: #0e4d22; border-color: #0e4d22; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid rgba(14, 77, 34, 0.14);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+    }
+    .image-wrap {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: #f4efe6;
+    }
+    .image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .sale {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: #e7622c;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+    .info {
+      padding: 14px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .label {
+      color: #0e4d22;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .title {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.35;
+      min-height: 2.7em;
+    }
+    .price-wrap { display: flex; align-items: baseline; gap: 8px; }
+    .price { color: #0e4d22; font-size: 16px; font-weight: 700; }
+    .compare { color: #6d756d; font-size: 14px; text-decoration: line-through; }
+  </style>
+</head>
+<body>
+  <div class="preview-flag">Desktop preview — Curtains, then Comforters. Same layout, after 3D Digital Bedsheet.</div>
+
+  <div class="artboard">
+    <div class="context">
+      <p class="context-label">Section already on the page</p>
+      <div class="context-card">
+        <img alt="3D Digital Bedsheet" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-09-18at06.06.56_1.jpg?v=1789741343">
+        <div class="context-copy">
+          <span class="pill">NEW PRODUCT</span>
+          <h2>3D Digital Bedsheet</h2>
+          <p>Existing showcase stays as it is. The curtain products start below it.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="curtain-products" aria-label="All curtains">
+      <div class="products-inner">
+        <div class="products-head">
+          <h2>CURTAINS</h2>
+          <a class="view-all" href="https://dtex.com.bd/collections/waffle-curtain">View all curtains</a>
+        </div>
+        <div class="grid">
+          <a class="card" href="https://dtex.com.bd/products/combined-waffle-curtain-2">
+            <span class="image-wrap"><span class="sale">-20%</span><img alt="Combo Waffle Curtain" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-11-03at22.24.27_062fbe13-5f8f-4624-aaaa-56ea6dc11127.jpg?v=1793798498"></span>
+            <span class="info"><span class="label">Combo</span><span class="title">Combo Waffle Curtain</span><span class="price-wrap"><span class="price">Tk 1,100</span><span class="compare">Tk 1,380</span></span></span>
+          </a>
+          <a class="card" href="https://dtex.com.bd/products/combined-waffle-curtain-1">
+            <span class="image-wrap"><span class="sale">-20%</span><img alt="Combo Waffle Curtain" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-11-03at22.24.28_1.jpg?v=1793798126"></span>
+            <span class="info"><span class="label">Combo</span><span class="title">Combo Waffle Curtain</span><span class="price-wrap"><span class="price">Tk 1,100</span><span class="compare">Tk 1,380</span></span></span>
+          </a>
+          <a class="card" href="https://dtex.com.bd/products/combined-waffle-curtain">
+            <span class="image-wrap"><span class="sale">-20%</span><img alt="Combo Waffle Curtain" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-11-03at22.24.27.jpg?v=1793797452"></span>
+            <span class="info"><span class="label">Combo</span><span class="title">Combo Waffle Curtain</span><span class="price-wrap"><span class="price">Tk 1,100</span><span class="compare">Tk 1,380</span></span></span>
+          </a>
+          <a class="card" href="https://dtex.com.bd/products/waffle-solid-curtain-3">
+            <span class="image-wrap"><span class="sale">-11%</span><img alt="Waffle Solid Curtain" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-11-03at04.19.22.jpg?v=1793724189"></span>
+            <span class="info"><span class="label">Solid</span><span class="title">Waffle Solid Curtain</span><span class="price-wrap"><span class="price">Tk 400</span><span class="compare">Tk 450</span></span></span>
+          </a>
+          <a class="card" href="https://dtex.com.bd/products/waffle-solid-curtain-2">
+            <span class="image-wrap"><span class="sale">-17%</span><img alt="Waffle Solid Curtain" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-11-03at04.19.22_1.jpg?v=1793724087"></span>
+            <span class="info"><span class="label">Solid</span><span class="title">Waffle Solid Curtain</span><span class="price-wrap"><span class="price">Tk 400</span><span class="compare">Tk 480</span></span></span>
+          </a>
+          <a class="card" href="https://dtex.com.bd/products/waffle-curtain-2">
+            <span class="image-wrap"><span class="sale">-16%</span><img alt="Waffle Curtain" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-11-02at01.28.37_6fd84949-a68a-4ad3-b10a-ff462091f915.jpg?v=1793702555"></span>
+            <span class="info"><span class="label">Waffle</span><span class="title">Waffle Curtain</span><span class="price-wrap"><span class="price">Tk 380</span><span class="compare">Tk 450</span></span></span>
+          </a>
+          <a class="card" href="https://dtex.com.bd/products/waffle-curtain-1">
+            <span class="image-wrap"><span class="sale">-16%</span><img alt="Waffle Curtain" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-11-02at01.28.37.jpg?v=1793702376"></span>
+            <span class="info"><span class="label">Waffle</span><span class="title">Waffle Curtain</span><span class="price-wrap"><span class="price">Tk 380</span><span class="compare">Tk 450</span></span></span>
+          </a>
+          <a class="card" href="https://dtex.com.bd/products/waffle-solid-curtain-1">
+            <span class="image-wrap"><span class="sale">-17%</span><img alt="Waffle Solid Curtain" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-11-02at01.28.37_2.jpg?v=1793702278"></span>
+            <span class="info"><span class="label">Solid</span><span class="title">Waffle Solid Curtain</span><span class="price-wrap"><span class="price">Tk 400</span><span class="compare">Tk 480</span></span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="curtain-products" aria-label="All comforters">
+      <div class="products-inner">
+        <div class="products-head">
+          <h2>COMFORTERS</h2>
+          <a class="view-all" href="https://dtex.com.bd/collections/premium-comforter">View all comforters</a>
+        </div>
+        <div class="grid">
+          <a class="card" href="https://dtex.com.bd/products/twill-comforter-2">
+            <span class="image-wrap"><span class="sale">-22%</span><img alt="Twill Comforter" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-10-29at01.50.49.jpg?v=1793628557"></span>
+            <span class="info"><span class="label">Twill</span><span class="title">Twill Comforter</span><span class="price-wrap"><span class="price">Tk 1,950</span><span class="compare">Tk 2,500</span></span></span>
+          </a>
+          <a class="card" href="https://dtex.com.bd/products/twill-comforter-1">
+            <span class="image-wrap"><span class="sale">-22%</span><img alt="Twill Comforter" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-10-29at01.50.47.jpg?v=1793628468"></span>
+            <span class="info"><span class="label">Twill</span><span class="title">Twill Comforter</span><span class="price-wrap"><span class="price">Tk 1,950</span><span class="compare">Tk 2,500</span></span></span>
+          </a>
+          <a class="card" href="https://dtex.com.bd/products/twill-comforter">
+            <span class="image-wrap"><span class="sale">-22%</span><img alt="Twill Comforter" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-10-29at01.50.46_1.jpg?v=1793628127"></span>
+            <span class="info"><span class="label">Twill</span><span class="title">Twill Comforter</span><span class="price-wrap"><span class="price">Tk 1,950</span><span class="compare">Tk 2,500</span></span></span>
+          </a>
+          <a class="card" href="https://dtex.com.bd/products/perkel-comforter-4">
+            <span class="image-wrap"><span class="sale">-25%</span><img alt="Perkel Comforter" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-10-29at01.50.50.jpg?v=1793627471"></span>
+            <span class="info"><span class="label">Perkel</span><span class="title">Perkel Comforter</span><span class="price-wrap"><span class="price">Tk 1,800</span><span class="compare">Tk 2,400</span></span></span>
+          </a>
+          <a class="card" href="https://dtex.com.bd/products/perkel-comforter-3">
+            <span class="image-wrap"><span class="sale">-25%</span><img alt="Perkel Comforter" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-10-29at01.50.48_1.jpg?v=1793627272"></span>
+            <span class="info"><span class="label">Perkel</span><span class="title">Perkel Comforter</span><span class="price-wrap"><span class="price">Tk 1,800</span><span class="compare">Tk 2,400</span></span></span>
+          </a>
+          <a class="card" href="https://dtex.com.bd/products/perkel-comforter-2">
+            <span class="image-wrap"><span class="sale">-25%</span><img alt="Perkel Comforter" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-10-29at01.50.46.jpg?v=1793626920"></span>
+            <span class="info"><span class="label">Perkel</span><span class="title">Perkel Comforter</span><span class="price-wrap"><span class="price">Tk 1,800</span><span class="compare">Tk 2,400</span></span></span>
+          </a>
+          <a class="card" href="https://dtex.com.bd/products/perkel-comforter-1">
+            <span class="image-wrap"><span class="sale">-25%</span><img alt="Perkel Comforter" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-10-29at01.50.46_2.jpg?v=1793626763"></span>
+            <span class="info"><span class="label">Perkel</span><span class="title">Perkel Comforter</span><span class="price-wrap"><span class="price">Tk 1,800</span><span class="compare">Tk 2,400</span></span></span>
+          </a>
+          <a class="card" href="https://dtex.com.bd/products/perkel-comforter">
+            <span class="image-wrap"><span class="sale">-25%</span><img alt="Perkel Comforter" src="https://cdn.shopify.com/s/files/1/0604/2143/9537/files/WhatsAppImage2026-10-29at01.50.45.jpg?v=1793626121"></span>
+            <span class="info"><span class="label">Perkel</span><span class="title">Perkel Comforter</span><span class="price-wrap"><span class="price">Tk 1,800</span><span class="compare">Tk 2,400</span></span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

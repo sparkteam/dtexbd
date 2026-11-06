@@ -858,6 +858,46 @@
       ],
       "name": "Hero section slider 2",
       "settings": {}
+    },
+    "catalog_curtains_mush": {
+      "type": "catalog-grid-mush",
+      "name": "Curtains",
+      "settings": {
+        "heading": "CURTAINS",
+        "view_all_label": "View all curtains",
+        "view_all_link": "shopify://collections/waffle-curtain",
+        "collection": "waffle-curtain",
+        "card_label": "Curtain",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "grid_gap": 20,
+        "container_width": 1400,
+        "heading_size": 28,
+        "section_bg": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 20,
+        "soldout_text": "Sold out"
+      }
+    },
+    "catalog_comforters_mush": {
+      "type": "catalog-grid-mush",
+      "name": "Comforters",
+      "settings": {
+        "heading": "COMFORTERS",
+        "view_all_label": "View all comforters",
+        "view_all_link": "shopify://collections/premium-comforter",
+        "collection": "premium-comforter",
+        "card_label": "Comforter",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "grid_gap": 20,
+        "container_width": 1400,
+        "heading_size": 28,
+        "section_bg": "#ffffff",
+        "padding_top": 20,
+        "padding_bottom": 40,
+        "soldout_text": "Sold out"
+      }
     }
   },
   "order": [
@@ -868,6 +908,8 @@
     "featured_products_mush_QDW7xV",
     "17919213487565cf7a",
     "mush_product_showcase_xQUTRz",
+    "catalog_curtains_mush",
+    "catalog_comforters_mush",
     "mush_category_grid_jik7qb",
     "featured_products_mush_TaFDFR",
     "blocks_EQUDVW",
