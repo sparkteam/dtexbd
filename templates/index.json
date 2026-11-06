@@ -1198,9 +1198,9 @@
         "badge_label": "Verified customers",
         "accessibility_label": "Customer reviews",
         "section_bg": "#ffffff",
-        "brand_color": "#1c2740",
-        "accent_color": "#c4a06a",
-        "star_color": "#f0b429"
+        "brand_color": "#0e4d22",
+        "accent_color": "#e7622c",
+        "star_color": "#f0a05a"
       }
     }
   },
