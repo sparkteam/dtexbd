@@ -61,7 +61,7 @@
           <button
             type="submit"
             name="add"
-            class="fp-atc"
+            class="fp-atc dtex-atc"
             aria-label="Add {{ product.title | escape }} to cart"
           >
             <span>{{ section.settings.button_text | default: 'Add to cart' }}</span>
@@ -70,7 +70,7 @@
         {%- endform -%}
       </product-form>
     {% else %}
-      <button class="fp-atc" type="button" disabled>
+      <button class="fp-atc dtex-atc" type="button" disabled>
         <span>{{ section.settings.soldout_text | default: 'Sold out' }}</span>
       </button>
     {% endif %}
