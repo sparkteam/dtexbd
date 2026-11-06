@@ -9,38 +9,70 @@
     assign save_amount = product.compare_at_price | minus: product.price
     assign save_percent = save_amount | times: 100.0 | divided_by: product.compare_at_price | round
   endif
+  assign card_variant = product.selected_or_first_available_variant
+  assign card_form_id = 'FpAtc-' | append: section.id | append: '-' | append: product.id
 -%}
-<a class="fp-card" href="{{ product.url }}">
-  <span class="fp-image-wrap">
-    {% if on_sale %}
-      <span class="fp-sale-badge">-{{ save_percent }}%</span>
-    {% endif %}
-    {% unless product.available %}
-      <span class="fp-sold-badge">{{ section.settings.soldout_text | default: 'Sold out' }}</span>
-    {% endunless %}
+<article class="fp-card">
+  <a class="fp-media-link" href="{{ product.url }}">
+    <span class="fp-image-wrap">
+      {% if on_sale %}
+        <span class="fp-sale-badge">-{{ save_percent }}%</span>
+      {% endif %}
+      {% unless product.available %}
+        <span class="fp-sold-badge">{{ section.settings.soldout_text | default: 'Sold out' }}</span>
+      {% endunless %}
 
-    {% if product.featured_media %}
-      {{ product.featured_media | image_url: width: 900 | image_tag:
-        loading: 'lazy',
-        widths: '300,450,600,750,900',
-        sizes: '(max-width: 749px) 50vw, 25vw',
-        alt: product.featured_media.alt | escape
-      }}
-    {% else %}
-      {{ 'product-1' | placeholder_svg_tag: 'fp-placeholder' }}
-    {% endif %}
-  </span>
+      {% if product.featured_media %}
+        {{ product.featured_media | image_url: width: 900 | image_tag:
+          loading: 'lazy',
+          widths: '300,450,600,750,900',
+          sizes: '(max-width: 749px) 50vw, 25vw',
+          alt: product.featured_media.alt | escape
+        }}
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag: 'fp-placeholder' }}
+      {% endif %}
+    </span>
+  </a>
 
-  <span class="fp-info">
+  <div class="fp-info">
     {% if card_label != blank %}
       <span class="fp-label">{{ card_label }}</span>
     {% endif %}
-    <span class="fp-title">{{ product.title }}</span>
+    <a class="fp-title" href="{{ product.url }}">{{ product.title }}</a>
     <span class="fp-price-wrap">
       <span class="fp-price">{{ product.price | money }}</span>
       {% if on_sale %}
         <span class="fp-compare">{{ product.compare_at_price | money }}</span>
       {% endif %}
     </span>
-  </span>
-</a>
+
+    {% if card_variant and product.available %}
+      <product-form class="fp-atc-form" data-section-id="{{ section.id }}">
+        {%- form 'product',
+          product,
+          id: card_form_id,
+          class: 'fp-atc-form-inner',
+          novalidate: 'novalidate',
+          data-type: 'add-to-cart-form'
+        -%}
+          <input type="hidden" name="id" value="{{ card_variant.id }}" class="product-variant-id">
+          <input type="hidden" name="quantity" value="1">
+          <button
+            type="submit"
+            name="add"
+            class="fp-atc"
+            aria-label="Add {{ product.title | escape }} to cart"
+          >
+            <span>{{ section.settings.button_text | default: 'Add to cart' }}</span>
+            {%- render 'loading-spinner' -%}
+          </button>
+        {%- endform -%}
+      </product-form>
+    {% else %}
+      <button class="fp-atc" type="button" disabled>
+        <span>{{ section.settings.soldout_text | default: 'Sold out' }}</span>
+      </button>
+    {% endif %}
+  </div>
+</article>

@@ -9,6 +9,7 @@
 
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'dtex-cart-drawer.css' | asset_url | stylesheet_tag }}
 
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
@@ -19,7 +20,7 @@
   }
 </style>
 
-<cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
+<cart-drawer class="drawer dtex-cart{% if cart == empty %} is-empty{% endif %}">
   <div id="CartDrawer" class="cart-drawer">
     <div id="CartDrawer-Overlay" class="cart-drawer__overlay"></div>
     <div
@@ -64,7 +65,10 @@
         </div>
       {%- endif -%}
       <div class="drawer__header">
-        <h2 class="drawer__heading">{{ 'sections.cart.title' | t }}</h2>
+        <div class="dtex-drawer-intro">
+          <p class="dtex-drawer-kicker">Dtex</p>
+          <h2 class="drawer__heading">{{ 'sections.cart.title' | t }}</h2>
+        </div>
         <button
           class="drawer__close"
           type="button"
@@ -573,6 +577,8 @@
         </div>
 
         <!-- CTAs -->
+
+        <p class="dtex-drawer-note">Home delivery in 2–3 days · 3 day easy return</p>
 
         <div class="cart__ctas" {{ block.shopify_attributes }}>
           <button
