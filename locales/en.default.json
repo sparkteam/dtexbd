@@ -117,7 +117,7 @@
     "product": {
       "add_to_cart": "Add to cart",
       "buy_it_now": "Buy it now",
-      "buy_with_whatsapp": "Buy with WhatsApp",
+      "buy_with_whatsapp": "Order on WhatsApp",
       "choose_options": "Choose options",
       "choose_product_options": "Choose options for {{ product_name }}",
       "description": "Description",
