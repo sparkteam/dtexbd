@@ -1,0 +1,494 @@
+{% comment %}
+  Loved by our customers — homepage review rail.
+  Photos come from the linked product, so each card shows a real DTex design.
+{% endcomment %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@700;800&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --lbc-green: {{ section.settings.brand_color }};
+    --lbc-green-deep: #0a3a1a;
+    --lbc-orange: {{ section.settings.accent_color }};
+    --lbc-cream: {{ section.settings.section_bg }};
+    --lbc-ink: #172117;
+    --lbc-muted: #5e675e;
+    --lbc-star: {{ section.settings.star_color }};
+    --lbc-navy: #1c2740;
+    --lbc-gold: #c4a06a;
+    --lbc-card: 332px;
+    --lbc-gap: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .lbc {
+    background: var(--lbc-cream);
+    padding: 56px 0 28px;
+    color: var(--lbc-ink);
+  }
+
+  #shopify-section-{{ section.id }} .lbc-head {
+    max-width: 1400px;
+    margin: 0 auto 22px;
+    padding: 0 20px;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .lbc-title {
+    margin: 0;
+    font-family: Almarai, "Noto Sans Bengali", sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }} .lbc-title-lead { color: var(--lbc-navy); }
+  #shopify-section-{{ section.id }} .lbc-title-accent { color: var(--lbc-gold); }
+
+  #shopify-section-{{ section.id }} .lbc-sub {
+    margin: 10px auto 0;
+    max-width: 560px;
+    color: var(--lbc-muted);
+    font-family: "Noto Sans Bengali", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  #shopify-section-{{ section.id }} .lbc-trust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .lbc-trust-stars {
+    display: inline-flex;
+    gap: 3px;
+    color: var(--lbc-star);
+  }
+
+  #shopify-section-{{ section.id }} .lbc-trust-stars svg,
+  #shopify-section-{{ section.id }} .lbc-stars svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .lbc-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px 7px 10px;
+    border: 0;
+    border-radius: 999px;
+    background: #f6efe4;
+    color: #8d7350;
+    font-family: "Noto Sans Bengali", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  #shopify-section-{{ section.id }} .lbc-pill svg { width: 14px; height: 14px; display: block; }
+
+  #shopify-section-{{ section.id }} .lbc-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 8px 20px 48px;
+    column-count: 4;
+    column-gap: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .lbc-card {
+    display: inline-block;
+    width: 100%;
+    margin: 0 0 16px;
+    break-inside: avoid;
+    vertical-align: top;
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(17, 24, 39, 0.08);
+  }
+
+  #shopify-section-{{ section.id }} .lbc-photo {
+    position: relative;
+    aspect-ratio: 5 / 4;
+    flex: 0 0 auto;
+    min-height: 0;
+    overflow: hidden;
+    background: #efe8dc;
+  }
+
+  #shopify-section-{{ section.id }} .lbc-card.size-sm .lbc-photo { aspect-ratio: 4 / 5; }
+  #shopify-section-{{ section.id }} .lbc-card.size-md .lbc-photo { aspect-ratio: 1 / 1; }
+  #shopify-section-{{ section.id }} .lbc-card.size-lg .lbc-photo { aspect-ratio: 5 / 4; }
+  #shopify-section-{{ section.id }} .lbc-card.size-xl .lbc-photo { aspect-ratio: 4 / 3; }
+
+  #shopify-section-{{ section.id }} .lbc-photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .lbc-heart {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.94);
+    color: #6b7280;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(23, 33, 23, 0.12);
+  }
+
+  #shopify-section-{{ section.id }} .lbc-heart svg { width: 18px; height: 18px; display: block; }
+  #shopify-section-{{ section.id }} .lbc-heart[aria-pressed="true"] { color: #d4534e; }
+  #shopify-section-{{ section.id }} .lbc-heart[aria-pressed="true"] svg { fill: currentColor; }
+
+  #shopify-section-{{ section.id }} .lbc-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px 16px 14px;
+    flex: 1;
+  }
+
+  #shopify-section-{{ section.id }} .lbc-person {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #shopify-section-{{ section.id }} .lbc-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    font-family: Almarai, "Noto Sans Bengali", sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    background: #1c2740;
+  }
+
+  #shopify-section-{{ section.id }} .lbc-avatar.tone-1 { background: #3d5a80; }
+  #shopify-section-{{ section.id }} .lbc-avatar.tone-2 { background: #8d7350; }
+  #shopify-section-{{ section.id }} .lbc-avatar.tone-3 { background: #2f6f4e; }
+
+  #shopify-section-{{ section.id }} .lbc-name {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--lbc-ink);
+    font-family: "Noto Sans Bengali", sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  #shopify-section-{{ section.id }} .lbc-name svg { width: 15px; height: 15px; color: #1d9bf0; display: block; }
+
+  #shopify-section-{{ section.id }} .lbc-meta {
+    margin-top: 2px;
+    color: var(--lbc-muted);
+    font-family: "Noto Sans Bengali", sans-serif;
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  #shopify-section-{{ section.id }} .lbc-stars {
+    display: inline-flex;
+    gap: 2px;
+    color: var(--lbc-star);
+  }
+
+  #shopify-section-{{ section.id }} .lbc-stars .is-off { color: #ddd6c8; }
+
+  #shopify-section-{{ section.id }} .lbc-quote {
+    margin: 0;
+    min-height: 0;
+    color: #3f3f46;
+    font-family: "Noto Sans Bengali", sans-serif;
+    font-size: 14.5px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  #shopify-section-{{ section.id }} .lbc-qmark {
+    color: var(--lbc-gold);
+    font-family: Georgia, "Noto Sans Bengali", serif;
+    font-size: 22px;
+    line-height: 0;
+    margin-right: 2px;
+  }
+
+  #shopify-section-{{ section.id }} .lbc-product {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid #efefef;
+    color: #374151;
+    font-family: "Noto Sans Bengali", sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.3;
+    text-decoration: none;
+  }
+
+  #shopify-section-{{ section.id }} a.lbc-product:hover { color: var(--lbc-navy); }
+  #shopify-section-{{ section.id }} .lbc-product svg { width: 16px; height: 16px; flex: 0 0 auto; color: #9ca3af; }
+  #shopify-section-{{ section.id }} .lbc-product span { flex: 1; }
+
+  #shopify-section-{{ section.id }} .lbc-arrow {
+    position: absolute;
+    top: 34%;
+    z-index: 2;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--lbc-navy);
+    border: 1px solid #ececec;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(14, 77, 34, 0.28);
+  }
+
+  #shopify-section-{{ section.id }} .lbc-arrow svg { width: 18px; height: 18px; display: block; }
+  #shopify-section-{{ section.id }} .lbc-arrow.prev { left: 14px; }
+  #shopify-section-{{ section.id }} .lbc-arrow.next { right: 14px; }
+  #shopify-section-{{ section.id }} .lbc-arrow:hover { background: #f6efe4; }
+  #shopify-section-{{ section.id }} .lbc-arrow:disabled {
+    opacity: 0.35;
+    cursor: default;
+    background: #fff;
+  }
+
+  #shopify-section-{{ section.id }} .lbc-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
+  @media screen and (max-width: 989px) {
+    #shopify-section-{{ section.id }} .lbc-grid { column-count: 2; }
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .lbc { padding-top: 40px; }
+    #shopify-section-{{ section.id }} .lbc-title { font-size: 28px; letter-spacing: 0.03em; }
+    #shopify-section-{{ section.id }} .lbc-grid { column-count: 1; }
+  }
+{%- endstyle -%}
+
+<section class="lbc" id="Lbc-{{ section.id }}" aria-label="{{ section.settings.accessibility_label | escape }}">
+  <div class="lbc-head">
+    <h2 class="lbc-title">
+      <span class="lbc-title-lead">{{ section.settings.heading_lead | escape }}</span>
+      <span class="lbc-title-accent">{{ section.settings.heading_accent | escape }}</span>
+    </h2>
+    {%- if section.settings.subheading != blank -%}
+      <p class="lbc-sub">{{ section.settings.subheading | escape }}</p>
+    {%- endif -%}
+    <div class="lbc-trust">
+      <span class="lbc-trust-stars" aria-hidden="true">
+        {%- for i in (1..5) -%}
+          <svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg>
+        {%- endfor -%}
+      </span>
+      <span class="lbc-sr">5 out of 5</span>
+      <span class="lbc-pill">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        {{ section.settings.badge_label | escape }}
+      </span>
+    </div>
+  </div>
+
+  <div class="lbc-grid">
+    {%- assign size_list = 'lg,sm,md,xl,sm,lg,md,sm,xl,md,lg,sm,xl,md,sm,lg,md,xl,sm,lg' | split: ',' -%}
+    {%- for block in section.blocks -%}
+      {%- assign tone = forloop.index0 | modulo: 4 -%}
+      {%- assign size_index = forloop.index0 | modulo: size_list.size -%}
+      {%- assign size = size_list[size_index] | default: 'md' -%}
+      {% render 'lbc-review-card', block: block, tone: tone, size: size %}
+    {%- endfor -%}
+  </div>
+
+</section>
+
+<script>
+  (function () {
+    var root = document.getElementById('Lbc-{{ section.id }}');
+    if (!root || root.dataset.lbcInit === '1') return;
+    root.dataset.lbcInit = '1';
+    root.querySelectorAll('[data-lbc-heart]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var on = button.getAttribute('aria-pressed') === 'true';
+        button.setAttribute('aria-pressed', on ? 'false' : 'true');
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Loved by customers",
+  "tag": "section",
+  "class": "lbc-section",
+    "max_blocks": 30,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_lead",
+      "label": "Heading start",
+      "default": "Loved by our"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading accent",
+      "default": "customers"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Beautiful bedding designs, shared by our verified customers."
+    },
+    {
+      "type": "text",
+      "id": "badge_label",
+      "label": "Badge",
+      "default": "Verified customers"
+    },
+    {
+      "type": "text",
+      "id": "accessibility_label",
+      "label": "Accessibility label",
+      "default": "Customer reviews"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "brand_color",
+      "label": "Brand green",
+      "default": "#1c2740"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#c4a06a"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#f0b429"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "photo_asset",
+          "label": "Home photo filename",
+          "info": "Theme asset, such as review-home-farzana.jpg. Used before the product photo."
+        },
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Placement",
+          "default": "carousel",
+          "options": [
+            { "value": "carousel", "label": "Top carousel" },
+            { "value": "below", "label": "Row below the carousel" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo",
+          "info": "Optional. Used when no home photo filename is set."
+        },
+        {
+          "type": "text",
+          "id": "product_title",
+          "label": "Product label",
+          "info": "Short name on the card. Leave empty to use the product title."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Customer name",
+          "default": "Farzana Akter"
+        },
+        {
+          "type": "textarea",
+          "id": "review",
+          "label": "Review",
+          "default": "কাপড় নরম, রঙটাও ছবির মতোই এসেছে।"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Stars",
+          "default": 5
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Loved by customers",
+      "blocks": [
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" }
+      ]
+    }
+  ]
+}
+{% endschema %}

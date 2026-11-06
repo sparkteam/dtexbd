@@ -923,6 +923,285 @@
         "padding_bottom": 40,
         "soldout_text": "Sold out"
       }
+    },
+    "loved_by_customers": {
+      "type": "loved-by-customers",
+      "blocks": {
+        "review_farzana": {
+          "type": "review",
+          "settings": {
+            "product": "export-quality-bedsheet-8",
+            "product_title": "Export Quality Bedsheet",
+            "name": "Farzana Akter",
+            "review": "হলুদ বেডশিট, ছোট ফুলের ছাপ। ছবির মতোই পেয়েছি। কাপড় ভালো। বালিশের কাভার ২টা ছিল।",
+            "rating": 5,
+            "photo_asset": "review-home-farzana.jpg",
+            "placement": "carousel"
+          }
+        },
+        "review_tanvir": {
+          "type": "review",
+          "settings": {
+            "product": "parkel-bedsheet-18",
+            "product_title": "Parkel Bedsheet",
+            "name": "Tanvir Hasan",
+            "review": "Parkel bedsheet. Green is deep, yellow flowers same as the photo. Washed 2 times, colour stayed. Pillow cover size is ok.",
+            "rating": 5,
+            "photo_asset": "review-home-tanvir.jpg",
+            "placement": "carousel"
+          }
+        },
+        "review_sadia": {
+          "type": "review",
+          "settings": {
+            "product": "twill-bedsheet-5",
+            "product_title": "Twill Bedsheet",
+            "name": "Sadia Islam",
+            "review": "Twill bedsheet, white with purple flowers. Thicker than market cotton. Print is clear, not blurry.",
+            "rating": 5,
+            "photo_asset": "review-home-sadia.jpg",
+            "placement": "carousel"
+          }
+        },
+        "review_rafiqul": {
+          "type": "review",
+          "settings": {
+            "product": "3d-digital-bedsheet-3",
+            "product_title": "3D Digital Bedsheet",
+            "name": "Rafiqul Islam",
+            "review": "3D bedsheet, light blue with big pink flowers. Print is good. Cloth is heavy and warm without a fan, so 4.",
+            "rating": 4,
+            "photo_asset": "review-home-rafiqul.jpg",
+            "placement": "carousel"
+          }
+        },
+        "review_nusrat": {
+          "type": "review",
+          "settings": {
+            "product": "solid-cotton-bedsheet-set-with-2-pillow-covers-40-40-count-8-5-x-7-5-feet",
+            "product_title": "Solid Cotton Bedsheet",
+            "name": "Nusrat Jahan",
+            "review": "Solid cotton bedsheet, plain white. Soft cloth, not rough. 2 pillow covers in the set.",
+            "rating": 5,
+            "photo_asset": "review-home-nusrat.jpg",
+            "placement": "carousel"
+          }
+        },
+        "review_shakib": {
+          "type": "review",
+          "settings": {
+            "product": "combined-waffle-curtain-2",
+            "product_title": "Combo Waffle Curtain",
+            "name": "Shakib Ahmed",
+            "review": "Combo waffle curtain. One panel floral, one panel solid blue. Texture shows in the sun. Room stays bright.",
+            "rating": 5,
+            "photo_asset": "review-home-shakib.jpg",
+            "placement": "carousel"
+          }
+        },
+        "review_meherun": {
+          "type": "review",
+          "settings": {
+            "product": "waffle-curtain-1",
+            "product_title": "Waffle Curtain",
+            "name": "Meherun Nesa",
+            "review": "নীল ফুলের ওয়াফল পর্দা। কাপড় পাতলা না। জানালায় লাগিয়েছি, ঝুল ঠিক আছে।",
+            "rating": 5,
+            "photo_asset": "review-home-meherun.jpg",
+            "placement": "carousel"
+          }
+        },
+        "review_imran": {
+          "type": "review",
+          "settings": {
+            "product": "regular-comforter-1",
+            "product_title": "Regular Comforter",
+            "name": "Imran Hossain",
+            "review": "Regular comforter. Pink on one side, navy with white flowers on the other. Not heavy. Came clean.",
+            "rating": 5,
+            "photo_asset": "review-home-imran.jpg",
+            "placement": "carousel"
+          }
+        },
+        "review_tasnim": {
+          "type": "review",
+          "settings": {
+            "product": "twill-comforter-2",
+            "product_title": "Twill Comforter",
+            "name": "Tasnim Chowdhury",
+            "review": "Twill comforter, light blue with dark blue flowers. Warm at night. Not stiff.",
+            "rating": 5,
+            "photo_asset": "review-home-tasnim.jpg",
+            "placement": "carousel"
+          }
+        },
+        "review_mahmudul": {
+          "type": "review",
+          "settings": {
+            "product": "perkel-comforter-4",
+            "product_title": "Perkel Comforter",
+            "name": "Mahmudul Hasan",
+            "review": "Perkel comforter, mustard with leaf print. Washed once, print stayed. Good for early winter.",
+            "rating": 5,
+            "photo_asset": "review-home-mahmudul.jpg",
+            "placement": "carousel"
+          }
+        },
+        "review_ruma": {
+          "type": "review",
+          "settings": {
+            "product": "3d-digital-comforter-4",
+            "product_title": "3D Digital Comforter",
+            "name": "Ruma Khatun",
+            "review": "3D comforter, purple and pink with white flowers. Print is clear. Cloth is good for the price.",
+            "rating": 5,
+            "photo_asset": "review-home-ruma.jpg",
+            "placement": "carousel"
+          }
+        },
+        "review_arif": {
+          "type": "review",
+          "settings": {
+            "product": "solid-comforter-1",
+            "product_title": "Solid Comforter",
+            "name": "Arif Mahmud",
+            "review": "Solid comforter, plain white, no print. Colour is even, cloth is soft. Came to Gazipur in 3 days. Product is good.",
+            "rating": 4,
+            "photo_asset": "review-home-arif.jpg",
+            "placement": "carousel"
+          }
+        },
+        "review_sumaiya": {
+          "type": "review",
+          "settings": {
+            "product": "export-quality-bedsheet-3",
+            "product_title": "Export Quality Bedsheet",
+            "name": "Sumaiya Akter",
+            "review": "Export quality bedsheet. Blue geometric print, same on the pillow covers. Colour did not change under the light.",
+            "rating": 5,
+            "placement": "below",
+            "photo_asset": "review-home-sumaiya.jpg"
+          }
+        },
+        "review_jahid": {
+          "type": "review",
+          "settings": {
+            "product": "parkel-bedsheet-6",
+            "product_title": "Parkel Bedsheet",
+            "name": "Jahid Hasan",
+            "review": "Parkel bedsheet, mint with small pink flowers. Print still there after one wash.",
+            "rating": 5,
+            "placement": "below",
+            "photo_asset": "review-home-jahid.jpg"
+          }
+        },
+        "review_lamia": {
+          "type": "review",
+          "settings": {
+            "product": "twill-bedsheet-2",
+            "product_title": "Twill Bedsheet",
+            "name": "Lamia Rahman",
+            "review": "Twill bedsheet, light rose print. Cotton is not thin. Put it on my parents bed.",
+            "rating": 5,
+            "placement": "below",
+            "photo_asset": "review-home-lamia.jpg"
+          }
+        },
+        "review_kamrul": {
+          "type": "review",
+          "settings": {
+            "product": "3d-digital-bedsheet-1",
+            "product_title": "3D Digital Bedsheet",
+            "name": "Kamrul Islam",
+            "review": "গোলাপি 3D বেডশিট। রং ছবির চেয়ে বেশি উজ্জ্বল। কাপড় মোটা।",
+            "rating": 4,
+            "placement": "below",
+            "photo_asset": "review-home-kamrul.jpg"
+          }
+        },
+        "review_sharmin": {
+          "type": "review",
+          "settings": {
+            "product": "waffle-solid-curtain-3",
+            "product_title": "Waffle Solid Curtain",
+            "name": "Sharmin Akter",
+            "review": "Solid purple waffle curtain. Cloth texture is clear. Light still comes through.",
+            "rating": 5,
+            "placement": "below",
+            "photo_asset": "review-home-sharmin.jpg"
+          }
+        },
+        "review_nayeem": {
+          "type": "review",
+          "settings": {
+            "product": "perkel-comforter-1",
+            "product_title": "Perkel Comforter",
+            "name": "Nayeem Ahmed",
+            "review": "Perkel comforter, aqua with flowers. Light, not too warm. Stitching is even. Print stayed after wash.",
+            "rating": 5,
+            "placement": "below",
+            "photo_asset": "review-home-nayeem.jpg"
+          }
+        },
+        "review_faria": {
+          "type": "review",
+          "settings": {
+            "product": "3d-digital-comforter-1",
+            "product_title": "3D Digital Comforter",
+            "name": "Faria Sultana",
+            "review": "3D comforter, light pink floral. Not heavy. Print stayed after one wash.",
+            "rating": 5,
+            "placement": "below",
+            "photo_asset": "review-home-faria.jpg"
+          }
+        },
+        "review_rakib": {
+          "type": "review",
+          "settings": {
+            "product": "waffle-curtain-28",
+            "product_title": "Waffle Curtain",
+            "name": "Rakib Chowdhury",
+            "review": "Waffle curtain, black pattern on cream. Looks ok, but the room gets less light. Gave 4.",
+            "rating": 4,
+            "placement": "below",
+            "photo_asset": "review-home-rakib.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "review_farzana",
+        "review_tanvir",
+        "review_sadia",
+        "review_rafiqul",
+        "review_nusrat",
+        "review_shakib",
+        "review_meherun",
+        "review_imran",
+        "review_tasnim",
+        "review_mahmudul",
+        "review_ruma",
+        "review_arif",
+        "review_sumaiya",
+        "review_jahid",
+        "review_lamia",
+        "review_kamrul",
+        "review_sharmin",
+        "review_nayeem",
+        "review_faria",
+        "review_rakib"
+      ],
+      "name": "Loved by customers",
+      "settings": {
+        "heading_lead": "Loved by our",
+        "heading_accent": "customers",
+        "subheading": "Beautiful bedding designs, shared by our verified customers.",
+        "badge_label": "Verified customers",
+        "accessibility_label": "Customer reviews",
+        "section_bg": "#ffffff",
+        "brand_color": "#1c2740",
+        "accent_color": "#c4a06a",
+        "star_color": "#f0b429"
+      }
     }
   },
   "order": [
@@ -936,6 +1215,7 @@
     "catalog_curtains_mush",
     "catalog_comforters_mush",
     "catalog_bedsheets_mush",
+    "loved_by_customers",
     "mush_category_grid_jik7qb",
     "featured_products_mush_TaFDFR",
     "blocks_EQUDVW",

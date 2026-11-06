@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Loved by our customers — desktop preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@700;800&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #fff; color: #172117; }
+    .preview-flag {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 8px 16px;
+      background: #172117;
+      color: #f4efe6;
+      font-family: "Noto Sans Bengali", sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+    .lbc { background: #fff; padding: 56px 0 28px; }
+    .lbc-head { max-width: 1400px; margin: 0 auto 22px; padding: 0 20px; text-align: center; }
+    .lbc-title {
+      margin: 0;
+      font-family: Almarai, "Noto Sans Bengali", sans-serif;
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: 0.045em;
+      text-transform: uppercase;
+    }
+    .lbc-title-lead { color: #1c2740; }
+    .lbc-title-accent { color: #c4a06a; }
+    .lbc-sub {
+      margin: 10px auto 0;
+      max-width: 560px;
+      color: #5e675e;
+      font-family: "Noto Sans Bengali", sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    .lbc-trust { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 16px; }
+    .lbc-trust-stars, .lbc-stars { display: inline-flex; gap: 3px; color: #f0b429; }
+    .lbc-trust-stars svg, .lbc-stars svg { width: 16px; height: 16px; display: block; }
+    .lbc-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 12px 7px 10px; border: 0; border-radius: 999px;
+      background: #f6efe4; color: #8d7350;
+      font-family: "Noto Sans Bengali", sans-serif; font-size: 13px; font-weight: 600; line-height: 1;
+    }
+    .lbc-pill svg { width: 14px; height: 14px; display: block; }
+    .lbc-grid {
+      max-width: 1400px; margin: 0 auto; padding: 8px 20px 48px;
+      column-count: 4; column-gap: 16px;
+    }
+    .lbc-card {
+      display: inline-block; width: 100%; margin: 0 0 16px;
+      break-inside: avoid; vertical-align: top;
+      background: #fff; border: 1px solid #ececec;
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 8px 24px rgba(17, 24, 39, 0.08);
+    }
+    @media (max-width: 989px) { .lbc-grid { column-count: 2; } }
+    @media (max-width: 749px) { .lbc-grid { column-count: 1; } }
+    .lbc-photo { position: relative; aspect-ratio: 5 / 4; flex: 0 0 auto; min-height: 0; overflow: hidden; background: #efe8dc; }
+    .lbc-card.size-sm .lbc-photo { aspect-ratio: 4 / 5; }
+    .lbc-card.size-md .lbc-photo { aspect-ratio: 1 / 1; }
+    .lbc-card.size-lg .lbc-photo { aspect-ratio: 5 / 4; }
+    .lbc-card.size-xl .lbc-photo { aspect-ratio: 4 / 3; }
+    .lbc-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .lbc-heart {
+      position: absolute; top: 12px; right: 12px; width: 36px; height: 36px;
+      border: 0; border-radius: 50%; background: rgba(255,255,255,0.94); color: #6b7280;
+      display: grid; place-items: center; cursor: pointer;
+      box-shadow: 0 2px 8px rgba(23, 33, 23, 0.12);
+    }
+    .lbc-heart svg { width: 18px; height: 18px; display: block; }
+    .lbc-heart[aria-pressed="true"] { color: #d4534e; }
+    .lbc-heart[aria-pressed="true"] svg { fill: currentColor; }
+    .lbc-body { display: flex; flex-direction: column; gap: 10px; padding: 16px 16px 14px; flex: 1; }
+    .lbc-person { display: flex; align-items: center; gap: 10px; }
+    .lbc-avatar {
+      width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+      font-family: Almarai, sans-serif; font-size: 16px; font-weight: 800; color: #fff; background: #1c2740;
+    }
+    .lbc-avatar.tone-1 { background: #3d5a80; }
+    .lbc-avatar.tone-2 { background: #8d7350; }
+    .lbc-avatar.tone-3 { background: #2f6f4e; }
+    .lbc-name {
+      display: flex; align-items: center; gap: 5px;
+      font-family: "Noto Sans Bengali", sans-serif; font-size: 15px; font-weight: 700; line-height: 1.2;
+    }
+    .lbc-name svg { width: 15px; height: 15px; color: #1d9bf0; display: block; }
+    .lbc-meta { margin-top: 2px; color: #5e675e; font-family: "Noto Sans Bengali", sans-serif; font-size: 12px; }
+    .lbc-stars .is-off { color: #ddd6c8; }
+    .lbc-quote {
+      margin: 0; min-height: 0; color: #3f3f46;
+      font-family: "Noto Sans Bengali", sans-serif; font-size: 14.5px; line-height: 1.6;
+    }
+    .lbc-qmark { color: #c4a06a; font-family: Georgia, serif; font-size: 22px; line-height: 0; margin-right: 2px; }
+    .lbc-product {
+      margin-top: auto; display: flex; align-items: center; gap: 8px;
+      padding-top: 12px; border-top: 1px solid #efefef;
+      color: #374151; font-family: "Noto Sans Bengali", sans-serif;
+      font-size: 13.5px; font-weight: 600; line-height: 1.3; text-decoration: none;
+    }
+    .lbc-product:hover { color: #1c2740; }
+    .lbc-product svg { width: 16px; height: 16px; flex: 0 0 auto; color: #9ca3af; }
+    .lbc-product span { flex: 1; }
+    .lbc-arrow {
+      position: absolute; top: 34%; z-index: 2; width: 42px; height: 42px;
+      border: 1px solid #ececec; border-radius: 50%; background: #fff; color: #1c2740;
+      display: grid; place-items: center; cursor: pointer;
+      box-shadow: 0 6px 16px rgba(14, 77, 34, 0.28);
+    }
+    .lbc-arrow svg { width: 18px; height: 18px; display: block; }
+    .lbc-arrow.prev { left: 14px; }
+    .lbc-arrow.next { right: 14px; }
+    .lbc-arrow:hover { background: #f6efe4; }
+    .lbc-arrow:disabled { opacity: 0.35; cursor: default; background: #fff; }
+  </style>
+</head>
+<body>
+  <div class="preview-flag">Desktop preview — Loved by our customers, static grid. Not published.</div>
+  <section class="lbc" id="lbc" aria-label="Customer reviews">
+    <div class="lbc-head">
+      <h2 class="lbc-title"><span class="lbc-title-lead">Loved by our</span> <span class="lbc-title-accent">customers</span></h2>
+      <p class="lbc-sub">Beautiful bedding designs, shared by our verified customers.</p>
+      <div class="lbc-trust">
+        <span class="lbc-trust-stars" aria-hidden="true">
+          <svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg>
+          <svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg>
+          <svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg>
+          <svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg>
+          <svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg>
+        </span>
+        <span class="lbc-pill">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Verified customers
+        </span>
+      </div>
+    </div>
+    <div class="lbc-grid">
+        <article class="lbc-card size-lg">
+          <div class="lbc-photo">
+            <img alt="Export Quality Bedsheet" src="reviews/review-home-farzana.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Farzana Akter"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-0">F</span><div><div class="lbc-name">Farzana Akter <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>হলুদ বেডশিট, ছোট ফুলের ছাপ। ছবির মতোই পেয়েছি। কাপড় ভালো। বালিশের কাভার ২টা ছিল।</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/export-quality-bedsheet-8"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Export Quality Bedsheet</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-sm">
+          <div class="lbc-photo">
+            <img alt="Parkel Bedsheet" src="reviews/review-home-tanvir.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Tanvir Hasan"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-1">T</span><div><div class="lbc-name">Tanvir Hasan <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>Parkel bedsheet. Green is deep, yellow flowers same as the photo. Washed 2 times, colour stayed. Pillow cover size is ok.</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/parkel-bedsheet-18"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Parkel Bedsheet</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-md">
+          <div class="lbc-photo">
+            <img alt="Twill Bedsheet" src="reviews/review-home-sadia.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Sadia Islam"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-2">S</span><div><div class="lbc-name">Sadia Islam <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>Twill bedsheet, white with purple flowers. Thicker than market cotton. Print is clear, not blurry.</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/twill-bedsheet-5"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Twill Bedsheet</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-xl">
+          <div class="lbc-photo">
+            <img alt="3D Digital Bedsheet" src="reviews/review-home-rafiqul.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Rafiqul Islam"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-3">R</span><div><div class="lbc-name">Rafiqul Islam <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg class="is-off" viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>3D bedsheet, light blue with big pink flowers. Print is good. Cloth is heavy and warm without a fan, so 4.</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/3d-digital-bedsheet-3"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>3D Digital Bedsheet</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-sm">
+          <div class="lbc-photo">
+            <img alt="Solid Cotton Bedsheet" src="reviews/review-home-nusrat.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Nusrat Jahan"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-0">N</span><div><div class="lbc-name">Nusrat Jahan <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>Solid cotton bedsheet, plain white. Soft cloth, not rough. 2 pillow covers in the set.</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/solid-cotton-bedsheet-set-with-2-pillow-covers-40-40-count-8-5-x-7-5-feet"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Solid Cotton Bedsheet</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-lg">
+          <div class="lbc-photo">
+            <img alt="Combo Waffle Curtain" src="reviews/review-home-shakib.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Shakib Ahmed"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-1">S</span><div><div class="lbc-name">Shakib Ahmed <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>Combo waffle curtain. One panel floral, one panel solid blue. Texture shows in the sun. Room stays bright.</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/combined-waffle-curtain-2"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Combo Waffle Curtain</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-md">
+          <div class="lbc-photo">
+            <img alt="Waffle Curtain" src="reviews/review-home-meherun.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Meherun Nesa"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-2">M</span><div><div class="lbc-name">Meherun Nesa <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>নীল ফুলের ওয়াফল পর্দা। কাপড় পাতলা না। জানালায় লাগিয়েছি, ঝুল ঠিক আছে।</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/waffle-curtain-1"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Waffle Curtain</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-sm">
+          <div class="lbc-photo">
+            <img alt="Regular Comforter" src="reviews/review-home-imran.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Imran Hossain"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-3">I</span><div><div class="lbc-name">Imran Hossain <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>Regular comforter. Pink on one side, navy with white flowers on the other. Not heavy. Came clean.</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/regular-comforter-1"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Regular Comforter</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-xl">
+          <div class="lbc-photo">
+            <img alt="Twill Comforter" src="reviews/review-home-tasnim.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Tasnim Chowdhury"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-0">T</span><div><div class="lbc-name">Tasnim Chowdhury <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>Twill comforter, light blue with dark blue flowers. Warm at night. Not stiff.</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/twill-comforter-2"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Twill Comforter</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-md">
+          <div class="lbc-photo">
+            <img alt="Perkel Comforter" src="reviews/review-home-mahmudul.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Mahmudul Hasan"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-1">M</span><div><div class="lbc-name">Mahmudul Hasan <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>Perkel comforter, mustard with leaf print. Washed once, print stayed. Good for early winter.</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/perkel-comforter-4"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Perkel Comforter</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-lg">
+          <div class="lbc-photo">
+            <img alt="3D Digital Comforter" src="reviews/review-home-ruma.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Ruma Khatun"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-2">R</span><div><div class="lbc-name">Ruma Khatun <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>3D comforter, purple and pink with white flowers. Print is clear. Cloth is good for the price.</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/3d-digital-comforter-4"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>3D Digital Comforter</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-sm">
+          <div class="lbc-photo">
+            <img alt="Solid Comforter" src="reviews/review-home-arif.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Arif Mahmud"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-3">A</span><div><div class="lbc-name">Arif Mahmud <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg class="is-off" viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>Solid comforter, plain white, no print. Colour is even, cloth is soft. Came to Gazipur in 3 days. Product is good.</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/solid-comforter-1"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Solid Comforter</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-xl">
+          <div class="lbc-photo">
+            <img alt="Export Quality Bedsheet" src="reviews/review-home-sumaiya.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Sumaiya Akter"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-0">S</span><div><div class="lbc-name">Sumaiya Akter <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>Export quality bedsheet. Blue geometric print, same on the pillow covers. Colour did not change under the light.</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/export-quality-bedsheet-3"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Export Quality Bedsheet</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-md">
+          <div class="lbc-photo">
+            <img alt="Parkel Bedsheet" src="reviews/review-home-jahid.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Jahid Hasan"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-1">J</span><div><div class="lbc-name">Jahid Hasan <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>Parkel bedsheet, mint with small pink flowers. Print still there after one wash.</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/parkel-bedsheet-6"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Parkel Bedsheet</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-sm">
+          <div class="lbc-photo">
+            <img alt="Twill Bedsheet" src="reviews/review-home-lamia.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Lamia Rahman"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-2">L</span><div><div class="lbc-name">Lamia Rahman <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>Twill bedsheet, light rose print. Cotton is not thin. Put it on my parents bed.</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/twill-bedsheet-2"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Twill Bedsheet</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-lg">
+          <div class="lbc-photo">
+            <img alt="3D Digital Bedsheet" src="reviews/review-home-kamrul.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Kamrul Islam"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-3">K</span><div><div class="lbc-name">Kamrul Islam <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg class="is-off" viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>গোলাপি 3D বেডশিট। রং ছবির চেয়ে বেশি উজ্জ্বল। কাপড় মোটা।</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/3d-digital-bedsheet-1"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>3D Digital Bedsheet</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-md">
+          <div class="lbc-photo">
+            <img alt="Waffle Solid Curtain" src="reviews/review-home-sharmin.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Sharmin Akter"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-0">S</span><div><div class="lbc-name">Sharmin Akter <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>Solid purple waffle curtain. Cloth texture is clear. Light still comes through.</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/waffle-solid-curtain-3"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Waffle Solid Curtain</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-xl">
+          <div class="lbc-photo">
+            <img alt="Perkel Comforter" src="reviews/review-home-nayeem.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Nayeem Ahmed"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-1">N</span><div><div class="lbc-name">Nayeem Ahmed <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>Perkel comforter, aqua with flowers. Light, not too warm. Stitching is even. Print stayed after wash.</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/perkel-comforter-1"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Perkel Comforter</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-sm">
+          <div class="lbc-photo">
+            <img alt="3D Digital Comforter" src="reviews/review-home-faria.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Faria Sultana"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-2">F</span><div><div class="lbc-name">Faria Sultana <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>3D comforter, light pink floral. Not heavy. Print stayed after one wash.</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/3d-digital-comforter-1"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>3D Digital Comforter</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+        <article class="lbc-card size-lg">
+          <div class="lbc-photo">
+            <img alt="Waffle Curtain" src="reviews/review-home-rakib.jpg">
+            <button class="lbc-heart" type="button" data-lbc-heart aria-pressed="false" aria-label="Save review from Rakib Chowdhury"><svg viewBox="0 0 24 24"><path d="M12 19.4l-1.1-1C6.1 14.2 3.5 11.8 3.5 8.8 3.5 6.5 5.3 4.7 7.6 4.7c1.3 0 2.6.6 3.4 1.7.8-1.1 2.1-1.7 3.4-1.7 2.3 0 4.1 1.8 4.1 4.1 0 3-2.6 5.4-7.4 9.6l-1.1 1z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+          </div>
+          <div class="lbc-body">
+            <div class="lbc-person"><span class="lbc-avatar tone-3">R</span><div><div class="lbc-name">Rakib Chowdhury <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10.2l2.3 2.3L14 7.2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lbc-meta">Verified customer</div></div></div>
+            <div class="lbc-stars"><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg><svg class="is-off" viewBox="0 0 20 20"><path fill="currentColor" d="M10 1.7l2.16 4.64 5.09.62-3.76 3.48.97 5.06L10 13.15 5.54 15.5l.97-5.06L2.75 6.96l5.09-.62L10 1.7z"/></svg></div>
+            <p class="lbc-quote"><span class="lbc-qmark">“</span>Waffle curtain, black pattern on cream. Looks ok, but the room gets less light. Gave 4.</p>
+            <a class="lbc-product" href="https://dtex.com.bd/products/waffle-curtain-28"><svg viewBox="0 0 24 24"><path d="M4 10.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11.5 12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 20v-5.2h5V20" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Waffle Curtain</span><svg viewBox="0 0 20 20"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          </div>
+        </article>
+    </div>
+  </section>
+  <script>
+    (function () {
+      var root = document.getElementById('lbc');
+      root.querySelectorAll('[data-lbc-heart]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          var on = button.getAttribute('aria-pressed') === 'true';
+          button.setAttribute('aria-pressed', on ? 'false' : 'true');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
