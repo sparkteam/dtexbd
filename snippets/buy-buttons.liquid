@@ -18,11 +18,6 @@
       if block.settings.show_gift_card_recipient and product.gift_card?
         assign gift_card_recipient_feature_active = true
       endif
-
-      assign show_dynamic_checkout = false
-      if block.settings.show_dynamic_checkout and gift_card_recipient_feature_active == false
-        assign show_dynamic_checkout = true
-      endif
     -%}
 
     <product-form
@@ -83,14 +78,12 @@
             unless product.has_only_default_variant
               assign wa_variant = product.selected_or_first_available_variant.title
             endunless
-            capture wa_text
-Hi, I want to buy {{ product.title }}.
-{%- if wa_variant != blank %}
-Option: {{ wa_variant }}
-{%- endif %}
-Price: {{ product.selected_or_first_available_variant.price | money }}
-{{ shop.url }}{{ product.url }}
-            endcapture
+            assign wa_price = product.selected_or_first_available_variant.price | money
+            assign wa_text = 'Hi, I want to buy ' | append: product.title | append: '.'
+            if wa_variant != blank
+              assign wa_text = wa_text | append: ' Option: ' | append: wa_variant | append: '.'
+            endif
+            assign wa_text = wa_text | append: ' Price: ' | append: wa_price | append: ' ' | append: shop.url | append: product.url
           -%}
           <button
             id="ProductSubmitButton-{{ section_id }}"
