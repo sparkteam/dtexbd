@@ -477,6 +477,7 @@
     },
     "mush_category_grid_jik7qb": {
       "type": "mush-category-grid",
+      "disabled": true,
       "blocks": {
         "category_8R4pmg": {
           "type": "category",
@@ -560,6 +561,7 @@
     },
     "featured_products_mush_TaFDFR": {
       "type": "featured-products-mush",
+      "disabled": true,
       "blocks": {
         "product_qmxyBh": {
           "type": "product",
@@ -641,6 +643,7 @@
     },
     "blocks_EQUDVW": {
       "type": "_blocks",
+      "disabled": true,
       "blocks": {
         "ai_gen_block_7394186_9BKhcf": {
           "type": "ai_gen_block_7394186",
@@ -684,6 +687,7 @@
     },
     "1791925459a40d1247": {
       "type": "_blocks",
+      "disabled": true,
       "blocks": {
         "ai_gen_block_6ae16f2_eAUqrf": {
           "type": "ai_gen_block_6ae16f2",
@@ -784,6 +788,7 @@
     },
     "17919271827c3c5217": {
       "type": "_blocks",
+      "disabled": true,
       "blocks": {
         "ai_gen_block_189327a_nEfxqr": {
           "type": "ai_gen_block_189327a",
