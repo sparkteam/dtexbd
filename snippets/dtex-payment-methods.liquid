@@ -48,17 +48,23 @@
         {% endif %}
       >
       <span class="dtex-pay__mark" aria-hidden="true"></span>
+      <span class="dtex-bkash-mark" aria-hidden="true">bKash</span>
       <span class="dtex-pay__copy">
-        <strong>bKash</strong>
-        <small>Manual Send Money</small>
+        <strong>Send Money</strong>
+        <small>Personal {{ dtex_bkash_number }}</small>
       </span>
     </label>
   </div>
 
   <div class="dtex-pay__bkash" data-dtex-bkash {% unless dtex_bkash_selected %}hidden{% endunless %}>
-    <p class="dtex-pay__hint">bKash app → Send Money → this personal number. Then enter the TrxID.</p>
+    <div class="dtex-pay__bkash-bar">
+      <span class="dtex-bkash-mark dtex-bkash-mark--bar">bKash</span>
+      <span>Send Money</span>
+    </div>
+    <div class="dtex-pay__bkash-body">
+    <p class="dtex-pay__hint">bKash app theke ei personal number-e Send Money korun, tarpor TrxID likhun.</p>
     <div class="dtex-pay__number">
-      <span>bKash personal</span>
+      <span>Personal</span>
       <strong data-dtex-bkash-number>{{ dtex_bkash_number }}</strong>
       <button type="button" class="dtex-pay__copy-btn" data-dtex-copy>Copy</button>
     </div>
@@ -77,6 +83,7 @@
       >
     </label>
     <p class="dtex-pay__error" data-dtex-pay-error hidden>Enter the bKash TrxID to check out.</p>
+    </div>
   </div>
   <input
     type="hidden"

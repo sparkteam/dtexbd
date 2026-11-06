@@ -38,8 +38,33 @@
   cursor: pointer;
 }
 
+.dtex-pay__option--bkash {
+  grid-template-columns: 18px auto 1fr;
+}
+
 .dtex-pay__option--bkash input {
   accent-color: #e2136e;
+}
+
+.dtex-bkash-mark {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 6px;
+  background: #e2136e;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.dtex-bkash-mark--bar {
+  height: auto;
+  padding: 0;
+  background: transparent;
+  font-size: 22px;
 }
 
 .dtex-pay__mark {
@@ -85,10 +110,27 @@
 
 .dtex-pay__bkash {
   margin-top: 8px;
-  padding: 12px;
+  overflow: hidden;
   border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #e2136e;
+}
+
+.dtex-pay__bkash-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #e2136e;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.dtex-pay__bkash-body {
+  padding: 12px;
   background: #fff5f8;
-  border: 1px solid rgba(226, 19, 110, 0.22);
 }
 
 .dtex-pay__bkash[hidden] {

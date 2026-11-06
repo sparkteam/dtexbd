@@ -6,7 +6,7 @@
   <title>Checkout payment — preview</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/dtex-payment.css">
+  <link rel="stylesheet" href="/assets/dtex-payment.css?v=3">
   <style>
     * { box-sizing: border-box; }
     body {
@@ -142,13 +142,19 @@
             <label class="dtex-pay__option dtex-pay__option--bkash" for="DtexPayBkash-CartDrawer-Form">
               <input id="DtexPayBkash-CartDrawer-Form" type="radio" name="attributes[Payment method]" value="bKash" form="CartDrawer-Form" data-dtex-pay-choice="bkash">
               <span class="dtex-pay__mark" aria-hidden="true"></span>
-              <span class="dtex-pay__copy"><strong>bKash</strong><small>Manual Send Money</small></span>
+              <span class="dtex-bkash-mark" aria-hidden="true">bKash</span>
+              <span class="dtex-pay__copy"><strong>Send Money</strong><small>Personal 01715026951</small></span>
             </label>
           </div>
           <div class="dtex-pay__bkash" data-dtex-bkash hidden>
-            <p class="dtex-pay__hint">bKash app → Send Money → this personal number. Then enter the TrxID.</p>
+            <div class="dtex-pay__bkash-bar">
+              <span class="dtex-bkash-mark dtex-bkash-mark--bar">bKash</span>
+              <span>Send Money</span>
+            </div>
+            <div class="dtex-pay__bkash-body">
+            <p class="dtex-pay__hint">bKash app theke ei personal number-e Send Money korun, tarpor TrxID likhun.</p>
             <div class="dtex-pay__number">
-              <span>bKash personal</span>
+              <span>Personal</span>
               <strong data-dtex-bkash-number>01715026951</strong>
               <button type="button" class="dtex-pay__copy-btn" data-dtex-copy>Copy</button>
             </div>
@@ -157,6 +163,7 @@
               <input id="DtexPayTrx-CartDrawer-Form" type="text" name="attributes[bKash Transaction ID]" form="CartDrawer-Form" placeholder="TrxID" autocomplete="off" spellcheck="false" data-dtex-trx>
             </label>
             <p class="dtex-pay__error" data-dtex-pay-error hidden>Enter the bKash TrxID to check out.</p>
+            </div>
           </div>
           <input type="hidden" name="attributes[bKash number]" form="CartDrawer-Form" value="" data-dtex-bkash-number-input data-dtex-bkash-number-value="01715026951">
         </div>
@@ -165,7 +172,7 @@
       </div>
     </form>
   </div>
-  <script src="/assets/dtex-payment.js?v=2" defer></script>
+  <script src="/assets/dtex-payment.js?v=3" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       document.addEventListener('submit', function (event) {
