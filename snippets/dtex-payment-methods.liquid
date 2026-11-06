@@ -1,0 +1,89 @@
+{% doc %}
+  Payment choice on cart checkout: Cash on Delivery or manual bKash.
+
+  @param {string} form_id - Cart form this choice submits with
+{% enddoc %}
+
+{%- liquid
+  assign dtex_payment = cart.attributes['Payment method'] | default: 'Cash on Delivery'
+  assign dtex_trx = cart.attributes['bKash Transaction ID']
+  assign dtex_bkash_number = '01715026951'
+  assign dtex_bkash_selected = false
+  if dtex_payment == 'bKash'
+    assign dtex_bkash_selected = true
+  endif
+-%}
+
+<div class="dtex-pay{% if dtex_bkash_selected %} is-bkash{% endif %}" data-dtex-pay>
+  <p class="dtex-pay__label" id="DtexPayLabel-{{ form_id }}">Payment method</p>
+  <div class="dtex-pay__options" role="radiogroup" aria-labelledby="DtexPayLabel-{{ form_id }}">
+    <label class="dtex-pay__option" for="DtexPayCod-{{ form_id }}">
+      <input
+        id="DtexPayCod-{{ form_id }}"
+        type="radio"
+        name="attributes[Payment method]"
+        value="Cash on Delivery"
+        form="{{ form_id }}"
+        data-dtex-pay-choice="cod"
+        {% unless dtex_bkash_selected %}
+          checked
+        {% endunless %}
+      >
+      <span class="dtex-pay__mark" aria-hidden="true"></span>
+      <span class="dtex-pay__copy">
+        <strong>Cash on Delivery</strong>
+        <small>Pay cash when the order arrives</small>
+      </span>
+    </label>
+    <label class="dtex-pay__option dtex-pay__option--bkash" for="DtexPayBkash-{{ form_id }}">
+      <input
+        id="DtexPayBkash-{{ form_id }}"
+        type="radio"
+        name="attributes[Payment method]"
+        value="bKash"
+        form="{{ form_id }}"
+        data-dtex-pay-choice="bkash"
+        {% if dtex_bkash_selected %}
+          checked
+        {% endif %}
+      >
+      <span class="dtex-pay__mark" aria-hidden="true"></span>
+      <span class="dtex-pay__copy">
+        <strong>bKash</strong>
+        <small>Manual Send Money</small>
+      </span>
+    </label>
+  </div>
+
+  <div class="dtex-pay__bkash" data-dtex-bkash {% unless dtex_bkash_selected %}hidden{% endunless %}>
+    <p class="dtex-pay__hint">bKash app → Send Money → this personal number. Then enter the TrxID.</p>
+    <div class="dtex-pay__number">
+      <span>bKash personal</span>
+      <strong data-dtex-bkash-number>{{ dtex_bkash_number }}</strong>
+      <button type="button" class="dtex-pay__copy-btn" data-dtex-copy>Copy</button>
+    </div>
+    <label class="dtex-pay__trx" for="DtexPayTrx-{{ form_id }}">
+      <span>Transaction ID</span>
+      <input
+        id="DtexPayTrx-{{ form_id }}"
+        type="text"
+        name="attributes[bKash Transaction ID]"
+        form="{{ form_id }}"
+        value="{% if dtex_bkash_selected %}{{ dtex_trx | escape }}{% endif %}"
+        placeholder="TrxID"
+        autocomplete="off"
+        spellcheck="false"
+        data-dtex-trx
+      >
+    </label>
+    <p class="dtex-pay__error" data-dtex-pay-error hidden>Enter the bKash TrxID to check out.</p>
+  </div>
+  <input
+    type="hidden"
+    name="attributes[bKash number]"
+    form="{{ form_id }}"
+    value="{% if dtex_bkash_selected %}{{ dtex_bkash_number }}{% endif %}"
+    data-dtex-bkash-number-input
+    data-dtex-bkash-number-value="{{ dtex_bkash_number }}"
+  >
+</div>
