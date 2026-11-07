@@ -1,0 +1,214 @@
+{%- liquid
+  assign s = section.settings
+  assign uid = section.id | handle
+-%}
+<style>
+  #df-{{ uid }}{--df-bg:{{ s.bg }};--df-bg2:{{ s.bg_dark }};--df-text:{{ s.text_color }};--df-accent:{{ s.accent }};background:var(--df-bg);color:var(--df-text);margin-top:{{ s.margin_top }}px}
+  #df-{{ uid }} a{color:inherit;text-decoration:none;transition:color .2s}
+  #df-{{ uid }} a:hover,#df-{{ uid }} a:focus-visible{color:var(--df-accent)}
+  #df-{{ uid }} .df-wrap{max-width:1400px;margin:0 auto;padding:0 24px}
+  #df-{{ uid }} .df-trust{background:var(--df-bg2);border-bottom:1px solid rgba(255,255,255,.08)}
+  #df-{{ uid }} .df-trust ul{list-style:none;margin:0 auto;padding:16px 24px;max-width:1400px;display:flex;justify-content:center;flex-wrap:wrap;gap:12px 40px}
+  #df-{{ uid }} .df-trust li{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600}
+  #df-{{ uid }} .df-trust svg{width:22px;height:22px;color:var(--df-accent);flex:none}
+  #df-{{ uid }} .df-news{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:36px 32px;margin:40px 0 0;border-radius:20px;background:linear-gradient(110deg,rgba(255,255,255,.07),rgba(231,98,44,.16));border:1px solid rgba(255,255,255,.1)}
+  #df-{{ uid }} .df-news h2{margin:0 0 6px;color:var(--df-text);font-size:clamp(22px,2.4vw,30px)}
+  #df-{{ uid }} .df-news p{margin:0;opacity:.8}
+  #df-{{ uid }} .df-news form{flex:1 1 360px;max-width:520px}
+  #df-{{ uid }} .df-news .df-field{display:flex;background:#fff;border-radius:999px;padding:5px;gap:6px}
+  #df-{{ uid }} .df-news input[type=email]{flex:1;min-width:0;border:0;background:transparent;padding:0 18px;font:inherit;font-size:15px;color:#1a1a1a;outline:none}
+  #df-{{ uid }} .df-news button{border:0;border-radius:999px;background:var(--df-accent);color:#fff;font:inherit;font-weight:700;font-size:14px;letter-spacing:.05em;padding:12px 24px;cursor:pointer;transition:filter .2s}
+  #df-{{ uid }} .df-news button:hover{filter:brightness(1.08)}
+  #df-{{ uid }} .df-msg{margin-top:10px;font-size:14px}
+  #df-{{ uid }} .df-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:40px;padding:{{ s.padding_top }}px 0 {{ s.padding_bottom }}px}
+  #df-{{ uid }} .df-brand img{max-width:{{ s.logo_width }}px;height:auto;display:block;margin-bottom:16px;{% if s.logo_on_light %}background:#fff;padding:10px 14px;border-radius:14px;{% endif %}}
+  #df-{{ uid }} .df-brand .df-about{opacity:.82;line-height:1.65;font-size:15px;max-width:360px}
+  #df-{{ uid }} .df-brand .df-about p{margin:0 0 8px}
+  #df-{{ uid }} .df-social{display:flex;gap:10px;list-style:none;padding:0;margin:18px 0 0}
+  #df-{{ uid }} .df-social a{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.1);transition:background .2s,color .2s}
+  #df-{{ uid }} .df-social a:hover{background:var(--df-accent);color:#fff}
+  #df-{{ uid }} .df-social svg{width:18px;height:18px}
+  #df-{{ uid }} .df-col summary{list-style:none;cursor:default;font-weight:700;font-size:15px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;color:var(--df-text)}
+  #df-{{ uid }} .df-col summary::-webkit-details-marker{display:none}
+  #df-{{ uid }} .df-col summary::after{content:"";display:none;width:10px;height:10px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);transition:transform .2s}
+  #df-{{ uid }} .df-col[open] summary::after{transform:rotate(-135deg)}
+  #df-{{ uid }} .df-col summary span{position:relative;padding-bottom:8px}
+  #df-{{ uid }} .df-col summary span::after{content:"";position:absolute;left:0;bottom:0;width:28px;height:2px;background:var(--df-accent);border-radius:2px}
+  #df-{{ uid }} .df-col ul{list-style:none;margin:0;padding:0}
+  #df-{{ uid }} .df-col li,#df-{{ uid }} .df-rt p{margin:0 0 10px;opacity:.85;font-size:15px}
+  #df-{{ uid }} .df-col li a:hover,#df-{{ uid }} .df-rt a:hover{opacity:1}
+  #df-{{ uid }} .df-contact li{display:flex;gap:10px;align-items:flex-start}
+  #df-{{ uid }} .df-contact svg{width:18px;height:18px;flex:none;color:var(--df-accent);margin-top:2px}
+  #df-{{ uid }} .df-bottom{border-top:1px solid rgba(255,255,255,.12);padding:20px 0;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;font-size:13px;opacity:.85}
+  #df-{{ uid }} .df-policies{display:flex;flex-wrap:wrap;gap:6px 18px;list-style:none;margin:0;padding:0}
+  #df-{{ uid }} .df-pay{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+  #df-{{ uid }} .df-pay svg{height:24px;width:auto;display:block}
+  @media (max-width:989px){#df-{{ uid }} .df-grid{grid-template-columns:1fr 1fr}#df-{{ uid }} .df-brand{grid-column:1/-1}}
+  @media (max-width:749px){
+    #df-{{ uid }} .df-grid{grid-template-columns:1fr;gap:0;padding-top:32px}
+    #df-{{ uid }} .df-brand{margin-bottom:24px}
+    #df-{{ uid }} .df-col{border-top:1px solid rgba(255,255,255,.12);padding:14px 0}
+    #df-{{ uid }} .df-col summary{cursor:pointer;margin:0;padding:4px 0}
+    #df-{{ uid }} .df-col summary::after{display:block}
+    #df-{{ uid }} .df-col[open] summary{margin-bottom:14px}
+    #df-{{ uid }} .df-news{padding:24px 20px;margin-top:28px}
+    #df-{{ uid }} .df-news .df-field{flex-direction:column;border-radius:16px;padding:8px}
+    #df-{{ uid }} .df-news input[type=email]{padding:12px}
+    #df-{{ uid }} .df-trust ul{justify-content:flex-start;gap:10px}
+    #df-{{ uid }} .df-bottom{flex-direction:column;align-items:flex-start}
+  }
+</style>
+
+<footer id="df-{{ uid }}" class="dtex-footer">
+  {%- if s.show_trust -%}
+    <div class="df-trust">
+      <ul>
+        {%- if s.trust_1 != blank -%}<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>{{ s.trust_1 | escape }}</li>{%- endif -%}
+        {%- if s.trust_2 != blank -%}<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9.5v5M18 9.5v5"/></svg>{{ s.trust_2 | escape }}</li>{%- endif -%}
+        {%- if s.trust_3 != blank -%}<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/></svg>{{ s.trust_3 | escape }}</li>{%- endif -%}
+      </ul>
+    </div>
+  {%- endif -%}
+
+  <div class="df-wrap">
+    {%- if s.show_newsletter -%}
+      <div class="df-news">
+        <div>
+          {%- if s.news_heading != blank -%}<h2>{{ s.news_heading | escape }}</h2>{%- endif -%}
+          {%- if s.news_text != blank -%}<p>{{ s.news_text | escape }}</p>{%- endif -%}
+        </div>
+        {%- form 'customer', id: 'DtexFooterNewsletter' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="df-field">
+            <label for="DtexFooterEmail" class="visually-hidden">{{ 'newsletter.label' | t }}</label>
+            <input id="DtexFooterEmail" type="email" name="contact[email]" required autocomplete="email" placeholder="{{ 'newsletter.label' | t }}" value="{{ form.email }}">
+            <button type="submit">{{ s.news_button | default: 'Subscribe' | escape }}</button>
+          </div>
+          {%- if form.posted_successfully? -%}
+            <p class="df-msg" role="status">{{ 'newsletter.success' | t }}</p>
+          {%- elsif form.errors -%}
+            <p class="df-msg" role="alert">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+
+    <div class="df-grid">
+      <div class="df-brand">
+        {%- if s.logo != blank -%}
+          <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">{{ s.logo | image_url: width: 400 | image_tag: loading: 'lazy', alt: shop.name }}</a>
+        {%- endif -%}
+        {%- if s.about != blank -%}<div class="df-about">{{ s.about }}</div>{%- endif -%}
+        {%- if s.show_social -%}
+          {%- capture soc -%}
+            {%- if settings.social_facebook_link != blank -%}<li><a href="{{ settings.social_facebook_link }}" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4A20 20 0 0 0 14.3 4.3c-2.2 0-3.7 1.3-3.7 3.8v2.4H8v3h2.6V21z"/></svg></a></li>{%- endif -%}
+            {%- if settings.social_instagram_link != blank -%}<li><a href="{{ settings.social_instagram_link }}" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a></li>{%- endif -%}
+            {%- if settings.social_youtube_link != blank -%}<li><a href="{{ settings.social_youtube_link }}" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.6 12 31 31 0 0 0 2 15.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .4-3.8 31 31 0 0 0-.4-3.8zM10 15V9l5.2 3z"/></svg></a></li>{%- endif -%}
+            {%- if settings.social_tiktok_link != blank -%}<li><a href="{{ settings.social_tiktok_link }}" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 3c.4 2.2 1.8 3.6 4 3.8v3.1a7 7 0 0 1-4-1.3v6.3a6 6 0 1 1-6-6v3.2a2.8 2.8 0 1 0 2.8 2.8V3z"/></svg></a></li>{%- endif -%}
+            {%- if settings.social_twitter_link != blank -%}<li><a href="{{ settings.social_twitter_link }}" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.3-8.3L2 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.4 4.7H5.6z"/></svg></a></li>{%- endif -%}
+            {%- if settings.social_pinterest_link != blank -%}<li><a href="{{ settings.social_pinterest_link }}" target="_blank" rel="noopener" aria-label="Pinterest"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.5 1.8-2.5.9 0 1.3.6 1.3 1.4 0 .9-.5 2.1-.8 3.3-.2 1 .5 1.8 1.5 1.8 1.8 0 3.1-1.9 3.1-4.6 0-2.4-1.7-4.1-4.2-4.1-2.9 0-4.6 2.2-4.6 4.4 0 .9.3 1.8.8 2.3l.1.4-.3 1.2c0 .2-.2.3-.4.2-1.3-.6-2.1-2.5-2.1-4 0-3.3 2.4-6.3 6.9-6.3 3.6 0 6.4 2.6 6.4 6 0 3.6-2.3 6.5-5.4 6.5-1 0-2-.5-2.4-1.2l-.6 2.5c-.2.9-.9 2.1-1.3 2.8A10 10 0 1 0 12 2z"/></svg></a></li>{%- endif -%}
+          {%- endcapture -%}
+          {%- if soc != blank -%}<ul class="df-social">{{ soc }}</ul>{%- endif -%}
+        {%- endif -%}
+      </div>
+
+      {%- if s.menu != blank and s.menu.links.size > 0 -%}
+        <details class="df-col" open>
+          <summary><span>{{ s.menu_heading | default: s.menu.title | escape }}</span></summary>
+          <ul>
+            {%- for l in s.menu.links -%}<li><a href="{{ l.url }}">{{ l.title | escape }}</a></li>{%- endfor -%}
+          </ul>
+        </details>
+      {%- endif -%}
+
+      {%- if s.col2_text != blank or s.menu2 != blank -%}
+        <details class="df-col" open>
+          <summary><span>{{ s.col2_heading | escape }}</span></summary>
+          {%- if s.menu2 != blank -%}
+            <ul>{%- for l in s.menu2.links -%}<li><a href="{{ l.url }}">{{ l.title | escape }}</a></li>{%- endfor -%}</ul>
+          {%- endif -%}
+          {%- if s.col2_text != blank -%}<div class="df-rt">{{ s.col2_text }}</div>{%- endif -%}
+        </details>
+      {%- endif -%}
+
+      {%- if s.address != blank or s.phone != blank or s.email != blank -%}
+        <details class="df-col df-contact" open>
+          <summary><span>{{ s.contact_heading | escape }}</span></summary>
+          <ul>
+            {%- if s.address != blank -%}<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><div class="df-rt">{{ s.address }}</div></li>{%- endif -%}
+            {%- if s.phone != blank -%}<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><a href="tel:{{ s.phone | remove: ' ' }}">{{ s.phone | escape }}</a></li>{%- endif -%}
+            {%- if s.email != blank -%}<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a href="mailto:{{ s.email }}">{{ s.email | escape }}</a></li>{%- endif -%}
+          </ul>
+        </details>
+      {%- endif -%}
+    </div>
+
+    <div class="df-bottom">
+      <small>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | link_to: routes.root_url }}{% if s.copyright_text != blank %} · {{ s.copyright_text | escape }}{% endif %}</small>
+      {%- if s.show_policies and shop.policies.size > 0 -%}
+        <ul class="df-policies">{%- for p in shop.policies -%}<li><a href="{{ p.url }}">{{ p.title | escape }}</a></li>{%- endfor -%}</ul>
+      {%- endif -%}
+      {%- if s.show_payment and shop.enabled_payment_types.size > 0 -%}
+        <ul class="df-pay" aria-label="{{ 'sections.footer.payment' | t }}">{%- for t in shop.enabled_payment_types -%}<li>{{ t | payment_type_svg_tag }}</li>{%- endfor -%}</ul>
+      {%- endif -%}
+    </div>
+  </div>
+  <script>
+    (function(){var r=document.getElementById('df-{{ uid }}');if(!r||!window.matchMedia)return;var m=window.matchMedia('(max-width: 749px)');
+    function set(){r.querySelectorAll('details.df-col').forEach(function(d){if(m.matches){d.removeAttribute('open')}else{d.setAttribute('open','')}})}
+    set();m.addEventListener?m.addEventListener('change',set):m.addListener(set);
+    r.addEventListener('click',function(e){var su=e.target.closest('summary');if(su&&!m.matches&&su.closest('.df-col'))e.preventDefault();});})();
+  </script>
+</footer>
+
+{% schema %}
+{
+  "name": "Dtex footer",
+  "tag": "section",
+  "class": "section-dtex-footer",
+  "settings": [
+    { "type": "header", "content": "Trust strip" },
+    { "type": "checkbox", "id": "show_trust", "label": "Show trust strip", "default": true },
+    { "type": "text", "id": "trust_1", "label": "Trust item 1", "default": "Home delivery in 2–3 days" },
+    { "type": "text", "id": "trust_2", "label": "Trust item 2", "default": "Cash on delivery" },
+    { "type": "text", "id": "trust_3", "label": "Trust item 3", "default": "3-day easy returns" },
+    { "type": "header", "content": "Newsletter" },
+    { "type": "checkbox", "id": "show_newsletter", "label": "Show newsletter signup", "default": true },
+    { "type": "text", "id": "news_heading", "label": "Newsletter heading", "default": "Subscribe to our emails" },
+    { "type": "text", "id": "news_text", "label": "Newsletter text", "default": "Be the first to know about new collections and exclusive offers." },
+    { "type": "text", "id": "news_button", "label": "Newsletter button", "default": "Subscribe" },
+    { "type": "header", "content": "Brand" },
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "range", "id": "logo_width", "label": "Logo width", "min": 80, "max": 260, "step": 10, "unit": "px", "default": 160 },
+    { "type": "checkbox", "id": "logo_on_light", "label": "Put logo on a white badge", "default": true, "info": "Turn on if the logo is dark and hard to see on green" },
+    { "type": "richtext", "id": "about", "label": "About text" },
+    { "type": "checkbox", "id": "show_social", "label": "Show social icons", "default": true, "info": "Links come from Theme settings > Social media" },
+    { "type": "header", "content": "Column 1 (menu)" },
+    { "type": "text", "id": "menu_heading", "label": "Column 1 heading", "default": "Categories" },
+    { "type": "link_list", "id": "menu", "label": "Column 1 menu", "default": "footer" },
+    { "type": "header", "content": "Column 2" },
+    { "type": "text", "id": "col2_heading", "label": "Column 2 heading", "default": "Customer Service" },
+    { "type": "link_list", "id": "menu2", "label": "Column 2 menu (optional)" },
+    { "type": "richtext", "id": "col2_text", "label": "Column 2 text / links" },
+    { "type": "header", "content": "Contact" },
+    { "type": "text", "id": "contact_heading", "label": "Contact heading", "default": "Our Office" },
+    { "type": "richtext", "id": "address", "label": "Address" },
+    { "type": "text", "id": "phone", "label": "Phone" },
+    { "type": "text", "id": "email", "label": "Email" },
+    { "type": "header", "content": "Bottom bar" },
+    { "type": "text", "id": "copyright_text", "label": "Extra copyright text" },
+    { "type": "checkbox", "id": "show_policies", "label": "Show policy links", "default": true },
+    { "type": "checkbox", "id": "show_payment", "label": "Show payment icons", "default": false },
+    { "type": "header", "content": "Colors & spacing" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#0e4d22" },
+    { "type": "color", "id": "bg_dark", "label": "Trust strip background", "default": "#0a3a1a" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#f6efe4" },
+    { "type": "color", "id": "accent", "label": "Accent / hover", "default": "#e7622c" },
+    { "type": "range", "id": "margin_top", "label": "Space above footer", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_top", "label": "Columns top padding", "min": 20, "max": 100, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "label": "Columns bottom padding", "min": 20, "max": 100, "step": 4, "unit": "px", "default": 40 }
+  ],
+  "enabled_on": { "groups": ["footer"] },
+  "presets": [ { "name": "Dtex footer" } ]
+}
+{% endschema %}
