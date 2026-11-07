@@ -1,0 +1,197 @@
+{%- comment -%}
+  Dtex – New product spotlight.
+  Auto mode: shows the newest product (by created date) from the chosen collection (default: all products).
+  Manual mode: pick a product in "Manual product" – it overrides auto mode.
+  Spec chips: product tags starting with "spec:" (e.g. "spec:800 GSM hollow fiber"). If the product has none, the "Spec chip" blocks are shown.
+{%- endcomment -%}
+
+{%- liquid
+  assign sp = section.settings.product
+  if sp == blank or sp.id == blank
+    assign src = section.settings.collection
+    if src == blank
+      assign src = collections.all
+    endif
+  endif
+-%}
+
+{%- if sp == blank or sp.id == blank -%}
+  {%- paginate src.products by 250 -%}
+    {%- assign sorted = src.products | sort: 'created_at' | reverse -%}
+    {%- assign sp = sorted | first -%}
+  {%- endpaginate -%}
+{%- endif -%}
+
+{%- assign uid = section.id | handle -%}
+<style>
+  #np-{{ uid }}{--np-accent:{{ section.settings.accent }};--np-green:{{ section.settings.button_color }};--np-green-h:{{ section.settings.button_hover }};--np-card:{{ section.settings.card_background }};padding:{{ section.settings.padding_top }}px 16px {{ section.settings.padding_bottom }}px;background:{{ section.settings.background_color }}}
+  #np-{{ uid }} .np{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.05fr 1fr;background:var(--np-card);border-radius:20px;overflow:hidden;box-shadow:0 18px 50px rgba(13,98,57,.10);opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  #np-{{ uid }} .np.is-in{opacity:1;transform:none}
+  #np-{{ uid }} .np__media{position:relative;min-height:480px;overflow:hidden;background:#ddd}
+  #np-{{ uid }} .np__media>a>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+  #np-{{ uid }} .np__media:hover>a>img{transform:scale(1.06)}
+  #np-{{ uid }} .np__media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.35));pointer-events:none}
+  #np-{{ uid }} .np__save{position:absolute;top:18px;left:18px;z-index:2;background:var(--np-accent);color:#fff;font-weight:700;font-size:14px;padding:8px 14px;border-radius:999px;box-shadow:0 6px 16px rgba(231,98,44,.35)}
+  #np-{{ uid }} .np__thumbs{position:absolute;left:18px;bottom:18px;z-index:2;display:flex;gap:8px}
+  #np-{{ uid }} .np__thumbs button{width:56px;height:56px;padding:0;border:2px solid rgba(255,255,255,.7);border-radius:10px;overflow:hidden;cursor:pointer;background:#fff}
+  #np-{{ uid }} .np__thumbs button.is-active{border-color:var(--np-accent)}
+  #np-{{ uid }} .np__thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+  #np-{{ uid }} .np__body{padding:48px 44px;display:flex;flex-direction:column;justify-content:center;gap:16px;color:#1a1a1a}
+  #np-{{ uid }} .np__pills{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  #np-{{ uid }} .np__pill{background:var(--np-accent);color:#fff;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:7px 14px;border-radius:999px}
+  #np-{{ uid }} .np__stock{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--np-green)}
+  #np-{{ uid }} .np__stock::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 0 4px rgba(13,98,57,.15)}
+  #np-{{ uid }} .np__stock--out{color:#b42318}
+  #np-{{ uid }} .np__title{margin:0;font-size:clamp(26px,3vw,36px);line-height:1.15}
+  #np-{{ uid }} .np__title a{color:inherit;text-decoration:none}
+  #np-{{ uid }} .np__desc{margin:0;color:#555;line-height:1.65}
+  #np-{{ uid }} .np__chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+  #np-{{ uid }} .np__chips li{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #e5e7eb;color:#374151;font-size:13px;padding:7px 12px;border-radius:999px}
+  #np-{{ uid }} .np__chips svg{width:14px;height:14px;color:var(--np-green);flex:none}
+  #np-{{ uid }} .np__price{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  #np-{{ uid }} .np__now{font-size:30px;font-weight:700;color:var(--np-green)}
+  #np-{{ uid }} .np__was{color:#888;text-decoration:line-through;font-size:17px}
+  #np-{{ uid }} .np__ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+  #np-{{ uid }} .np__btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 26px;border-radius:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:14px;text-decoration:none;cursor:pointer;border:2px solid var(--np-green);transition:background .25s,color .25s,transform .25s;font-family:inherit}
+  #np-{{ uid }} .np__btn--primary{background:var(--np-green);color:#fff}
+  #np-{{ uid }} .np__btn--primary:hover{background:var(--np-green-h);border-color:var(--np-green-h);transform:translateY(-2px)}
+  #np-{{ uid }} .np__btn--ghost{background:transparent;color:var(--np-green)}
+  #np-{{ uid }} .np__btn--ghost:hover{background:var(--np-green);color:#fff;transform:translateY(-2px)}
+  #np-{{ uid }} .np__btn[disabled]{opacity:.5;cursor:not-allowed}
+  #np-{{ uid }} form{margin:0}
+  @media (max-width:989px){#np-{{ uid }} .np{grid-template-columns:1fr}#np-{{ uid }} .np__media{min-height:340px}#np-{{ uid }} .np__body{padding:28px 22px 32px}}
+  @media (max-width:749px){#np-{{ uid }} .np__ctas>*{flex:1 1 100%}#np-{{ uid }} .np__btn{width:100%}#np-{{ uid }} .np__thumbs button{width:46px;height:46px}}
+  @media (prefers-reduced-motion:reduce){#np-{{ uid }} .np{opacity:1;transform:none;transition:none}#np-{{ uid }} .np__media>a>img{transition:none}}
+</style>
+
+<div id="np-{{ uid }}">
+  {%- if sp != blank and sp.id != blank -%}
+    {%- liquid
+      assign v = sp.selected_or_first_available_variant
+      assign save = 0
+      if sp.compare_at_price > sp.price
+        assign save = sp.compare_at_price | minus: sp.price | times: 100 | divided_by: sp.compare_at_price
+      endif
+      assign btn = section.settings.button_label | default: 'Shop now' | replace: '[title]', sp.title
+    -%}
+    <div class="np" data-np>
+      <div class="np__media">
+        <a href="{{ sp.url }}" aria-label="{{ sp.title | escape }}">
+          {%- if sp.featured_media -%}
+            {{ sp.featured_media | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '600,900,1200,1400', sizes: '(max-width: 989px) 100vw, 50vw', alt: sp.title, class: 'np-main' }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag }}
+          {%- endif -%}
+        </a>
+        {%- if save > 0 and section.settings.show_save -%}<span class="np__save">Save {{ save }}%</span>{%- endif -%}
+        {%- if section.settings.show_thumbs and sp.images.size > 1 -%}
+          <div class="np__thumbs">
+            {%- for img in sp.images limit: 4 -%}
+              <button type="button" class="{% if forloop.first %}is-active{% endif %}" data-np-thumb="{{ img | image_url: width: 1400 }}" aria-label="Image {{ forloop.index }}">
+                {{ img | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="np__body">
+        <div class="np__pills">
+          {%- if section.settings.pill_label != blank -%}<span class="np__pill">{{ section.settings.pill_label }}</span>{%- endif -%}
+          {%- if section.settings.show_stock -%}
+            {%- if sp.available -%}<span class="np__stock">In stock</span>{%- else -%}<span class="np__stock np__stock--out">Out of stock</span>{%- endif -%}
+          {%- endif -%}
+        </div>
+        <h2 class="np__title h1"><a href="{{ sp.url }}">{{ sp.title | escape }}</a></h2>
+        {%- if sp.description != blank -%}
+          <p class="np__desc">{{ sp.description | strip_html | truncatewords: section.settings.desc_words }}</p>
+        {%- endif -%}
+
+        {%- capture chips -%}
+          {%- for t in sp.tags -%}
+            {%- assign tl = t | downcase -%}
+            {%- if tl contains 'spec:' -%}
+              {%- assign txt = t | split: ':' | last | strip -%}
+              {%- if txt != blank -%}<li><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>{{ txt | escape }}</li>{%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+        {%- if chips == blank -%}
+          {%- capture chips -%}
+            {%- for block in section.blocks -%}
+              {%- if block.settings.text != blank -%}<li {{ block.shopify_attributes }}><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>{{ block.settings.text | escape }}</li>{%- endif -%}
+            {%- endfor -%}
+          {%- endcapture -%}
+        {%- endif -%}
+        {%- if chips != blank -%}<ul class="np__chips">{{ chips }}</ul>{%- endif -%}
+
+        <div class="np__price">
+          <span class="np__now">{{ sp.price | money }}</span>
+          {%- if sp.compare_at_price > sp.price -%}<span class="np__was">{{ sp.compare_at_price | money }}</span>{%- endif -%}
+        </div>
+
+        <div class="np__ctas">
+          <a class="np__btn np__btn--primary" href="{{ sp.url }}">{{ btn | escape }}</a>
+          {%- if section.settings.show_atc and v -%}
+            <form method="post" action="{{ routes.cart_add_url }}">
+              <input type="hidden" name="id" value="{{ v.id }}">
+              <input type="hidden" name="quantity" value="1">
+              <button type="submit" class="np__btn np__btn--ghost"{% unless v.available %} disabled{% endunless %}>{{ section.settings.atc_label | default: 'Add to cart' | escape }}</button>
+            </form>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+    <script>
+      (function(){var r=document.getElementById('np-{{ uid }}');if(!r)return;var c=r.querySelector('[data-np]');
+      if('IntersectionObserver' in window){var o=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){c.classList.add('is-in');o.disconnect();}})},{threshold:.15});o.observe(c);}else{c.classList.add('is-in');}
+      r.addEventListener('click',function(e){var b=e.target.closest('[data-np-thumb]');if(!b)return;var m=r.querySelector('.np-main');if(m){m.removeAttribute('srcset');m.src=b.getAttribute('data-np-thumb');}
+      r.querySelectorAll('[data-np-thumb]').forEach(function(t){t.classList.toggle('is-active',t===b)});});})();
+    </script>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Dtex new product",
+  "tag": "section",
+  "class": "section-dtex-new-product",
+  "settings": [
+    { "type": "header", "content": "Product" },
+    { "type": "paragraph", "content": "Leave \"Manual product\" empty to automatically show the newest product. Pick a product to show it instead." },
+    { "type": "product", "id": "product", "label": "Manual product (overrides auto)" },
+    { "type": "collection", "id": "collection", "label": "Auto mode: collection to take the newest product from", "info": "Empty = all products" },
+    { "type": "header", "content": "Texts" },
+    { "type": "text", "id": "pill_label", "label": "Pill label", "default": "NEW PRODUCT" },
+    { "type": "text", "id": "button_label", "label": "Button text", "default": "Shop [title]", "info": "[title] is replaced by the product name" },
+    { "type": "text", "id": "atc_label", "label": "Add to cart button text", "default": "Add to cart" },
+    { "type": "range", "id": "desc_words", "label": "Description length (words)", "min": 10, "max": 60, "step": 2, "default": 26 },
+    { "type": "header", "content": "Show / hide" },
+    { "type": "checkbox", "id": "show_atc", "label": "Show Add to cart button", "default": true },
+    { "type": "checkbox", "id": "show_save", "label": "Show \"Save X%\" badge", "default": true },
+    { "type": "checkbox", "id": "show_stock", "label": "Show stock status", "default": true },
+    { "type": "checkbox", "id": "show_thumbs", "label": "Show image thumbnails", "default": true },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "accent", "label": "Accent (pill, badge)", "default": "#e7622c" },
+    { "type": "color", "id": "button_color", "label": "Button", "default": "#0d6239" },
+    { "type": "color", "id": "button_hover", "label": "Button hover", "default": "#0a4f2e" },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#f1efe9" },
+    { "type": "color", "id": "background_color", "label": "Section background", "default": "#ffffff" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 40 }
+  ],
+  "blocks": [
+    {
+      "type": "chip",
+      "name": "Spec chip (fallback)",
+      "settings": [
+        { "type": "paragraph", "content": "Shown only when the product has no tags starting with \"spec:\"." },
+        { "type": "text", "id": "text", "label": "Chip text", "default": "Premium quality" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [ { "name": "Dtex new product" } ]
+}
+{% endschema %}

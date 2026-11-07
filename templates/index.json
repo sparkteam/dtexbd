@@ -394,85 +394,56 @@
       "settings": {}
     },
     "mush_product_showcase_xQUTRz": {
-      "type": "mush-product-showcase",
+      "type": "dtex-new-product",
       "blocks": {
-        "badge_mqaxKA": {
-          "type": "badge",
+        "chip_1": {
+          "type": "chip",
           "settings": {
-            "text": "NEW PRODUCT"
+            "text": "72 × 78 inches"
           }
         },
-        "heading_PHXTn7": {
-          "type": "heading",
+        "chip_2": {
+          "type": "chip",
           "settings": {
-            "text": "3D Digital Bedsheet"
+            "text": "800 GSM hollow fiber"
           }
         },
-        "description_b9W7n7": {
-          "type": "description",
+        "chip_3": {
+          "type": "chip",
           "settings": {
-            "text": "Add a soft, cushioned layer to your bed without replacing your mattress. Filled with siliconized hollow fiber and finished in a smooth microfiber shell."
+            "text": "Microfiber shell"
           }
         },
-        "tags_hg36Vj": {
-          "type": "tags",
+        "chip_4": {
+          "type": "chip",
           "settings": {
-            "tag_1": "72 × 78 inches",
-            "tag_2": "800 GSM hollow fiber",
-            "tag_3": "Microfiber shell",
-            "tag_4": "Vacuum-packed",
-            "tag_5": "",
-            "tag_6": ""
-          }
-        },
-        "price_UVDbLU": {
-          "type": "price",
-          "settings": {
-            "currency": "Tk",
-            "sale_price": "7,599",
-            "compare_price": "9,999"
-          }
-        },
-        "button_DiCxma": {
-          "type": "button",
-          "settings": {
-            "label": "SHOP 3D Digital Bedsheet",
-            "link": "https://dtexbd.net/collections/3d-digital-bed-sheet"
+            "text": "Vacuum-packed"
           }
         }
       },
       "block_order": [
-        "badge_mqaxKA",
-        "heading_PHXTn7",
-        "description_b9W7n7",
-        "tags_hg36Vj",
-        "price_UVDbLU",
-        "button_DiCxma"
+        "chip_1",
+        "chip_2",
+        "chip_3",
+        "chip_4"
       ],
-      "name": "Mush Product Showcase",
+      "name": "Dtex new product",
       "settings": {
-        "image_position": "left",
-        "container_width": 1280,
-        "gap": 0,
-        "image_min_height": 480,
-        "content_padding": 40,
-        "padding_top": 40,
-        "padding_bottom": 40,
-        "border_radius": 16,
-        "enable_shadow": true,
-        "primary_color": "#0d6239",
-        "secondary_color": "#e7622c",
-        "background_color": "#ffffff",
-        "card_background": "#e6e4e4",
-        "text_color": "#1a1a1a",
-        "muted_text_color": "#555555",
+        "pill_label": "NEW PRODUCT",
+        "button_label": "Shop [title]",
+        "atc_label": "Add to cart",
+        "desc_words": 26,
+        "show_atc": true,
+        "show_save": true,
+        "show_stock": true,
+        "show_thumbs": true,
+        "accent": "#e7622c",
+        "button_color": "#0d6239",
         "button_hover": "#0a4f2e",
-        "tag_bg": "#f3f4f6",
-        "tag_border": "#e5e7eb",
-        "tag_text": "#374151",
-        "heading_size": 30,
-        "price_size": 28,
-        "image": "shopify://shop_images/WhatsAppImage2026-09-18at06.06.56_1.jpg"
+        "card_background": "#f1efe9",
+        "background_color": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     },
     "mush_category_grid_jik7qb": {
