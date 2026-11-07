@@ -24,7 +24,7 @@
         "news_button": "Subscribe",
         "logo": "shopify://shop_images/dtex_bd_logo.png",
         "logo_width": 160,
-        "logo_on_light": true,
+        "logo_on_light": false,
         "about": "<p>Bedsheets, comforters, curtains and towels for a cosy home, delivered across Bangladesh.</p>",
         "show_social": true,
         "menu_heading": "Categories",
@@ -38,13 +38,18 @@
         "copyright_text": "",
         "show_policies": true,
         "show_payment": false,
-        "bg": "#0e4d22",
-        "bg_dark": "#0a3a1a",
-        "text_color": "#f6efe4",
-        "accent": "#e7622c",
+        "bg": "#eef8f1",
+        "bg_dark": "#2e9e4f",
+        "text_color": "#1f3b2c",
+        "accent": "#f26a21",
         "margin_top": 0,
         "padding_top": 48,
-        "padding_bottom": 40
+        "padding_bottom": 40,
+        "bg_end": "#fff1e8",
+        "gold": "#2e9e4f",
+        "serif_headings": false,
+        "trust_bg_end": "#3bb273",
+        "trust_text": "#ffffff"
       }
     }
   },
