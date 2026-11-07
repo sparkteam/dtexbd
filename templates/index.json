@@ -1143,6 +1143,27 @@
         "accent_color": "#e7622c",
         "star_color": "#f0a05a"
       }
+    },
+    "dtex_comforter_banner": {
+      "type": "dtex-promo-banner",
+      "name": "Dtex promo banner",
+      "settings": {
+        "collection": "premium-comforter",
+        "image_count": 4,
+        "image_side": "left",
+        "pill": "Winter Collection",
+        "title": "Wrap Yourself in Cloud-Soft Comfort",
+        "text": "Premium and export-quality comforters for cosy nights. Home delivery in 2–3 days with cash on delivery and 3-day easy returns.",
+        "button_label": "Shop Comforters",
+        "button_link": "shopify://collections/premium-comforter",
+        "bg_start": "#fbf3e8",
+        "bg_end": "#f6dcc6",
+        "accent": "#e7622c",
+        "button_color": "#0d6239",
+        "text_color": "#1a1a1a",
+        "padding_top": 20,
+        "padding_bottom": 8
+      }
     }
   },
   "order": [
@@ -1154,6 +1175,7 @@
     "17919213487565cf7a",
     "mush_product_showcase_xQUTRz",
     "catalog_curtains_mush",
+    "dtex_comforter_banner",
     "catalog_comforters_mush",
     "catalog_bedsheets_mush",
     "loved_by_customers",
