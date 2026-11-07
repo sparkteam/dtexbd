@@ -1164,6 +1164,27 @@
         "padding_top": 20,
         "padding_bottom": 8
       }
+    },
+    "dtex_bedsheet_banner": {
+      "type": "dtex-promo-banner",
+      "name": "Dtex promo banner (bedsheets)",
+      "settings": {
+        "collection": "export-quality-bedsheets",
+        "image_count": 4,
+        "image_side": "right",
+        "pill": "Bedroom Refresh",
+        "title": "Sleep Beautiful, Every Night",
+        "text": "Export-quality bedsheets in fresh prints and colours to brighten your bedroom. Home delivery in 2–3 days with cash on delivery and 3-day easy returns.",
+        "button_label": "Shop Bedsheets",
+        "button_link": "shopify://collections/export-quality-bedsheets",
+        "bg_start": "#e4f1e8",
+        "bg_end": "#fbf6ec",
+        "accent": "#e7622c",
+        "button_color": "#0d6239",
+        "text_color": "#1a1a1a",
+        "padding_top": 20,
+        "padding_bottom": 8
+      }
     }
   },
   "order": [
@@ -1177,6 +1198,7 @@
     "catalog_curtains_mush",
     "dtex_comforter_banner",
     "catalog_comforters_mush",
+    "dtex_bedsheet_banner",
     "catalog_bedsheets_mush",
     "loved_by_customers",
     "mush_category_grid_jik7qb",
