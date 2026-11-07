@@ -2,11 +2,15 @@
   Dtex – New product spotlight.
   Auto mode: shows the newest product (by created date) from the chosen collection (default: all products).
   Manual mode: pick a product in "Manual product" – it overrides auto mode.
-  Spec chips: product tags starting with "spec:" (e.g. "spec:800 GSM hollow fiber"). If the product has none, the "Spec chip" blocks are shown.
+  Spec chips: product tags starting with "spec:" (e.g. "spec:800 GSM hollow fiber"). In auto mode no chips without spec: tags; Spec chip blocks are a fallback only for a manual product.
 {%- endcomment -%}
 
 {%- liquid
   assign sp = section.settings.product
+  assign manual = false
+  if sp != blank and sp.id != blank
+    assign manual = true
+  endif
   if sp == blank or sp.id == blank
     assign src = section.settings.collection
     if src == blank
@@ -116,7 +120,7 @@
             {%- endif -%}
           {%- endfor -%}
         {%- endcapture -%}
-        {%- if chips == blank -%}
+        {%- if chips == blank and manual -%}
           {%- capture chips -%}
             {%- for block in section.blocks -%}
               {%- if block.settings.text != blank -%}<li {{ block.shopify_attributes }}><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>{{ block.settings.text | escape }}</li>{%- endif -%}
@@ -186,7 +190,7 @@
       "type": "chip",
       "name": "Spec chip (fallback)",
       "settings": [
-        { "type": "paragraph", "content": "Shown only when the product has no tags starting with \"spec:\"." },
+        { "type": "paragraph", "content": "Shown only when a Manual product is picked and it has no tags starting with \"spec:\". In auto mode chips come only from spec: tags." },
         { "type": "text", "id": "text", "label": "Chip text", "default": "Premium quality" }
       ]
     }

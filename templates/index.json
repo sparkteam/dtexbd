@@ -395,38 +395,8 @@
     },
     "mush_product_showcase_xQUTRz": {
       "type": "dtex-new-product",
-      "blocks": {
-        "chip_1": {
-          "type": "chip",
-          "settings": {
-            "text": "72 × 78 inches"
-          }
-        },
-        "chip_2": {
-          "type": "chip",
-          "settings": {
-            "text": "800 GSM hollow fiber"
-          }
-        },
-        "chip_3": {
-          "type": "chip",
-          "settings": {
-            "text": "Microfiber shell"
-          }
-        },
-        "chip_4": {
-          "type": "chip",
-          "settings": {
-            "text": "Vacuum-packed"
-          }
-        }
-      },
-      "block_order": [
-        "chip_1",
-        "chip_2",
-        "chip_3",
-        "chip_4"
-      ],
+      "blocks": {},
+      "block_order": [],
       "name": "Dtex new product",
       "settings": {
         "pill_label": "NEW PRODUCT",
