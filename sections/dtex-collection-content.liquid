@@ -1,0 +1,117 @@
+{%- comment -%}
+  DTex BD – long description + FAQ below the product grid (draft).
+  long description = collection metafield custom.long_description (rich text), fallback: collection description.
+  Bangla = custom.long_description_bn (in a "বাংলায় পড়ুন" dropdown).
+  FAQ = custom.faq, lines "Q: ..." then "A: ...". Adds FAQPage structured data.
+{%- endcomment -%}
+{%- liquid
+  assign long_mf = collection.metafields.custom.long_description
+  assign bn = collection.metafields.custom.long_description_bn.value
+  assign faq_raw = collection.metafields.custom.faq.value
+  assign faq_lines = faq_raw | newline_to_br | split: '<br />'
+  assign has_content = false
+  if long_mf != blank or bn != blank or faq_raw != blank
+    assign has_content = true
+  elsif section.settings.fallback_to_description and collection.description != blank
+    assign has_content = true
+  endif
+-%}
+{%- if has_content -%}
+{%- style -%}
+  .dcc-{{ section.id }} { background: {{ section.settings.bg }}; color: {{ section.settings.text }}; padding: {{ section.settings.pad_top }}px 0 {{ section.settings.pad_bottom }}px; }
+  .dcc-{{ section.id }} .dcc__wrap { max-width: {{ section.settings.max_width }}px; margin: 0 auto; padding: 0 24px; }
+  .dcc-{{ section.id }} .dcc__desc { font-size: 15px; line-height: 1.75; }
+  .dcc-{{ section.id }} .dcc__desc h2, .dcc-{{ section.id }} .dcc__faq h2 { font-size: 24px; margin: 0 0 12px; color: {{ section.settings.text }}; }
+  .dcc-{{ section.id }} .dcc__desc h3 { font-size: 18px; margin: 22px 0 8px; color: {{ section.settings.accent }}; }
+  .dcc-{{ section.id }} .dcc__desc ul { padding-left: 20px; }
+  .dcc-{{ section.id }} .dcc__desc a { color: {{ section.settings.accent }}; }
+  .dcc-{{ section.id }} details { background: #fff; border: 1px solid rgba(46,158,79,.22); border-radius: 12px; margin: 10px 0; overflow: hidden; }
+  .dcc-{{ section.id }} summary { cursor: pointer; list-style: none; padding: 14px 44px 14px 18px; font-weight: 700; position: relative; color: {{ section.settings.text }}; }
+  .dcc-{{ section.id }} summary::-webkit-details-marker { display: none; }
+  .dcc-{{ section.id }} summary::after { content: "+"; position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-size: 22px; color: {{ section.settings.accent2 }}; font-weight: 700; }
+  .dcc-{{ section.id }} details[open] > summary { background: {{ section.settings.open_bg }}; }
+  .dcc-{{ section.id }} details[open] > summary::after { content: "–"; }
+  .dcc-{{ section.id }} .dcc__ans { padding: 4px 18px 16px; line-height: 1.7; }
+  .dcc-{{ section.id }} .dcc__bn summary { color: {{ section.settings.accent }}; }
+  .dcc-{{ section.id }} .dcc__faq { margin-top: 34px; }
+  @media (max-width: 749px) {
+    .dcc-{{ section.id }} { padding: 28px 0 36px; }
+    .dcc-{{ section.id }} .dcc__wrap { padding: 0 16px; }
+    .dcc-{{ section.id }} .dcc__desc h2, .dcc-{{ section.id }} .dcc__faq h2 { font-size: 20px; }
+  }
+{%- endstyle -%}
+
+<section class="dcc-{{ section.id }}">
+  <div class="dcc__wrap">
+    {%- if section.settings.show_description -%}
+      <div class="dcc__desc rte">
+        {%- if long_mf != blank -%}
+          {{ long_mf | metafield_tag }}
+        {%- elsif section.settings.fallback_to_description -%}
+          {{ collection.description }}
+        {%- endif -%}
+      </div>
+      {%- if bn != blank -%}
+        <details class="dcc__bn">
+          <summary>{{ section.settings.bn_label }}</summary>
+          <div class="dcc__ans">{{ bn | escape | newline_to_br }}</div>
+        </details>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if faq_raw != blank and section.settings.show_faq -%}
+      {%- assign q = '' -%}
+      {%- capture faq_json -%}{%- endcapture -%}
+      <div class="dcc__faq">
+        <h2>{{ section.settings.faq_heading }}</h2>
+        {%- for raw in faq_lines -%}
+          {%- assign line = raw | strip -%}
+          {%- assign head = line | slice: 0, 2 | upcase -%}
+          {%- if head == 'Q:' -%}
+            {%- assign q = line | slice: 2, 1000 | strip -%}
+          {%- elsif head == 'A:' and q != '' -%}
+            {%- assign a = line | slice: 2, 2000 | strip -%}
+            <details>
+              <summary>{{ q | escape }}</summary>
+              <div class="dcc__ans">{{ a | escape }}</div>
+            </details>
+            {%- capture item -%}{"@type":"Question","name":{{ q | json }},"acceptedAnswer":{"@type":"Answer","text":{{ a | json }}}}{%- endcapture -%}
+            {%- if faq_json == blank -%}{%- assign faq_json = item -%}{%- else -%}{%- assign faq_json = faq_json | append: ',' | append: item -%}{%- endif -%}
+            {%- assign q = '' -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      {%- if faq_json != blank and section.settings.faq_schema -%}
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{{ faq_json }}]}</script>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "DTex collection SEO text",
+  "class": "section-dtex-collection-content",
+  "settings": [
+    { "type": "paragraph", "content": "Text comes from the collection's metafields: 'Long description', 'Long description (Bangla)' and 'FAQ' (Q: / A: lines). Edit them in Admin › Products › Collections › edit collection › Metafields." },
+    { "type": "checkbox", "id": "show_description", "label": "Show long description", "default": true },
+    { "type": "checkbox", "id": "fallback_to_description", "label": "If no Long description, show the collection description", "default": true },
+    { "type": "text", "id": "bn_label", "label": "Bangla dropdown label", "default": "বাংলায় পড়ুন" },
+    { "type": "checkbox", "id": "show_faq", "label": "Show FAQ", "default": true },
+    { "type": "text", "id": "faq_heading", "label": "FAQ heading", "default": "Frequently Asked Questions" },
+    { "type": "checkbox", "id": "faq_schema", "label": "Add FAQPage structured data", "default": true },
+    { "type": "header", "content": "Style" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#f3fbf6" },
+    { "type": "color", "id": "open_bg", "label": "Open question background", "default": "#fff1e8" },
+    { "type": "color", "id": "text", "label": "Text", "default": "#1f3b2c" },
+    { "type": "color", "id": "accent", "label": "Accent", "default": "#2e9e4f" },
+    { "type": "color", "id": "accent2", "label": "Accent 2 (+ icon)", "default": "#f26a21" },
+    { "type": "range", "id": "max_width", "label": "Max width", "min": 700, "max": 1400, "step": 20, "unit": "px", "default": 980 },
+    { "type": "range", "id": "pad_top", "label": "Padding top", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "pad_bottom", "label": "Padding bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 56 }
+  ],
+  "enabled_on": { "templates": ["collection"] },
+  "presets": [{ "name": "DTex collection SEO text" }]
+}
+{% endschema %}
