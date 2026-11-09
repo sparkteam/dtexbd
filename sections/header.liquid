@@ -188,6 +188,12 @@
     .dtex-hdr .mega-menu__link--level-2::before{content:"";width:6px;height:6px;border-radius:50%;background:{{ fg }};flex:none;opacity:.8;transition:opacity .2s}
     .dtex-hdr .mega-menu__link--level-2:hover{background:#fff1e8;color:{{ gd }};transform:translateX(3px)}
     .dtex-hdr .mega-menu__link--level-2:hover::before{opacity:1;background:{{ gd }}}
+    /* DTex fix: current / pressed / focused sub-category pill = brand colours, never dark (overrides Dawn's dark --active pill) */
+    .dtex-hdr .mega-menu__list .mega-menu__link--level-2.mega-menu__link--active,.dtex-hdr .mega-menu__list .mega-menu__link--level-2[aria-current]{background:#eef8f1;border-color:{{ fg }};color:#0e4d22;box-shadow:inset 0 -2px 0 {{ gd }}}
+    .dtex-hdr .mega-menu__list .mega-menu__link--level-2.mega-menu__link--active::before,.dtex-hdr .mega-menu__list .mega-menu__link--level-2[aria-current]::before{opacity:1;background:{{ gd }}}
+    .dtex-hdr .mega-menu__list .mega-menu__link--level-2:active{background:#fff1e8;border-color:rgba({{ gd.red }},{{ gd.green }},{{ gd.blue }},.35);color:{{ gd }}}
+    .dtex-hdr .mega-menu__list .mega-menu__link--level-2:focus{color:#0e4d22}
+    .dtex-hdr .mega-menu__list .mega-menu__link--level-2:focus-visible{background:#eef8f1;color:#0e4d22;outline:2px solid {{ gd }};outline-offset:2px}
     .dtex-hdr .mega-menu__link--level-3{color:rgba({{ dg.red }},{{ dg.green }},{{ dg.blue }},.8)}
     .dtex-hdr .mega-menu__link--level-3:hover{color:{{ gd }}}
     .dtex-hdr .header__submenu{background:{{ db }};border-radius:16px;box-shadow:0 18px 40px rgba({{ dg.red }},{{ dg.green }},{{ dg.blue }},.14);border:1px solid rgba({{ dg.red }},{{ dg.green }},{{ dg.blue }},.08);padding:1rem 0;animation:dtexDrop .25s ease both}
@@ -825,4 +831,3 @@
   ]
 }
 {% endschema %}
-
