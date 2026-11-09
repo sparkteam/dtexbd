@@ -48,7 +48,7 @@
             "button_label": "Shop comforters",
             "button_link": "shopify://collections/premium-comforter",
             "tab_label": "Comforter",
-            "note": "3 day easy return"
+            "note": ""
           }
         }
       },
@@ -74,16 +74,16 @@
           "type": "ai_gen_block_5c0fa07",
           "settings": {
             "desktop_width_percent": 100,
-            "columns_desktop": "3",
+            "columns_desktop": "2",
             "columns_mobile": "1",
             "item_1_enabled": true,
             "item_1_title": "Fast delivery",
             "item_1_text": "Home delivery in 2-3 days",
             "item_1_icon": "delivery",
             "item_1_link": "",
-            "item_2_enabled": true,
-            "item_2_title": "3 days return policy",
-            "item_2_text": "No questions asked 3 days return",
+            "item_2_enabled": false,
+            "item_2_title": "",
+            "item_2_text": "",
             "item_2_icon": "return",
             "item_2_link": "",
             "item_3_enabled": true,
@@ -1151,7 +1151,7 @@
         "image_side": "left",
         "pill": "Winter Collection",
         "title": "Wrap Yourself in Cloud-Soft Comfort",
-        "text": "Premium and export-quality comforters for cosy nights. Home delivery in 2–3 days with cash on delivery and 3-day easy returns.",
+        "text": "Premium and export-quality comforters for cosy nights. Home delivery in 2–3 days with cash on delivery.",
         "button_label": "Shop Comforters",
         "button_link": "shopify://collections/premium-comforter",
         "bg_start": "#fbf3e8",
@@ -1172,7 +1172,7 @@
         "image_side": "right",
         "pill": "Bedroom Refresh",
         "title": "Sleep Beautiful, Every Night",
-        "text": "Export-quality bedsheets in fresh prints and colours to brighten your bedroom. Home delivery in 2–3 days with cash on delivery and 3-day easy returns.",
+        "text": "Export-quality bedsheets in fresh prints and colours to brighten your bedroom. Home delivery in 2–3 days with cash on delivery.",
         "button_label": "Shop Bedsheets",
         "button_link": "shopify://collections/export-quality-bedsheets",
         "bg_start": "#e4f1e8",
