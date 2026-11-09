@@ -26,7 +26,8 @@
         "padding_top": 60,
         "padding_bottom": 60,
         "color_scheme": "scheme-1"
-      }
+      },
+      "disabled": true
     },
     "product-grid": {
       "type": "main-collection-product-grid",
@@ -113,11 +114,21 @@
       ],
       "name": "Modern Product Grid Mush",
       "settings": {}
+    },
+    "dtex-hero": {
+      "type": "dtex-collection-hero",
+      "settings": {}
+    },
+    "dtex-seo-text": {
+      "type": "dtex-collection-content",
+      "settings": {}
     }
   },
   "order": [
+    "dtex-hero",
     "banner",
     "product-grid",
-    "1792181965b09c1760"
+    "1792181965b09c1760",
+    "dtex-seo-text"
   ]
 }
