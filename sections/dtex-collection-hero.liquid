@@ -1,0 +1,215 @@
+{%- comment -%}
+  DTex BD – thin collection hero v2 (draft).
+  Left: breadcrumb, H1 (collection title), short intro (metafield custom.hero_intro, fallback collection description).
+  Right (v3): 3-4 clickable product photo cards from this collection in a fanned, overlapping row
+  (slight alternating tilt, rounded corners, white frame, soft shadow). Each card links to its product.
+{%- endcomment -%}
+{%- liquid
+  assign menu = linklists[section.settings.menu]
+  assign parent_title = blank
+  assign parent_url = blank
+  for link in menu.links
+    for child in link.links
+      if child.url == collection.url
+        assign parent_title = link.title
+        assign parent_url = link.url
+        break
+      endif
+    endfor
+    if parent_title != blank
+      break
+    endif
+  endfor
+
+  assign intro = collection.metafields.custom.hero_intro.value
+  if intro == blank
+    assign intro = section.settings.fallback_intro
+  endif
+  if intro == blank
+    assign intro = collection.description | strip_html | truncatewords: section.settings.fallback_words
+  endif
+
+  assign card_max = section.settings.card_count | plus: 0
+  assign slide_count = 0
+  for p in collection.products limit: 12
+    if p.featured_image and slide_count < card_max
+      assign slide_count = slide_count | plus: 1
+    endif
+  endfor
+-%}
+{%- style -%}
+  #DchHero-{{ section.id }} {
+    --dch-bg1: {{ section.settings.bg_start }};
+    --dch-bg2: {{ section.settings.bg_end }};
+    --dch-text: {{ section.settings.text }};
+    --dch-accent: {{ section.settings.accent }};
+    --dch-accent2: {{ section.settings.accent2 }};
+    --dch-h: {{ section.settings.hero_h }}px;
+    --dch-max: {{ section.settings.max_width }}px;
+    --dch-title: {{ section.settings.title_size }}px;
+    --dch-title-m: {{ section.settings.title_size_mobile }}px;
+    --dch-ch: {{ section.settings.card_h }}px;
+    --dch-chm: {{ section.settings.card_h_mobile }}px;
+    --dch-border: {{ section.settings.border_color }};
+    --dch-bw: {{ section.settings.border_w }}px;
+    --dch-focus: {{ section.settings.focus_y }}%;
+  }
+{%- endstyle -%}
+
+<div id="DchHero-{{ section.id }}" class="dch{% unless section.settings.rotate %} dch--flat{% endunless %}" role="region" aria-label="{{ collection.title | escape }}">
+  <div class="dch__frame{% if slide_count == 0 %} dch__frame--noimg{% endif %}">
+    <div class="dch__panel">
+      <div class="dch__text">
+        {%- if section.settings.show_breadcrumb -%}
+          <nav class="dch__crumbs" aria-label="Breadcrumb">
+            <a href="{{ routes.root_url }}">{{ section.settings.home_label }}</a>
+            {%- if parent_title != blank and parent_url != collection.url -%}
+              <span class="dch__sep" aria-hidden="true">›</span><a href="{{ parent_url }}">{{ parent_title }}</a>
+            {%- endif -%}
+            <span class="dch__sep" aria-hidden="true">›</span><span class="dch__here" aria-current="page">{{ collection.title }}</span>
+          </nav>
+        {%- endif -%}
+        <h1 class="dch__title">{{ collection.title }}</h1>
+        {%- if intro != blank -%}<p class="dch__intro">{{ intro | escape | newline_to_br }}</p>{%- endif -%}
+        {%- if section.settings.show_count -%}<span class="dch__count">{{ collection.products_count }} {{ section.settings.count_label }}</span>{%- endif -%}
+      </div>
+    </div>
+
+    {%- if slide_count > 0 -%}
+    <div class="dch__media">
+      <ul class="dch__cards" role="list" aria-label="{{ collection.title | escape }}">
+        {%- assign n = 0 -%}
+        {%- for p in collection.products limit: 12 -%}
+          {%- if p.featured_image and n < card_max -%}
+            {%- assign img_alt = p.title -%}
+            <li class="dch__card-item">
+              <a class="dch__card" href="{{ p.url }}" title="{{ p.title | escape }}">
+                {%- if n < 2 -%}
+                  {{ p.featured_image | image_url: width: 600 | image_tag: widths: '240, 360, 480, 600', sizes: '(min-width: 750px) 240px, 120px', alt: img_alt, class: 'dch__img', fetchpriority: 'high' }}
+                {%- else -%}
+                  {{ p.featured_image | image_url: width: 600 | image_tag: widths: '240, 360, 480, 600', sizes: '(min-width: 750px) 240px, 120px', alt: img_alt, class: 'dch__img', loading: 'lazy' }}
+                {%- endif -%}
+                {%- if section.settings.show_price -%}<span class="dch__price">{{ p.price | money_without_trailing_zeros }}</span>{%- endif -%}
+              </a>
+            </li>
+            {%- assign n = n | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{%- if section.settings.breadcrumb_schema -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": {{ section.settings.home_label | json }}, "item": {{ shop.url | append: routes.root_url | json }} }
+    {%- assign pos = 2 -%}
+    {%- if parent_title != blank and parent_url != collection.url -%},
+    { "@type": "ListItem", "position": 2, "name": {{ parent_title | json }}, "item": {{ shop.url | append: parent_url | json }} }
+    {%- assign pos = 3 -%}
+    {%- endif -%},
+    { "@type": "ListItem", "position": {{ pos }}, "name": {{ collection.title | json }}, "item": {{ shop.url | append: collection.url | json }} }
+  ]
+}
+</script>
+{%- endif -%}
+
+{% stylesheet %}
+  .dch { display: block; background: linear-gradient(110deg, var(--dch-bg1, #eef8f1) 0%, var(--dch-bg2, #fff1e8) 100%); color: var(--dch-text, #1f3b2c); border-bottom: 1px solid rgba(46,158,79,.14); overflow: hidden; }
+  .dch__frame { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); height: var(--dch-h, 300px); max-width: var(--dch-max, 1400px); margin: 0 auto; }
+  .dch__frame--noimg { grid-template-columns: 1fr; height: auto; }
+  .dch__panel { display: flex; align-items: center; min-width: 0; padding: 20px 24px 20px 24px; }
+  .dch__frame--noimg .dch__panel { padding-top: 26px; padding-bottom: 26px; }
+  .dch__text { max-width: 560px; }
+  .dch__crumbs { font-size: 13px; margin: 0 0 10px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; opacity: .9; }
+  .dch__crumbs a { color: var(--dch-accent, #2e9e4f); text-decoration: none; font-weight: 600; }
+  .dch__crumbs a:hover { color: var(--dch-accent2, #f26a21); }
+  .dch__sep { color: var(--dch-accent2, #f26a21); }
+  .dch__title { font-size: var(--dch-title, 36px); line-height: 1.15; margin: 0 0 10px; color: var(--dch-text, #1f3b2c); font-weight: 800; letter-spacing: -.01em; }
+  .dch__title::after { content: ""; display: block; width: 56px; height: 4px; border-radius: 4px; margin-top: 10px; background: var(--dch-accent2, #f26a21); }
+  .dch__intro { font-size: 15px; line-height: 1.6; margin: 0; }
+  .dch__count { display: inline-block; margin-top: 12px; font-size: 12px; font-weight: 700; color: var(--dch-accent, #2e9e4f); background: #fff; border: 1px solid rgba(46,158,79,.25); border-radius: 999px; padding: 4px 12px; }
+
+  .dch__media { position: relative; min-width: 0; display: flex; align-items: center; justify-content: center; padding: 16px 24px; }
+  .dch__media::before { content: ""; position: absolute; inset: 12% 10%; border-radius: 50%; background: radial-gradient(closest-side, rgba(255,255,255,.75), rgba(255,255,255,0)); pointer-events: none; }
+  .dch__cards { --cw: calc(var(--dch-ch, 230px) * .8); position: relative; display: flex; align-items: center; justify-content: center; list-style: none; margin: 0; padding: 0; }
+  .dch__card-item { position: relative; flex: 0 0 auto; margin: 0; padding: 0; z-index: 1; }
+  .dch__card-item + .dch__card-item { margin-left: calc(var(--cw) * -.28); }
+  .dch__card-item:nth-child(1) { --r: -6deg; --y: 6px; }
+  .dch__card-item:nth-child(2) { --r: 3deg; --y: -6px; z-index: 2; }
+  .dch__card-item:nth-child(3) { --r: -3deg; --y: 4px; z-index: 3; }
+  .dch__card-item:nth-child(4) { --r: 5deg; --y: -4px; z-index: 2; }
+  .dch--flat .dch__card-item { --r: 0deg; --y: 0px; }
+  .dch__card { position: relative; display: block; width: var(--cw); height: var(--dch-ch, 230px); border-radius: 16px; overflow: hidden; border: var(--dch-bw, 6px) solid var(--dch-border, #ffffff); background: var(--dch-border, #ffffff); box-shadow: 0 14px 30px rgba(31,59,44,.18), 0 3px 8px rgba(31,59,44,.10); transform: translateY(var(--y, 0)) rotate(var(--r, 0deg)); transition: transform .3s ease, box-shadow .3s ease; text-decoration: none; }
+  .dch__img { width: 100%; height: 100%; object-fit: cover; object-position: center var(--dch-focus, 50%); display: block; border-radius: 10px; }
+  .dch__card-item:hover, .dch__card-item:focus-within { z-index: 10; }
+  .dch__card:hover, .dch__card:focus-visible { transform: translateY(-10px) rotate(0deg) scale(1.06); box-shadow: 0 22px 40px rgba(31,59,44,.24), 0 4px 10px rgba(31,59,44,.12); }
+  .dch__card:focus-visible { outline: 3px solid var(--dch-accent2, #f26a21); outline-offset: 3px; }
+  .dch__price { position: absolute; left: 8px; bottom: 8px; font-size: 11px; font-weight: 700; color: var(--dch-text, #1f3b2c); background: rgba(255,255,255,.92); border-radius: 999px; padding: 2px 8px; }
+  @media (prefers-reduced-motion: reduce) { .dch__card { transition: none; } }
+  @media screen and (min-width: 750px) and (max-width: 1100px) {
+    .dch__cards { --cw: calc(var(--dch-ch, 230px) * .66); }
+    .dch__card-item + .dch__card-item { margin-left: calc(var(--cw) * -.34); }
+  }
+  @media screen and (max-width: 749px) {
+    .dch__frame { grid-template-columns: 1fr; height: auto; }
+    .dch__panel { padding: 14px 16px 4px; }
+    .dch__crumbs { flex-wrap: nowrap; white-space: nowrap; overflow: hidden; margin-bottom: 6px; font-size: 12px; }
+    .dch__here { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+    .dch__title { font-size: var(--dch-title-m, 24px); margin-bottom: 6px; }
+    .dch__title::after { margin-top: 6px; height: 3px; width: 44px; }
+    .dch__intro { font-size: 13.5px; line-height: 1.5; }
+    .dch__count { display: none; }
+    .dch__media { padding: 6px 12px 18px; overflow-x: auto; justify-content: flex-start; }
+    .dch__cards { --cw: calc(var(--dch-chm, 140px) * .8); margin: 0 auto; padding: 8px 6px; }
+    .dch__card { height: var(--dch-chm, 140px); border-radius: 12px; border-width: max(3px, calc(var(--dch-bw, 6px) - 2px)); }
+    .dch__img { border-radius: 8px; }
+    .dch__card-item + .dch__card-item { margin-left: calc(var(--cw) * -.22); }
+    .dch__card:hover, .dch__card:focus-visible { transform: translateY(-6px) rotate(0deg) scale(1.04); }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "DTex collection hero",
+  "class": "section-dtex-collection-hero",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "paragraph", "content": "Title = collection title. Short intro = collection metafield 'Hero intro' (Admin › Products › Collections › edit collection › Metafields). Cards = first products of the collection; each card opens its product page." },
+    { "type": "link_list", "id": "menu", "label": "Menu used for breadcrumb parent", "default": "main-menu" },
+    { "type": "checkbox", "id": "show_breadcrumb", "label": "Show breadcrumb", "default": true },
+    { "type": "text", "id": "home_label", "label": "Breadcrumb home label", "default": "Home" },
+    { "type": "textarea", "id": "fallback_intro", "label": "Fallback intro (used only when the collection has no Hero intro)" },
+    { "type": "range", "id": "fallback_words", "label": "Fallback: words from collection description", "min": 10, "max": 50, "step": 2, "default": 26 },
+    { "type": "checkbox", "id": "show_count", "label": "Show product count", "default": true },
+    { "type": "text", "id": "count_label", "label": "Product count label", "default": "products" },
+    { "type": "checkbox", "id": "breadcrumb_schema", "label": "Add BreadcrumbList structured data", "default": true },
+    { "type": "header", "content": "Product cards (right side)" },
+    { "type": "select", "id": "card_count", "label": "Number of product cards", "options": [{ "value": "3", "label": "3" }, { "value": "4", "label": "4" }], "default": "4" },
+    { "type": "checkbox", "id": "rotate", "label": "Tilt cards (fanned look)", "default": true },
+    { "type": "color", "id": "border_color", "label": "Card frame colour", "default": "#ffffff" },
+    { "type": "range", "id": "border_w", "label": "Card frame thickness", "min": 0, "max": 12, "step": 1, "unit": "px", "default": 6 },
+    { "type": "range", "id": "card_h", "label": "Card height (desktop)", "min": 160, "max": 280, "step": 10, "unit": "px", "default": 220 },
+    { "type": "range", "id": "card_h_mobile", "label": "Card height (mobile)", "min": 100, "max": 200, "step": 10, "unit": "px", "default": 130 },
+    { "type": "range", "id": "focus_y", "label": "Photo focus (0 = top, 100 = bottom)", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 50 },
+    { "type": "checkbox", "id": "show_price", "label": "Show small price tag on cards", "default": false },
+    { "type": "header", "content": "Style" },
+    { "type": "color", "id": "bg_start", "label": "Background (left)", "default": "#eef8f1" },
+    { "type": "color", "id": "bg_end", "label": "Background (right)", "default": "#fff1e8" },
+    { "type": "color", "id": "text", "label": "Text", "default": "#1f3b2c" },
+    { "type": "color", "id": "accent", "label": "Accent (links)", "default": "#2e9e4f" },
+    { "type": "color", "id": "accent2", "label": "Accent 2 (underline, focus ring)", "default": "#f26a21" },
+    { "type": "range", "id": "title_size", "label": "Title size (desktop)", "min": 24, "max": 52, "step": 1, "unit": "px", "default": 36 },
+    { "type": "range", "id": "title_size_mobile", "label": "Title size (mobile)", "min": 20, "max": 36, "step": 1, "unit": "px", "default": 24 },
+    { "type": "range", "id": "hero_h", "label": "Hero height (desktop)", "min": 220, "max": 420, "step": 10, "unit": "px", "default": 300 },
+    { "type": "range", "id": "max_width", "label": "Page width", "min": 1000, "max": 1600, "step": 20, "unit": "px", "default": 1400 }
+  ],
+  "enabled_on": { "templates": ["collection"] },
+  "presets": [{ "name": "DTex collection hero" }]
+}
+{% endschema %}
