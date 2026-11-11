@@ -15,40 +15,49 @@
         "slide_bedsheet": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/WhatsAppImage2026-11-03at21.27.13.jpg",
+            "image": "shopify://shop_images/WhatsAppImage2026-11-03at03.10.41_1.jpg",
             "kicker": "Bedsheet",
             "heading": "নরম কটন বেডশিট",
             "text": "এক্সপোর্ট কোয়ালিটি ফ্লোরাল বেডশিট — নরম, রঙিন, প্রতিদিনের ঘুমের জন্য।",
             "button_label": "Shop bedsheets",
             "button_link": "shopify://collections/export-quality-bedsheets",
             "tab_label": "Bedsheet",
-            "note": "Home delivery in 2–3 days"
+            "note": "Home delivery in 2–3 days",
+            "image_x": 50,
+            "image_x_mobile": 50,
+            "image_y": 60
           }
         },
         "slide_curtain": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/WhatsAppImage2026-11-02at01.28.37.jpg",
+            "image": "shopify://shop_images/Waffle_Cotton_Curtain_-_Floral_Design_1.jpg",
             "kicker": "Curtain",
             "heading": "ঘর জুড়ে ওয়াফেল কার্টেন",
             "text": "ফ্লোরাল প্রিন্ট আর প্রিমিয়াম ওয়াফেল টেক্সচার — জানালা হবে ঘরের সেরা কোণা।",
             "button_label": "Shop curtains",
             "button_link": "shopify://collections/waffle-curtain",
             "tab_label": "Curtain",
-            "note": "7 ft height · waffle cotton"
+            "note": "7 ft height · waffle cotton",
+            "image_x": 50,
+            "image_x_mobile": 65,
+            "image_y": 35
           }
         },
         "slide_comforter": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/WhatsAppImage2026-10-29at01.50.54.jpg",
+            "image": "shopify://shop_images/WhatsAppImage2026-10-29at01.50.52.jpg",
             "kicker": "Comforter",
             "heading": "হালকা ফুলের কম্ফোর্টার",
             "text": "নরম কুইল্টেড কম্ফোর্টার, উজ্জ্বল প্রিন্ট — শীতের রাত আর গিফট, দুটোতেই মানানসই।",
             "button_label": "Shop comforters",
             "button_link": "shopify://collections/premium-comforter",
             "tab_label": "Comforter",
-            "note": ""
+            "note": "",
+            "image_x": 50,
+            "image_x_mobile": 55,
+            "image_y": 55
           }
         }
       },
@@ -63,8 +72,10 @@
         "interval": 6,
         "panel_color": "#0e4d22",
         "accent_color": "#f0a05a",
-        "button_color": "#f4efe6",
-        "button_text": "#0e4d22"
+        "button_color": "#0e4d22",
+        "button_text": "#ffffff",
+        "card_color": "#fbf8f2",
+        "text_color": "#172117"
       }
     },
     "1791922712091fa8b5": {

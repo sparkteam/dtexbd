@@ -4,7 +4,9 @@
 
 {%- style -%}
   #DtexHero-{{ section.id }} {
-    --dtex-panel: {{ section.settings.panel_color }};
+    --dtex-brand: {{ section.settings.panel_color }};
+    --dtex-card: {{ section.settings.card_color }};
+    --dtex-ink: {{ section.settings.text_color }};
     --dtex-accent: {{ section.settings.accent_color }};
     --dtex-btn: {{ section.settings.button_color }};
     --dtex-btn-text: {{ section.settings.button_text }};
@@ -21,79 +23,22 @@
   aria-label="{{ section.settings.accessibility_label | escape }}"
 >
   <div class="dtex-hero__frame">
-    <div class="dtex-hero__panel">
-      <div class="dtex-hero__stories">
-        {%- for block in section.blocks -%}
-          <div
-            class="dtex-hero__story{% if forloop.first %} is-active{% endif %}"
-            data-hero-slide="{{ forloop.index0 }}"
-            {{ block.shopify_attributes }}
-            {% unless forloop.first %}hidden{% endunless %}
-          >
-            <p class="dtex-hero__kicker">
-              <span>0{{ forloop.index }}</span>
-              {{ block.settings.kicker | escape }}
-            </p>
-            {%- if block.settings.heading != blank -%}
-              <h2 class="dtex-hero__heading">{{ block.settings.heading | escape }}</h2>
-            {%- endif -%}
-            {%- if block.settings.text != blank -%}
-              <p class="dtex-hero__text">{{ block.settings.text | escape }}</p>
-            {%- endif -%}
-            {%- if block.settings.button_label != blank -%}
-              <a
-                class="dtex-hero__btn"
-                {% if block.settings.button_link != blank %}
-                  href="{{ block.settings.button_link }}"
-                {% else %}
-                  role="link" aria-disabled="true"
-                {% endif %}
-              >
-                {{ block.settings.button_label | escape }}
-                <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
-                  <path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </a>
-            {%- endif -%}
-            {%- if block.settings.note != blank -%}
-              <p class="dtex-hero__note">{{ block.settings.note | escape }}</p>
-            {%- endif -%}
-          </div>
-        {%- endfor -%}
-      </div>
-
-      {%- if section.blocks.size > 1 -%}
-        <div class="dtex-hero__tabs" role="tablist" aria-label="Choose a category">
-          {%- for block in section.blocks -%}
-            <button
-              class="dtex-hero__tab{% if forloop.first %} is-active{% endif %}"
-              type="button"
-              role="tab"
-              data-hero-tab="{{ forloop.index0 }}"
-              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-              aria-label="{{ block.settings.tab_label | default: block.settings.kicker | escape }}"
-            >
-              <span class="dtex-hero__tab-index">0{{ forloop.index }}</span>
-              <span class="dtex-hero__tab-label">{{ block.settings.tab_label | default: block.settings.kicker | escape }}</span>
-              <span class="dtex-hero__bar" aria-hidden="true"><span class="dtex-hero__bar-fill"></span></span>
-            </button>
-          {%- endfor -%}
-        </div>
-      {%- endif -%}
-    </div>
-
     <div class="dtex-hero__media">
       {%- for block in section.blocks -%}
-        <div class="dtex-hero__photo{% if forloop.first %} is-active{% endif %}" data-hero-photo="{{ forloop.index0 }}">
+        <div
+          class="dtex-hero__photo{% if forloop.first %} is-active{% endif %}"
+          data-hero-photo="{{ forloop.index0 }}"
+          style="--dtex-pos-x: {{ block.settings.image_x }}%; --dtex-pos-y: {{ block.settings.image_y }}%; --dtex-pos-x-mobile: {{ block.settings.image_x_mobile }}%;"
+        >
           {%- if block.settings.image != blank -%}
-            {%- assign hero_alt = block.settings.heading | default: block.settings.kicker -%}
+            {%- assign hero_alt = block.settings.image.alt | default: block.settings.heading | default: block.settings.kicker -%}
             {%- if forloop.first and section.index == 1 -%}
               {{
                 block.settings.image
-                | image_url: width: 1800
+                | image_url: width: 2400
                 | image_tag:
-                  widths: '600, 900, 1200, 1600, 1800',
-                  sizes: '(min-width: 990px) 58vw, 100vw',
+                  widths: '600, 900, 1200, 1600, 2000, 2400',
+                  sizes: '100vw',
                   alt: hero_alt,
                   fetchpriority: 'high',
                   class: 'dtex-hero__img'
@@ -101,10 +46,10 @@
             {%- else -%}
               {{
                 block.settings.image
-                | image_url: width: 1800
+                | image_url: width: 2400
                 | image_tag:
-                  widths: '600, 900, 1200, 1600, 1800',
-                  sizes: '(min-width: 990px) 58vw, 100vw',
+                  widths: '600, 900, 1200, 1600, 2000, 2400',
+                  sizes: '100vw',
                   alt: hero_alt,
                   loading: 'lazy',
                   class: 'dtex-hero__img'
@@ -119,13 +64,76 @@
       {%- if section.blocks.size > 1 -%}
         <div class="dtex-hero__arrows">
           <button class="dtex-hero__arrow" type="button" data-hero-prev aria-label="Previous slide">
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
           <button class="dtex-hero__arrow" type="button" data-hero-next aria-label="Next slide">
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>
       {%- endif -%}
+    </div>
+
+    <div class="dtex-hero__wrap">
+      <div class="dtex-hero__card">
+        <div class="dtex-hero__stories">
+          {%- for block in section.blocks -%}
+            <div
+              class="dtex-hero__story{% if forloop.first %} is-active{% endif %}"
+              data-hero-slide="{{ forloop.index0 }}"
+              {{ block.shopify_attributes }}
+              {% unless forloop.first %}hidden{% endunless %}
+            >
+              <p class="dtex-hero__kicker">
+                <span class="dtex-hero__kicker-num">0{{ forloop.index }}</span>
+                <span class="dtex-hero__kicker-label">{{ block.settings.kicker | escape }}</span>
+              </p>
+              {%- if block.settings.heading != blank -%}
+                <h2 class="dtex-hero__heading">{{ block.settings.heading | escape }}</h2>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <p class="dtex-hero__text">{{ block.settings.text | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.button_label != blank -%}
+                <a
+                  class="dtex-hero__btn"
+                  {% if block.settings.button_link != blank %}
+                    href="{{ block.settings.button_link }}"
+                  {% else %}
+                    role="link" aria-disabled="true"
+                  {% endif %}
+                >
+                  {{ block.settings.button_label | escape }}
+                  <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                    <path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              {%- endif -%}
+              {%- if block.settings.note != blank -%}
+                <p class="dtex-hero__note">{{ block.settings.note | escape }}</p>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- if section.blocks.size > 1 -%}
+          <div class="dtex-hero__tabs" role="tablist" aria-label="Choose a category">
+            {%- for block in section.blocks -%}
+              <button
+                class="dtex-hero__tab{% if forloop.first %} is-active{% endif %}"
+                type="button"
+                role="tab"
+                data-hero-tab="{{ forloop.index0 }}"
+                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                aria-label="{{ block.settings.tab_label | default: block.settings.kicker | escape }}"
+              >
+                <span class="dtex-hero__tab-index">0{{ forloop.index }}</span>
+                <span class="dtex-hero__tab-label">{{ block.settings.tab_label | default: block.settings.kicker | escape }}</span>
+                <span class="dtex-hero__bar" aria-hidden="true"><span class="dtex-hero__bar-fill"></span></span>
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
     </div>
   </div>
 </dtex-hero>
@@ -133,51 +141,117 @@
 {% stylesheet %}
   .dtex-hero {
     display: block;
-    background: var(--dtex-panel, #0e4d22);
-    color: #f7f4ee;
+    position: relative;
+    background: #efe8dc;
+    color: #172117;
   }
 
   .dtex-hero__frame {
-    display: grid;
-    grid-template-columns: minmax(340px, 0.86fr) minmax(460px, 1.14fr);
-    height: clamp(560px, calc(100svh - 148px), 700px);
+    position: relative;
+    height: clamp(560px, calc(100svh - 140px), 720px);
+    overflow: hidden;
   }
 
-  .dtex-hero__panel {
+  .dtex-hero__media {
+    position: absolute;
+    inset: 0;
+    background: #e6dfd3;
+    overflow: hidden;
+  }
+
+  .dtex-hero__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(23, 33, 23, 0.18) 0%, rgba(23, 33, 23, 0.04) 38%, rgba(23, 33, 23, 0) 60%);
+  }
+
+  .dtex-hero__photo {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+  }
+
+  .dtex-hero__photo.is-active {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .dtex-hero__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--dtex-pos-x, 50%) var(--dtex-pos-y, 50%);
+    transform: scale(1.05);
+  }
+
+  .dtex-hero__photo.is-active .dtex-hero__img {
+    animation: dtex-hero-ken 9s ease forwards;
+  }
+
+  .dtex-hero__placeholder {
+    background: #efe8dc;
+  }
+
+  @keyframes dtex-hero-ken {
+    from { transform: scale(1.05); }
+    to { transform: scale(1); }
+  }
+
+  .dtex-hero__wrap {
     position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 clamp(24px, 4vw, 56px);
+    pointer-events: none;
+  }
+
+  .dtex-hero__card {
+    pointer-events: auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    min-width: 0;
-    padding: 52px 48px 0;
-    background: var(--dtex-panel, #0e4d22);
+    width: min(460px, 42%);
+    min-width: 360px;
+    padding: 34px 34px 22px;
+    border-radius: 22px;
+    background: var(--dtex-card, #fbf8f2);
+    color: var(--dtex-ink, #172117);
+    box-shadow: 0 24px 60px rgba(23, 33, 23, 0.18), 0 2px 8px rgba(23, 33, 23, 0.06);
   }
 
   .dtex-hero__stories {
     position: relative;
-    flex: 1;
-    min-height: 280px;
   }
 
   .dtex-hero__story {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: center;
-    max-width: 520px;
-    min-height: 100%;
+    animation: dtex-hero-rise 0.55s ease both;
   }
 
   .dtex-hero__story[hidden] {
     display: none;
   }
 
+  @keyframes dtex-hero-rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   .dtex-hero__kicker {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin: 0 0 18px;
-    color: var(--dtex-accent, #f0a05a);
+    gap: 10px;
+    margin: 0 0 16px;
     font-family: Questrial, "Noto Sans Bengali", sans-serif;
     font-size: 13px;
     font-weight: 400;
@@ -185,33 +259,39 @@
     text-transform: uppercase;
   }
 
-  .dtex-hero__kicker span {
+  .dtex-hero__kicker-num {
+    color: var(--dtex-accent, #f0a05a);
     letter-spacing: 0.08em;
+  }
+
+  .dtex-hero__kicker-label {
+    color: var(--dtex-brand, #0e4d22);
   }
 
   .dtex-hero__kicker::after {
     content: "";
-    width: 42px;
+    width: 46px;
     height: 1px;
     background: var(--dtex-accent, #f0a05a);
   }
 
   .dtex-hero__heading {
     margin: 0;
-    color: #f7f4ee;
+    color: var(--dtex-ink, #172117);
     font-family: "Noto Sans Bengali", Almarai, sans-serif;
-    font-size: clamp(36px, 4vw, 58px);
+    font-size: clamp(32px, 3.2vw, 46px);
     font-weight: 800;
-    line-height: 1.18;
-    letter-spacing: -0.02em;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
   }
 
   .dtex-hero__text {
-    margin: 16px 0 0;
-    max-width: 440px;
-    color: rgba(247, 244, 238, 0.88);
+    margin: 14px 0 0;
+    max-width: 400px;
+    color: var(--dtex-ink, #172117);
+    opacity: 0.8;
     font-family: "Noto Sans Bengali", Questrial, sans-serif;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 500;
     line-height: 1.65;
   }
@@ -220,61 +300,75 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    margin-top: 28px;
-    min-height: 50px;
+    margin-top: 24px;
+    min-height: 48px;
     padding: 0 22px 0 24px;
     border-radius: 999px;
-    background: var(--dtex-btn, #f4efe6);
-    color: var(--dtex-btn-text, #0e4d22);
+    background: var(--dtex-btn, #0e4d22);
+    color: var(--dtex-btn-text, #ffffff);
     font-family: Questrial, "Noto Sans Bengali", sans-serif;
     font-size: 16px;
     letter-spacing: 0.01em;
     text-decoration: none;
-    transition: transform 0.2s ease, background 0.2s ease;
+    box-shadow: 0 8px 20px rgba(14, 77, 34, 0.22);
+    transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
   }
 
   .dtex-hero__btn svg {
     width: 18px;
     height: 18px;
+    transition: transform 0.2s ease;
   }
 
   .dtex-hero__btn:hover {
-    background: #fff;
+    filter: brightness(1.12);
+    box-shadow: 0 10px 26px rgba(14, 77, 34, 0.3);
+  }
+
+  .dtex-hero__btn:hover svg {
     transform: translateX(3px);
   }
 
   .dtex-hero__note {
-    margin: 16px 0 0;
-    color: rgba(247, 244, 238, 0.7);
+    margin: 14px 0 0;
+    color: var(--dtex-ink, #172117);
+    opacity: 0.62;
     font-family: Questrial, sans-serif;
     font-size: 13px;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.03em;
   }
 
   .dtex-hero__tabs {
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
-    gap: 8px;
-    margin: 28px -12px 0;
+    gap: 6px;
+    margin: 28px 0 0;
+    border-top: 1px solid rgba(23, 33, 23, 0.1);
   }
 
   .dtex-hero__tab {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 4px;
-    padding: 14px 12px 18px;
+    gap: 3px;
+    padding: 12px 0 6px;
     border: 0;
-    border-top: 1px solid rgba(247, 244, 238, 0.18);
     background: transparent;
-    color: rgba(247, 244, 238, 0.62);
+    color: var(--dtex-ink, #172117);
+    opacity: 0.55;
     text-align: left;
     cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  .dtex-hero__tab:hover {
+    opacity: 0.85;
   }
 
   .dtex-hero__tab.is-active {
-    color: #f7f4ee;
+    color: var(--dtex-brand, #0e4d22);
+    opacity: 1;
   }
 
   .dtex-hero__tab-index {
@@ -285,16 +379,17 @@
 
   .dtex-hero__tab-label {
     font-family: Questrial, "Noto Sans Bengali", sans-serif;
-    font-size: 15px;
-    letter-spacing: 0.04em;
+    font-size: 14px;
+    letter-spacing: 0.03em;
   }
 
   .dtex-hero__bar {
     display: block;
     width: 100%;
-    height: 2px;
+    height: 3px;
     margin-top: 8px;
-    background: rgba(247, 244, 238, 0.2);
+    border-radius: 3px;
+    background: rgba(23, 33, 23, 0.1);
     overflow: hidden;
   }
 
@@ -318,67 +413,28 @@
     to { width: 100%; }
   }
 
-  .dtex-hero__media {
-    position: relative;
-    min-width: 0;
-    background: #d9d3c8;
-    overflow: hidden;
-  }
-
-  .dtex-hero__photo {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-  }
-
-  .dtex-hero__photo.is-active {
-    opacity: 1;
-    z-index: 1;
-  }
-
-  .dtex-hero__img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-    transform: scale(1.06);
-  }
-
-  .dtex-hero__photo.is-active .dtex-hero__img {
-    animation: dtex-hero-ken 8s ease forwards;
-  }
-
-  .dtex-hero__placeholder {
-    background: #efe8dc;
-  }
-
-  @keyframes dtex-hero-ken {
-    from { transform: scale(1.06); }
-    to { transform: scale(1); }
-  }
-
   .dtex-hero__arrows {
     position: absolute;
-    z-index: 2;
-    right: 22px;
-    bottom: 22px;
+    z-index: 3;
+    right: 24px;
+    bottom: 24px;
     display: flex;
-    gap: 8px;
+    gap: 10px;
   }
 
   .dtex-hero__arrow {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 46px;
-    height: 46px;
+    width: 48px;
+    height: 48px;
     border: 0;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.94);
     color: #172117;
-    box-shadow: 0 8px 24px rgba(23, 33, 23, 0.16);
+    box-shadow: 0 8px 24px rgba(23, 33, 23, 0.18);
     cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
   }
 
   .dtex-hero__arrow svg {
@@ -388,6 +444,7 @@
 
   .dtex-hero__arrow:hover {
     background: #fff;
+    transform: scale(1.06);
   }
 
   .dtex-hero__btn:focus-visible,
@@ -400,7 +457,8 @@
   @media (prefers-reduced-motion: reduce) {
     .dtex-hero__photo,
     .dtex-hero__btn,
-    .dtex-hero__img {
+    .dtex-hero__img,
+    .dtex-hero__story {
       transition: none;
       animation: none;
     }
@@ -413,43 +471,64 @@
 
   @media screen and (max-width: 989px) {
     .dtex-hero__frame {
-      grid-template-columns: 1fr;
       height: auto;
-      min-height: 0;
+      overflow: visible;
     }
 
     .dtex-hero__media {
-      height: min(92vw, 520px);
-      order: -1;
+      position: relative;
+      inset: auto;
+      height: min(96vw, 560px);
     }
 
-    .dtex-hero__panel {
-      padding: 28px 20px 0;
+    .dtex-hero__media::after {
+      background: linear-gradient(180deg, rgba(23, 33, 23, 0) 65%, rgba(23, 33, 23, 0.14) 100%);
     }
 
-    .dtex-hero__stories {
-      min-height: 0;
+    .dtex-hero__img {
+      object-position: var(--dtex-pos-x-mobile, 50%) var(--dtex-pos-y, 50%);
     }
 
-    .dtex-hero__story {
-      min-height: 0;
-      padding-bottom: 8px;
+    .dtex-hero__arrows {
+      right: 14px;
+      bottom: auto;
+      top: 14px;
+      gap: 8px;
+    }
+
+    .dtex-hero__arrow {
+      width: 40px;
+      height: 40px;
+    }
+
+    .dtex-hero__wrap {
+      display: block;
+      height: auto;
+      margin-top: -56px;
+      padding: 0 14px 24px;
+    }
+
+    .dtex-hero__card {
+      width: 100%;
+      min-width: 0;
+      padding: 24px 20px 14px;
+      border-radius: 18px;
     }
 
     .dtex-hero__heading {
-      font-size: 34px;
+      font-size: 30px;
     }
 
     .dtex-hero__text {
       font-size: 15px;
     }
 
-    .dtex-hero__tabs {
-      margin-top: 22px;
+    .dtex-hero__btn {
+      margin-top: 20px;
     }
 
-    .dtex-hero__tab {
-      padding: 12px 8px 16px;
+    .dtex-hero__tabs {
+      margin-top: 20px;
     }
 
     .dtex-hero__tab-label {
@@ -569,9 +648,25 @@
       "default": 6
     },
     {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card background",
+      "default": "#fbf8f2"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Card text",
+      "default": "#172117"
+    },
+    {
       "type": "color",
       "id": "panel_color",
-      "label": "Panel color",
+      "label": "Brand color (eyebrow, active tab)",
       "default": "#0e4d22"
     },
     {
@@ -584,13 +679,13 @@
       "type": "color",
       "id": "button_color",
       "label": "Button color",
-      "default": "#f4efe6"
+      "default": "#0e4d22"
     },
     {
       "type": "color",
       "id": "button_text",
       "label": "Button text",
-      "default": "#0e4d22"
+      "default": "#ffffff"
     }
   ],
   "blocks": [
@@ -602,6 +697,36 @@
           "type": "image_picker",
           "id": "image",
           "label": "Image"
+        },
+        {
+          "type": "range",
+          "id": "image_x",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "label": "Image horizontal position (desktop)",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "image_x_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "label": "Image horizontal position (mobile)",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "image_y",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "label": "Image vertical position",
+          "default": 50
         },
         {
           "type": "text",
@@ -619,7 +744,7 @@
           "type": "textarea",
           "id": "text",
           "label": "Text",
-          "default": "এক্সপোর্ট কোয়ালিটি ফ্লোরাল বেডশিট — নরম, রঙিন, প্রতিদিনের ঘুমের জন্য।"
+          "default": "এক্সপোর্ট কোয়ালিটি ফ্লোরাল বেডশিট — নরম, রঙিন, প্রতিদিনের ঘুমের জন্য।"
         },
         {
           "type": "text",
