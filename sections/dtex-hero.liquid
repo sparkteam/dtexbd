@@ -3,6 +3,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@500;700;800&family=Questrial&display=swap" rel="stylesheet">
 
 {%- style -%}
+  #shopify-section-{{ section.id }}.dtex-hero-section,
+  #DtexHero-{{ section.id }} {
+    max-width: {{ section.settings.container_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   #DtexHero-{{ section.id }} {
     --dtex-brand: {{ section.settings.panel_color }};
     --dtex-card: {{ section.settings.card_color }};
@@ -673,6 +680,21 @@
       "unit": "s",
       "label": "Seconds per slide",
       "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "min": 1000,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 1400,
+      "info": "Stays full width on normal screens. On a large monitor or when zoomed out, the slideshow centers at this width to match Shop by Category and Featured products."
     },
     {
       "type": "header",

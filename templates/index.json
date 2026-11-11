@@ -88,6 +88,7 @@
         "accessibility_label": "Bedsheets, curtains, comforters and towels",
         "autoplay": true,
         "interval": 6,
+        "container_width": 1400,
         "panel_color": "#0e4d22",
         "accent_color": "#f0a05a",
         "button_color": "#0e4d22",
@@ -156,6 +157,9 @@
       },
       "block_order": [
         "ai_gen_block_5c0fa07_FmaMdE"
+      ],
+      "custom_css": [
+        "{ max-width: 1400px; margin-inline: auto; }"
       ],
       "settings": {}
     },
