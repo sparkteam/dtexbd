@@ -12,8 +12,130 @@
   if section.blocks.size > 0
     assign announcement_bar = true
   endif
+
+  assign enable_marquee = section.settings.enable_marquee
+  assign marquee_text = section.settings.marquee_text | strip
+  if marquee_text == blank
+    assign marquee_text = section.blocks.first.settings.text | strip
+  endif
+  if enable_marquee == false or marquee_text == blank
+    assign enable_marquee = false
+  endif
 -%}
 
+{%- if enable_marquee -%}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .announcement-bar-section .announcement-marquee-bar {
+      overflow: hidden;
+      width: 100%;
+    }
+    .announcement-bar-section .announcement-marquee {
+      position: relative;
+      width: 100%;
+      color: #ffffff;
+      font-family: "Noto Sans Bengali", sans-serif;
+      font-weight: 600;
+      font-size: 1.35rem;
+      letter-spacing: normal;
+      text-transform: none;
+      line-height: 1.45;
+    }
+    .announcement-bar-section .announcement-marquee__static {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .announcement-bar-section .announcement-marquee__viewport {
+      overflow: hidden;
+      width: 100%;
+    }
+    .announcement-bar-section .announcement-marquee__track {
+      display: flex;
+      width: max-content;
+      animation: dtex-announcement-marquee 28s linear infinite;
+    }
+    .announcement-bar-section .announcement-marquee-bar:hover .announcement-marquee__track,
+    .announcement-bar-section .announcement-marquee-bar:focus-within .announcement-marquee__track {
+      animation-play-state: paused;
+    }
+    .announcement-bar-section .announcement-marquee__group {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .announcement-bar-section .announcement-marquee__item,
+    .announcement-bar-section .announcement-marquee__sep {
+      display: inline-block;
+      white-space: nowrap;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+    .announcement-bar-section .announcement-marquee__item {
+      padding-left: 1.8rem;
+      padding-right: 1.8rem;
+    }
+    .announcement-bar-section .announcement-marquee__sep {
+      padding-left: 0.15rem;
+      padding-right: 0.15rem;
+      opacity: 0.8;
+    }
+    @keyframes dtex-announcement-marquee {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(-50%, 0, 0); }
+    }
+    @media screen and (max-width: 749px) {
+      .announcement-bar-section .announcement-marquee {
+        font-size: 1.25rem;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .announcement-bar-section .announcement-marquee__viewport {
+        display: none;
+      }
+      .announcement-bar-section .announcement-marquee__static {
+        position: static;
+        width: auto;
+        height: auto;
+        margin: 0;
+        padding: 1rem 1.6rem;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+        text-align: center;
+      }
+    }
+  </style>
+  <div class="utility-bar color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} utility-bar--bottom-border{% endif %} announcement-marquee-bar">
+    <div
+      class="announcement-marquee"
+      role="region"
+      aria-label="{{ marquee_text | escape }}"
+    >
+      <p class="announcement-marquee__static">{{ marquee_text | escape }}</p>
+      <div class="announcement-marquee__viewport" aria-hidden="true">
+        <div class="announcement-marquee__track">
+          {%- for i in (1..2) -%}
+            <div class="announcement-marquee__group">
+              {%- for j in (1..4) -%}
+                <span class="announcement-marquee__item">{{ marquee_text | escape }}</span>
+                <span class="announcement-marquee__sep">•</span>
+              {%- endfor -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- else -%}
 {% if social_icons %}
   {{ 'component-list-social.css' | asset_url | stylesheet_tag }}
 {% endif %}
@@ -162,6 +284,8 @@
   </div>
 </div>
 
+{%- endif -%}
+
 {% schema %}
 {
   "name": "t:sections.announcement-bar.name",
@@ -171,6 +295,25 @@
     "groups": ["header"]
   },
   "settings": [
+
+    {
+      "type": "header",
+      "content": "Offer marquee"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_marquee",
+      "label": "Enable offer marquee",
+      "info": "Shows a scrolling offer across this bar. Hides the Facebook icon in the top bar only; the Facebook URL in Theme settings is not removed.",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "marquee_text",
+      "label": "Marquee text",
+      "default": "Up To 36% পর্যন্ত ছাড় চলছে, এই সুযোগ সীমিত সময়ের জন্য",
+      "info": "Leave blank to use the announcement text in the block below."
+    },
     {
       "type": "checkbox",
       "id": "auto_rotate",
