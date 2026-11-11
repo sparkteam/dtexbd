@@ -27,7 +27,7 @@
       ],
       "settings": {
         "enable_marquee": true,
-        "marquee_text": "Up To 36% পর্যন্ত ছাড় চলছে, এই সুযোগ সীমিত সময়ের জন্য",
+        "marquee_text": "Up To 36% পর্যন্ত ছাড় চলছে, এই সুযোগ সীমিত সময়ের জন্য\nকমফোর্টারে Up To 26% পর্যন্ত ছাড় চলছে\nকার্টেনে Up To 20% পর্যন্ত ছাড় চলছে",
         "auto_rotate": false,
         "change_slides_speed": 5,
         "color_scheme": "scheme-1",

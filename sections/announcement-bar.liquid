@@ -18,7 +18,27 @@
   if marquee_text == blank
     assign marquee_text = section.blocks.first.settings.text | strip
   endif
-  if enable_marquee == false or marquee_text == blank
+
+  assign offer_markup = marquee_text | newline_to_br | strip
+  assign offer_items_raw = offer_markup | split: '<br />'
+  if offer_items_raw.size == 1
+    assign offer_items_raw = offer_markup | split: '<br>'
+  endif
+
+  assign offers_label = ''
+  assign offer_count = 0
+  for raw_item in offer_items_raw
+    assign item_text = raw_item | strip
+    if item_text != blank
+      assign offer_count = offer_count | plus: 1
+      if offers_label != blank
+        assign offers_label = offers_label | append: ' • '
+      endif
+      assign offers_label = offers_label | append: item_text
+    endif
+  endfor
+
+  if enable_marquee == false or offer_count == 0
     assign enable_marquee = false
   endif
 -%}
@@ -118,16 +138,19 @@
     <div
       class="announcement-marquee"
       role="region"
-      aria-label="{{ marquee_text | escape }}"
+      aria-label="{{ offers_label | escape }}"
     >
-      <p class="announcement-marquee__static">{{ marquee_text | escape }}</p>
+      <p class="announcement-marquee__static">{{ offers_label | escape }}</p>
       <div class="announcement-marquee__viewport" aria-hidden="true">
         <div class="announcement-marquee__track">
           {%- for i in (1..2) -%}
             <div class="announcement-marquee__group">
-              {%- for j in (1..4) -%}
-                <span class="announcement-marquee__item">{{ marquee_text | escape }}</span>
-                <span class="announcement-marquee__sep">•</span>
+              {%- for raw_item in offer_items_raw -%}
+                {%- assign item_text = raw_item | strip -%}
+                {%- if item_text != blank -%}
+                  <span class="announcement-marquee__item">{{ item_text | escape }}</span>
+                  <span class="announcement-marquee__sep">•</span>
+                {%- endif -%}
               {%- endfor -%}
             </div>
           {%- endfor -%}
@@ -311,8 +334,8 @@
       "type": "textarea",
       "id": "marquee_text",
       "label": "Marquee text",
-      "default": "Up To 36% পর্যন্ত ছাড় চলছে, এই সুযোগ সীমিত সময়ের জন্য",
-      "info": "Leave blank to use the announcement text in the block below."
+      "default": "Up To 36% পর্যন্ত ছাড় চলছে, এই সুযোগ সীমিত সময়ের জন্য\nকমফোর্টারে Up To 26% পর্যন্ত ছাড় চলছে\nকার্টেনে Up To 20% পর্যন্ত ছাড় চলছে",
+      "info": "Write one offer per line. Each offer appears once in the scrolling bar."
     },
     {
       "type": "checkbox",
