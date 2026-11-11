@@ -76,6 +76,7 @@
     <div class="dtex-hero__wrap">
       <div class="dtex-hero__card">
         <div class="dtex-hero__stories">
+          {%- assign hero_h1_used = false -%}
           {%- for block in section.blocks -%}
             <div
               class="dtex-hero__story{% if forloop.first %} is-active{% endif %}"
@@ -88,7 +89,12 @@
                 <span class="dtex-hero__kicker-label">{{ block.settings.kicker | escape }}</span>
               </p>
               {%- if block.settings.heading != blank -%}
-                <h2 class="dtex-hero__heading">{{ block.settings.heading | escape }}</h2>
+                {%- if block.settings.use_h1 and hero_h1_used == false and template.name == 'index' -%}
+                  {%- assign hero_h1_used = true -%}
+                  <h1 class="dtex-hero__heading dtex-hero__heading--h1">{{ block.settings.heading | escape }}</h1>
+                {%- else -%}
+                  <h2 class="dtex-hero__heading">{{ block.settings.heading | escape }}</h2>
+                {%- endif -%}
               {%- endif -%}
               {%- if block.settings.text != blank -%}
                 <p class="dtex-hero__text">{{ block.settings.text | escape }}</p>
@@ -280,9 +286,15 @@
     color: var(--dtex-ink, #172117);
     font-family: "Noto Sans Bengali", Almarai, sans-serif;
     font-size: clamp(32px, 3.2vw, 46px);
+    text-wrap: balance;
     font-weight: 800;
     line-height: 1.2;
     letter-spacing: -0.015em;
+  }
+
+  .dtex-hero__heading--h1 {
+    font-size: clamp(30px, 2.7vw, 40px);
+    line-height: 1.18;
   }
 
   .dtex-hero__text {
@@ -378,9 +390,18 @@
   }
 
   .dtex-hero__tab-label {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-family: Questrial, "Noto Sans Bengali", sans-serif;
     font-size: 14px;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.02em;
+  }
+
+  .dtex-hero__tabs:has(> :nth-child(4)) .dtex-hero__tab-label {
+    font-size: 13px;
+    letter-spacing: 0;
   }
 
   .dtex-hero__bar {
@@ -519,6 +540,10 @@
       font-size: 30px;
     }
 
+    .dtex-hero__heading--h1 {
+      font-size: 28px;
+    }
+
     .dtex-hero__text {
       font-size: 15px;
     }
@@ -531,8 +556,10 @@
       margin-top: 20px;
     }
 
-    .dtex-hero__tab-label {
-      font-size: 13px;
+    .dtex-hero__tab-label,
+    .dtex-hero__tabs:has(> :nth-child(4)) .dtex-hero__tab-label {
+      font-size: 12px;
+      letter-spacing: 0;
     }
   }
 {% endstylesheet %}
@@ -739,6 +766,13 @@
           "id": "heading",
           "label": "Heading",
           "default": "নরম কটন বেডশিট"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_h1",
+          "label": "Use as homepage H1",
+          "info": "Turn on for one slide only. The first checked slide renders its heading as the page H1; others stay H2.",
+          "default": false
         },
         {
           "type": "textarea",
