@@ -159,7 +159,7 @@
         "ai_gen_block_5c0fa07_FmaMdE"
       ],
       "custom_css": [
-        "{ max-width: 1400px; margin-inline: auto; }"
+        "{ width: 100%; max-width: 1400px; margin-inline: auto; }"
       ],
       "settings": {}
     },
