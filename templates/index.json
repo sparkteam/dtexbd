@@ -25,7 +25,7 @@
             "note": "Home delivery in 2–3 days",
             "image_x": 50,
             "image_x_mobile": 50,
-            "image_y": 60
+            "image_y": 35
           }
         },
         "slide_curtain": {
@@ -41,7 +41,7 @@
             "note": "7 ft height · waffle cotton",
             "image_x": 50,
             "image_x_mobile": 65,
-            "image_y": 35
+            "image_y": 20
           }
         },
         "slide_comforter": {
@@ -57,7 +57,7 @@
             "note": "",
             "image_x": 50,
             "image_x_mobile": 55,
-            "image_y": 55
+            "image_y": 35
           }
         }
       },
